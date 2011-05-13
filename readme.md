@@ -3,7 +3,7 @@ LIBCDS 2 - A Compressed Data Structure Library
 
 Rationale
 ---------  
-LIBCDS 2 is the re-coding of [LIBCDS][libcds] with these goals:
+LIBCDS 2 is the re-coding of [LIBCDS][libcds1] with these goals:
 
  - 64-Bit support to allow for larger, single structures.
  - Speedups

@@ -4,6 +4,7 @@ LIBCDS 2 - A Compressed Data Structure Library
 Rationale
 ---------  
 LIBCDS 2 is the re-coding of [LIBCDS][libcds] with these goals:
+
  - 64-Bit support to allow for larger, single structures.
  - Speedups
  - Improved code readability, including unit tests ([googletest][googtest])
@@ -11,6 +12,7 @@ LIBCDS 2 is the re-coding of [LIBCDS][libcds] with these goals:
  - More formality (such as code reviews)
 
 Further long-term goals include:
+
  - Introduce missing types to the library.
  - Provide packages for common Linux distributions, and other OSs.
  - Provide the option of installing it as a shared library (easing compilation and updates).
@@ -20,6 +22,7 @@ Further long-term goals include:
 Links
 -----  
 Some useful project links are below:
+
  - [LIBCDS 2 GitHub project][gitproject]
  - [LIBCDS 2 Wiki][wiki]
  - [LIBCDS 2 Issues][issues]

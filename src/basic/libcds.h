@@ -18,8 +18,22 @@
  */
 
 
-#ifndef _LIBCDS_H
-#define _LIBCDS_H
+#pragma once
+
+
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include <cmath>
+#include <string>
+#include <sstream>
+#include <cassert>
+#include <vector>
+#include <queue>
+#include <map>
+#include <string>
+
+using namespace std;
 
 #include <sys/types.h>
 #include <sys/resource.h>
@@ -28,14 +42,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/stat.h>
-#include <iostream>
-#include <fstream>
-#include <cstdlib>
-#include <cmath>
-#include <string>
-#include <sstream>
-#include <cassert>
+#include <sys/time.h>
 #include <stdint.h>
+
 
 namespace cds_basic
 {
@@ -270,8 +279,10 @@ namespace cds_basic
     return B[index];
   }
 
-
-
 };
 
-#endif                           /* _LIBCDS_H */
+#include <libcds/cdsexception.h>
+#include <libcds/time.h>
+#include <libcds/io.h>
+
+

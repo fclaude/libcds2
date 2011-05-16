@@ -1,5 +1,5 @@
 /**
- *    test_libcdsh.cpp
+ *    test_libcdsh.h
  *    Copyright (C) 2011  Francisco Claude F.
  *
  *    This program is free software: you can redistribute it and/or modify
@@ -16,12 +16,6 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
-#include <libcds/libcds.h>
-#include <algorithm>
-
-using namespace cds_basic;
-using namespace std;
 
 /** Test values are what we expect */
 TEST(TypeSize,ExpectedValues) {
@@ -281,9 +275,4 @@ TEST(Fields,32Bits) {
     cds_word exp = i&mask;
     ASSERT_EQ(exp,get_var_field(A,k*i,k*(i+1)-1));
   }
-}
-
-int main(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
 }

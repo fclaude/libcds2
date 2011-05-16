@@ -12,4 +12,4 @@ include_files:
 
 
 tests: libcds
-	$(CPP) $(CPPFLAGS) -o test/test_libcdsh test/test_libcdsh.cpp -lgtest -lpthread
+	$(CPP) $(CPPFLAGS) -o test/test_basic test/test_basic.cpp -lgtest -lpthread	

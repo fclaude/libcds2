@@ -99,7 +99,7 @@ TEST(Tokenize,ThreeStringsMid) {
 }
 
 TEST(Transform,All) {
-  cds_word i1 = (cds_word)12345678901234;
+  cds_word i1 = (cds_word)12345678901234ull;
   cds_word v1 = transform_string<cds_word>("12345678901234");
   ASSERT_EQ(i1,v1);
   cds_uint i2 = 123456789u;
@@ -116,7 +116,7 @@ TEST(SaveLoadValue,SingleValues) {
   stringbuf * sbuf = new stringbuf(ios_base::in | ios_base::out);
   sbuf->pubsetbuf(buffer,N);
   iostream io(sbuf);
-  cds_word i1 = (cds_word)12345678901234;
+  cds_word i1 = (cds_word)12345678901234ull;
   cds_uint i2 = 123456789u;
   cds_uchar i3 = '1';
   save_value(io,i1);

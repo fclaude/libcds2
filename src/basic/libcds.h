@@ -83,12 +83,28 @@ namespace cds_basic
   #define unlikely(x)     __builtin_expect((x),0)
 
   /** Bits required to represent a number between 0 and n */
+#if __LP64__
   inline cds_word msb(cds_word n) {
     cds_word ret=0;
     if(unlikely(n==0)) return 0;
     asm("bsr %1, %0" : "=r" (ret) : "r" (n));
     return ret+1;
   }
+#else
+  inline cds_word msb(cds_word n) {
+    cds_uint ret=0;
+    if(unlikely(n==0)) return 0;
+    cds_uint v=*(1+(uint*)&n);
+    if(v==0) {
+      v = *((uint*)&n);
+      assert(v!=0);
+      asm("bsrl %1, %0" : "=r" (ret) : "r" (v));
+      return ret+1;
+    }
+    asm("bsrl %1, %0" : "=r" (ret) : "r" (v));
+    return ret+1+32;
+  }
+#endif
 
   /** Counts the number of 1s in x 
    * @param x cds_uint type

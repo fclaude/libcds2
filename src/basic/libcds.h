@@ -53,16 +53,12 @@ namespace cds_basic
   typedef unsigned char cds_uchar;
   typedef unsigned short cds_ushort;
   typedef unsigned int cds_uint;
-#ifdef __LP64__
-  typedef unsigned long cds_ulong;
-#else
-  typedef unsigned long long cds_ulong;
-#endif
+  typedef size_t cds_ulong;
   
   /** Libcds works with words represented by the type cds_word.
       Note that positions are also represented with this type.
    */
-  typedef cds_ulong cds_word;
+  typedef size_t cds_word;
 
   /** Number of bits in a word in libcds. */
   #define W (8*sizeof(cds_word))
@@ -92,40 +88,18 @@ namespace cds_basic
   }
 #else
   inline cds_word msb(cds_word n) {
-    cds_uint ret=0;
+    cds_word ret=0;
     if(unlikely(n==0)) return 0;
-    cds_uint v=*(1+(uint*)&n);
-    if(v==0) {
-      v = *((uint*)&n);
-      assert(v!=0);
-      asm("bsrl %1, %0" : "=r" (ret) : "r" (v));
-      return ret+1;
-    }
-    asm("bsrl %1, %0" : "=r" (ret) : "r" (v));
-    return ret+1+32;
+    asm("bsr %1, %0" : "=r" (ret) : "r" (n));
+    return ret+1;
   }
 #endif
 
-  /** Counts the number of 1s in x 
-   * @param x cds_uint type
-   *
-   inline cds_word popcount32(const cds_uint x) {
-    return __popcount_tab[(x >>  0) & 0xff]  + __popcount_tab[(x >>  8) & 0xff]
-      + __popcount_tab[(x >> 16) & 0xff] + __popcount_tab[(x >> 24) & 0xff];
-      }*/
-  #define popcount32 __builtin_popcount
 
   /** Counts the number of 1s in x 
    * @param x cds_word type
    */
-#if __LP64__
   #define popcount __builtin_popcountl
-#else
-  inline cds_word popcount(const cds_word x) {
-    cds_uint * ptr = (cds_uint*)&x;
-    return popcount32(*ptr)+popcount32(*(ptr+1));
-  }
-#endif
 
 
   /** Obtaines the index of the least significant 1-bit of x>1 */

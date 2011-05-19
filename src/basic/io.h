@@ -105,4 +105,63 @@ namespace cds_basic
     return ret;
   }
 
+  /** Saves a value into an ofstream.
+   */
+  template <cds_word> void save_value(ostream & out, const cds_word val) {
+    assert(out.good());
+#if __LP64__
+    out.write((char*)&val,sizeof(cds_word));
+#else
+    unsigned long long v = val;
+    out.write((char*)&v,sizeof(unsigned long long));
+#endif
+  }
+
+  /** Loads a value from an ifstream.
+   */
+  template <cds_word> cds_word load_value(istream & in) {
+    assert(in.good());
+    cds_word ret;
+#if __LP64__
+    in.read((char*)&ret,sizeof(cds_word));
+#else
+    unsigned long long v;
+    in.read((char*)&v,sizeof(unsigned long long));
+    if(v > MAX_CDS_WORD)
+      throw CDSException("Value too large for the size of the word");
+    ret = (cds_word)v;
+#endif
+    return ret;
+  }
+
+  /** Saves len values into an ofstream.
+   */
+  template <cds_word> void save_value(ostream & out, const cds_word * val, const cds_word len) {
+    assert(out.good());
+#if __LP64__
+    out.write((char*)val,len*sizeof(cds_word));
+#else
+    for(cds_word i=0;i<len;i++) {
+      unsigned long long v = val[i];
+      out.write((char*)&v,sizeof(unsigned long long));
+    }
+#endif
+  }
+  
+  /** Loads len values from an ifstream.
+   */
+  template <cds_word> cds_word * load_value(istream & in, const cds_word len) {
+    assert(in.good());
+    cds_word * ret = new cds_word[len];
+#if __LP64__
+    in.read((char*)ret,len*sizeof(cds_word));
+#else
+    for(uint i=0;i<len;i++)
+      ret[i] = load_value<cds_word>(in);
+#endif
+    return ret;
+  }
+  
+
+
 };

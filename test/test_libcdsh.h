@@ -57,7 +57,7 @@ TEST(Bits,PopcountWord) {
 
 TEST(Bits,PopcountUint) {
   for(cds_word i=0; i<128*MAX_CDS_UCHAR;i++) {
-    ASSERT_EQ(seq_popcount(i),popcount32((cds_uint)i));
+    ASSERT_EQ(seq_popcount(i),popcount((cds_uint)i));
   }
 }
 

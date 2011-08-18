@@ -16,8 +16,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _BITSEQUENCE_H
-#define _BITSEQUENCE_H
+#pragma once
 
 #include <iostream>
 #include <libcds/libcds.h>
@@ -113,5 +112,3 @@ namespace cds_static
   };
 
 };
-
-#endif                           /* _STATIC_BITSEQUENCE_H */

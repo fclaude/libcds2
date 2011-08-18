@@ -177,6 +177,12 @@ namespace cds_basic
 
   /** Functions to set and retrieve sequences of bits from a given array. */
 
+  /** Obtains the number of words required to represent n elements of b bits each
+   */
+  inline cds_word words_length(cds_word n, cds_word b) {
+    return (n*b+W-1)/W;
+  }
+
   /** Retrieve a given bitsequence from array A
    * @param A Array
    * @param ini Starting position
@@ -185,17 +191,13 @@ namespace cds_basic
   inline cds_word get_var_field(const cds_word *A, const cds_word ini, const cds_word fin) {
     if(ini==fin+1) return 0;
     cds_word i=ini/W, j=ini-W*i;
-    //std::cout << "i=" << i << std::endl;
     cds_word result;
     cds_word len = (fin-ini+1);
-    //std::cout << "len=" << len << std::endl;
     if (j+len <= W) {
       result = (A[i] << (W-j-len)) >> (W-len);
-      //std::cout << "result1=" << result << std::endl;
     } else {
       result = A[i] >> j;
       result = result | (A[i+1] << (WW-j-len)) >> (W-len);
-      //std::cout << "result2=" << result << std::endl;
     }
     return result;
   }
@@ -210,11 +212,11 @@ namespace cds_basic
     if(ini==fin+1) return;
     cds_word i=ini/W, j=ini-i*W;
     cds_word len = (fin-ini+1);
-    cds_word mask = ((j+len) < W ? ~0u << (j+len) : 0)
-      | ((W-j) < W ? ~0u >> (W-j) : 0);
+    cds_word mask = ((j+len) < W ? ~(cds_word)0 << (j+len) : 0)
+      | ((W-j) < W ? ~(cds_word)0 >> (W-j) : 0);
     A[i] = (A[i] & mask) | x << j;
     if (j+len>W) {
-      mask = ((~0u) << (len+j-W));
+      mask = ((~(cds_word)0) << (len+j-W));
       A[i+1] = (A[i+1] & mask)| x >> (W-j);
     }
   }
@@ -249,11 +251,11 @@ namespace cds_basic
   inline void set_field(cds_word *A, const cds_word len, const cds_word index, const cds_word x) {
     if(len==0) return;
     cds_word i=index*len/W, j=index*len-i*W;
-    cds_word mask = ((j+len) < W ? ~0u << (j+len) : 0)
-      | ((W-j) < W ? ~0u >> (W-j) : 0);
+    cds_word mask = ((j+len) < W ? ~(cds_word)0 << (j+len) : 0)
+      | ((W-j) < W ? ~(cds_word)0 >> (W-j) : 0);
     A[i] = (A[i] & mask) | x << j;
     if (j+len>W) {
-      mask = ((~0u) << (len+j-W));
+      mask = ((~(cds_word)0) << (len+j-W));
       A[i+1] = (A[i+1] & mask)| x >> (W-j);
     }
   }  

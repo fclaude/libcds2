@@ -29,6 +29,7 @@ using namespace std;
 #include "test_libcdsh.h"
 #include "test_ioh.h"
 #include "test_timeh.h"
+#include "test_array.h"
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

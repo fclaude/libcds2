@@ -21,17 +21,16 @@
 #include <algorithm>
 #include <pthread.h>
 
-
-using namespace cds_basic;
+using namespace cds::basic;
 using namespace std;
-
 
 #include "test_libcdsh.h"
 #include "test_ioh.h"
 #include "test_timeh.h"
 #include "test_array.h"
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

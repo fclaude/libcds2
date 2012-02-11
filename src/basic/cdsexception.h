@@ -20,20 +20,25 @@
 
 #include <libcds/libcds.h>
 
-namespace cds_basic 
+namespace cds
 {
+  namespace basic
+  {
 
-  class CDSException {
-  public:
-    CDSException(const string s) {
-      msg = s;
-    }
+    class CDSException
+    {
+      public:
+        CDSException(const string s) {
+          msg = s;
+        }
 
-    string what() {
-      return msg;
-    }
+        string what() {
+          return msg;
+        }
 
-  protected:
-    string msg;
+      protected:
+        string msg;
+    };
+
   };
 };

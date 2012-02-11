@@ -9,13 +9,12 @@
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURpositionE.  See the
  *    GNU General Public License for more details.
  *
  *    You should have received a copy of the GNU General Public License
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 #pragma once
 
@@ -27,178 +26,183 @@
 
 using namespace std;
 
-namespace cds_basic
+namespace cds
 {
-
-  class Array
+  namespace basic
   {
-  public:
-    class ArrayModifier
+
+    class Array
     {
-    protected:
-      cds_word * data;
-      cds_word len;
-      cds_word bitsPerItem;
-      cds_word pos;
-    public:
-    ArrayModifier(cds_word * _data, cds_word _len, cds_word _bitsPerItem, cds_word _pos)
-      : data(_data), len(_len), bitsPerItem(_bitsPerItem), pos(_pos) {}
-      inline cds_word operator=(const cds_word v) {
-	set_field(data, bitsPerItem, pos, v);
-	return v;
-      }
+      public:
+        /** Reads and Array from a file stream
+         * @param input input file stream
+         */
+        Array(ifstream & input);
 
-      inline cds_word getValue() {
-	return get_field(data, bitsPerItem,pos);
-      }
+        /** Creates an array copying part of a previously existing array
+         * @param A source array
+         * @param i initial positionition
+         * @param j final positionition
+         * @param bpe bits per element (0 uses the max in A[i,j]
+         */
+        Array(cds_word * A, cds_word i, cds_word j, cds_word bpe = 0);
 
-      inline bool operator==(const ArrayModifier & v) {
-	return get_field(data, bitsPerItem,pos) == get_field(v.data,v.bitsPerItem,v.pos);
-      }
+        /** Creates and array with n elements that can store elements between 0 and _maxValue
+         * @param n length (in elements) of the array
+         * @param _maxValue maximum value that could be stored in the array
+         */
+        Array(cds_word n, cds_word bpe);
 
-      inline bool operator!=(const ArrayModifier & v) {
-	return get_field(data, bitsPerItem,pos) != get_field(v.data,v.bitsPerItem,v.pos);
-      }
+        /** Destroys the array */
+        ~Array();
 
-      inline bool operator<(const ArrayModifier & v) {
-	return get_field(data, bitsPerItem,pos) < get_field(v.data,v.bitsPerItem,v.pos);
-      }
+        /** Retrieves Array[position]
+         * @paran position positionition
+         * @return Array[position]
+         */
+        inline cds_word GetField(const cds_word position) const
+        {
+          assert(position<length_);
+          return cds::basic::GetField(data_, bits_per_item_, position);
+        }
 
-      inline bool operator<=(const ArrayModifier & v) {
-	return get_field(data, bitsPerItem,pos) <= get_field(v.data,v.bitsPerItem,v.pos);
-      }
+        /** Assigns v to Array[position]
+         * @paran position positionition
+         * @param v value
+         * @return Array[position]
+         */
+        inline cds_word SetField(const cds_word position, const cds_word v) {
+          assert(position<length_); assert(v<=max_value_);
+          cds::basic::SetField(data_, bits_per_item_, position, v);
+          return v;
+        }
 
-      inline bool operator>(const ArrayModifier & v) {
-	return get_field(data, bitsPerItem,pos) > get_field(v.data,v.bitsPerItem,v.pos);
-      }
+        /** operator [] for getField
+         */
+        cds_word const operator[](const cds_word position) const
+        {
+          assert(position<length_);
+          return cds::basic::GetField(data_, bits_per_item_, position);
+        }
 
-      inline bool operator>=(const ArrayModifier & v) {
-	return get_field(data, bitsPerItem,pos) >= get_field(v.data,v.bitsPerItem,v.pos);
-      }
+        /** Operator [] for modifying array
+        This is not thread-safe
+         *
+        ArrayModifier & operator[](const cds_word position) {
+          assert(position<length);
+          static ArrayModifier ret = ArrayModifier(data,length,bits_per_item,position);
+          return ret;
+          }*/
 
-      inline operator cds_word() {
-	return get_field(data, bitsPerItem, pos);
-      }
+        /** Saves the array into a file */
+        void Save(ofstream & out) const;
 
+        /** Returns the size of the array in bytes
+         */
+        inline cds_word GetSize() const
+        {
+          return sizeof(cds_word) * uint_length_
+            + sizeof(cds_word) * 4
+            + sizeof(cds_word*);
+        }
+
+        /** Returns the length of the array
+         */
+        inline cds_word GetLength() const
+        {
+          return length_;
+        }
+
+        /** Returns the maximum value in the array
+         */
+        cds_word GetMax() const;
+
+        void Use() {
+          users_++;
+        }
+
+        void Unuse() {
+          assert(users_>0);
+          users_--;
+          if(users_==0)
+            delete this;
+        }
+
+        class ArrayModifier
+        {
+          public:
+            ArrayModifier(cds_word * data, cds_word length, cds_word bits_per_item, cds_word position)
+              : data_(data), length_(length), bits_per_item_(bits_per_item), position_(position) {}
+
+            inline cds_word operator=(const cds_word v) {
+              cds::basic::SetField(data_, bits_per_item_, position_, v);
+              return v;
+            }
+
+            inline cds_word getValue() {
+              return cds::basic::GetField(data_, bits_per_item_, position_);
+            }
+
+            inline bool operator==(const ArrayModifier & v) {
+              return cds::basic::GetField(data_, bits_per_item_, position_)
+                == cds::basic::GetField(v.data_, v.bits_per_item_, v.position_);
+            }
+
+            inline bool operator!=(const ArrayModifier & v) {
+              return cds::basic::GetField(data_, bits_per_item_, position_)
+                != cds::basic::GetField(v.data_, v.bits_per_item_, v.position_);
+            }
+
+            inline bool operator<(const ArrayModifier & v) {
+              return cds::basic::GetField(data_, bits_per_item_, position_)
+                < cds::basic::GetField(v.data_, v.bits_per_item_, v.position_);
+            }
+
+            inline bool operator<=(const ArrayModifier & v) {
+              return cds::basic::GetField(data_, bits_per_item_, position_)
+                <= cds::basic::GetField(v.data_, v.bits_per_item_, v.position_);
+            }
+
+            inline bool operator>(const ArrayModifier & v) {
+              return cds::basic::GetField(data_, bits_per_item_, position_)
+                > cds::basic::GetField(v.data_, v.bits_per_item_, v.position_);
+            }
+
+            inline bool operator>=(const ArrayModifier & v) {
+              return cds::basic::GetField(data_, bits_per_item_, position_)
+                >= cds::basic::GetField(v.data_, v.bits_per_item_, v.position_);
+            }
+
+            inline operator cds_word() {
+              return cds::basic::GetField(data_, bits_per_item_, position_);
+            }
+
+          protected:
+            cds_word *data_;
+            cds_word length_;
+            cds_word bits_per_item_;
+            cds_word position_;
+        };
+
+        //friend cds_word operator=(const ArrayModifier a);
+      protected:
+        /** Array where the data is stored */
+        cds_word * data_;
+        /** Length of the array in number of elements */
+        cds_word length_;
+        /** Length in bits of each field */
+        cds_word bits_per_item_;
+        /** Maximum value stored in the array */
+        cds_word max_value_;
+        /** Length of the array in number of uints */
+        cds_word uint_length_;
+
+        cds_word users_;
+
+        /** Initializes the array, all the values to 0
+         */
+        void InitData();
     };
-  public:
-    /** Reads and Array from a file stream
-     * @param input input file stream
-     */
-    Array(ifstream & input);
 
-    /** Creates an array copying part of a previously existing array
-     * @param A source array
-     * @param i initial position
-     * @param j final position
-     * @param bpe bits per element (0 uses the max in A[i,j]
-     */
-    Array(cds_word * A, cds_word i, cds_word j, cds_word bpe = 0);
-
-    /** Creates and array with n elements that can store elements between 0 and _maxValue
-     * @param n length (in elements) of the array
-     * @param _maxValue maximum value that could be stored in the array
-     */
-    Array(cds_word n, cds_word bpe);
-
-    /** Destroys the array */
-    ~Array();
-
-    /** Retrieves Array[pos]
-     * @paran pos position
-     * @return Array[pos]
-     */
-    inline cds_word getField(const cds_word pos) const
-    {
-      assert(pos<length);
-      return get_field(data, bitsPerItem, pos);
-    }
-
-    /** Assigns v to Array[pos]
-     * @paran pos position
-     * @param v value
-     * @return Array[pos]
-     */
-    inline cds_word setField(const cds_word pos, const cds_word v) {
-      assert(pos<length); assert(v<=maxValue);
-      set_field(data, bitsPerItem, pos, v);
-      return v;
-    }
-
-    /** operator [] for getField
-     */
-    cds_word const operator[](const cds_word pos) const
-    {
-      assert(pos<length);
-      return get_field(data, bitsPerItem, pos);
-    }
-
-    /** Operator [] for modifying array
-	This is not thread-safe
-     *
-    ArrayModifier & operator[](const cds_word pos) {
-      assert(pos<length);
-      static ArrayModifier ret = ArrayModifier(data,length,bitsPerItem,pos);
-      return ret;
-      }*/
-
-    /** Saves the array into a file */
-    void save(ofstream & out) const;
-
-    /** Returns the size of the array in bytes
-     */
-    inline cds_word getSize() const
-    {
-      return sizeof(cds_word)*uintLength+sizeof(cds_word)*4+sizeof(cds_word*);
-    }
-
-    /** Returns the length of the array
-     */
-    inline cds_word getLength() const
-    {
-      return length;
-    }
-
-    /** Returns the maximum value in the array
-     */
-    inline cds_word getMax() const
-    {
-      cds_word maxV = 0;   // default max
-      for(cds_word i=0; i<length; i++)
-	maxV = max(maxV,getField(i));
-      return maxV;
-    }
-
-    void use() {
-      users++;
-    }
-
-    void unuse() {
-      assert(users>0);
-      users--;
-      if(users==0)
-	delete this;
-    }
-
-    //friend cds_word operator=(const ArrayModifier a);
-  protected:
-    /** Array where the data is stored */
-    cds_word * data;
-    /** Length of the array in number of elements */
-    cds_word length;
-    /** Length in bits of each field */
-    cds_word bitsPerItem;
-    /** Maximum value stored in the array */
-    cds_word maxValue;
-    /** Length of the array in number of uints */
-    cds_word uintLength;
-
-    cds_word users;
-
-    /** Initializes the array, all the values to 0
-     */
-    void initData();
   };
-}
-
-
+};

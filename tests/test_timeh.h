@@ -19,13 +19,16 @@
 int sleepTime = 0;
 int keepWaiting = 1;
 
-void * myThread(void*) {
+void * myThread(void*)
+{
   sleep(sleepTime);
   keepWaiting = 0;
   return NULL;
 }
 
-void testTimer(int i) {
+
+void testTimer(int i)
+{
   sleepTime = i;
   keepWaiting = 1;
   pthread_t th1;
@@ -38,9 +41,9 @@ void testTimer(int i) {
   EXPECT_GE(10,diff);
 }
 
-TEST(Sleep,0_10Seconds) {
-  //for(int i=0;i<=10;i++)
-  //  testTimer(i);
+
+TEST(Sleep,0_10Seconds)
+{
+  for(int i=15;i<=16;i++)
+    testTimer(i);
 }
-
-

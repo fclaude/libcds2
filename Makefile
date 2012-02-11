@@ -6,7 +6,7 @@ CPP=g++
 INC=-I./includes/
 LIB=lib/libcds.a
 
-OBJ=src/basic/array.o
+OBJ=src/basic/array.o src/basic/io.o
 
 libcds: include_files $(OBJ)
 	@rm -f $(LIB)

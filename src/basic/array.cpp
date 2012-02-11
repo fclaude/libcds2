@@ -18,83 +18,94 @@
 
 #include <libcds/array.h>
 
-namespace cds_basic
+namespace cds
 {
+  namespace basic
+  {
 
     Array::Array(ifstream & input) {
-        length = load_value<cds_word>(input);
-        maxValue = load_value<cds_word>(input);
-        bitsPerItem = load_value<cds_word>(input);
-        uintLength = load_value<cds_word>(input);
-        data = load_value<cds_word>(input,uintLength);
-	use();
+      length_ = LoadValue<cds_word>(input);
+      max_value_ = LoadValue<cds_word>(input);
+      bits_per_item_ = LoadValue<cds_word>(input);
+      uint_length_ = LoadValue<cds_word>(input);
+      data_ = LoadValue<cds_word>(input, uint_length_);
+      Use();
     }
 
     Array::Array(cds_word n, cds_word bpe) {
-        length = n;
-        maxValue = ((cds_word)1<<bpe)-1;
-        initData();
-	use();
+      length_ = n;
+      max_value_ = ((cds_word)1 << bpe) - 1;
+      InitData();
+      Use();
     }
 
-  /*Array::Array(cds_word * A, cds_word n, cds_word bpe) {
-        maxValue = 0;
-        if(bpe==0) {
-            for(cds_word k=0;k<n;k++)
-                maxValue = max(maxValue,A[k]);
-        }
-        else {
-	  maxValue = ((cds_word)1<<(bpe))-1;
-        }
-        length = n;
-        initData();
-        assert(bpe==0 || bitsPerItem==bpe);
-        for(cds_word k=0;k<n;k++) {
-            assert(A[k] <= maxValue);
-            setField(k, A[k]);
-        }
-	use();
-	}*/
+    /*Array::Array(cds_word * A, cds_word n, cds_word bpe) {
+          maxValue = 0;
+          if(bpe==0) {
+              for(cds_word k=0;k<n;k++)
+                  maxValue = max(maxValue,A[k]);
+          }
+          else {
+      maxValue = ((cds_word)1<<(bpe))-1;
+          }
+          length = n;
+          initData();
+    assert(bpe==0 || bitsPerItem==bpe);
+    for(cds_word k=0;k<n;k++) {
+    assert(A[k] <= maxValue);
+    setField(k, A[k]);
+    }
+    use();
+    }*/
 
     Array::Array(cds_word * A, cds_word i, cds_word j, cds_word bpe) {
-        maxValue = 0;
-        if(bpe==0) {
-            for(cds_word k=i;k<=j;k++)
-                maxValue = max(maxValue,A[k]);
-        }
-        else {
-	  maxValue = ((cds_word)1<<(bpe))-1;
-        }
-        length = j-i+1;
-        initData();
-        assert(bpe==0 || bitsPerItem==bpe);
-        for(cds_word k=i;k<=j;k++) {
-            assert(A[k] <= maxValue);
-            setField(k-i, A[k]);
-        }
-	use();
+      max_value_ = 0;
+      if (bpe == 0) {
+        for(cds_word k = i; k <= j; k++)
+          max_value_ = max(max_value_, A[k]);
+      }
+      else {
+        max_value_ = ((cds_word)1 << bpe) - 1;
+      }
+      length_ = j - i + 1;
+      InitData();
+      assert(bpe == 0 || bits_per_item_ == bpe);
+      for(cds_word k = i; k <= j; k++) {
+        assert(A[k] <= max_value_);
+        SetField(k-i, A[k]);
+      }
+      Use();
     }
 
     Array::~Array() {
-        delete [] data;
+      delete [] data_;
     }
 
-    void Array::save(ofstream & out) const
+    void Array::Save(ofstream & out) const
     {
-        save_value(out,length);
-        save_value(out,maxValue);
-        save_value(out,bitsPerItem);
-        save_value(out,uintLength);
-        save_value(out,data,uintLength);
+      SaveValue(out, length_);
+      SaveValue(out, max_value_);
+      SaveValue(out, bits_per_item_);
+      SaveValue(out, uint_length_);
+      SaveValue(out, data_, uint_length_);
     }
 
-    void Array::initData() {
-        bitsPerItem = msb(maxValue);
-        uintLength = words_length(length,bitsPerItem);
-	//cout << "uintLength=" << uintLength << " bitsPerItem=" << bitsPerItem << endl;
-        data = new cds_word[uintLength];
-        for(cds_word i=0;i<uintLength;i++)
-            data[i] = 0;
+    cds_word Array::GetMax() const
+    {
+      cds_word max_value = 0;                     // default max
+      for(cds_word i = 0; i < length_; i++)
+        max_value = max(max_value, GetField(i));
+      return max_value;
     }
+
+    void Array::InitData() {
+      bits_per_item_ = msb(max_value_);
+      uint_length_ = WordsLength(length_, bits_per_item_);
+      //cout << "uintLength=" << uintLength << " bitsPerItem=" << bitsPerItem << endl;
+      data_ = new cds_word[uint_length_];
+      for(cds_word i = 0; i < uint_length_; i++)
+        data_[i] = 0;
+    }
+
+  };
 };
-

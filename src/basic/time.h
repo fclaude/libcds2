@@ -20,39 +20,43 @@
 
 #include <libcds/libcds.h>
 
-namespace cds_basic
+namespace cds
 {
+  namespace basic
+  {
 
-  /** Timer class.
-   */
-  class Timer {
-  public:
-    /** Creates and starts the timer.
+    /** Timer class.
      */
-    Timer() {
-      restart();
-    }
+    class Timer
+    {
+      public:
+        /** Creates and starts the timer.
+         */
+        Timer() {
+          restart();
+        }
 
-    /** Restarts the timer.
-     */
-    void restart() {
-      initial = clock();
-    }
+        /** Restarts the timer.
+         */
+        void restart() {
+          initial = clock();
+        }
 
-    /** Stops the timer.
-     */
-    void stop() {
-      final = clock();
-    }
+        /** Stops the timer.
+         */
+        void stop() {
+          final = clock();
+        }
 
-    /** Computes the number of miliseconds elapsed from start to stop.
-     */
-    double elapsedTime() {
-      return 1000.*(final-initial)/CLOCKS_PER_SEC;
-    }
+        /** Computes the number of miliseconds elapsed from start to stop.
+         */
+        double elapsedTime() {
+          return 1000.*(final-initial)/CLOCKS_PER_SEC;
+        }
 
-  protected:
-    clock_t initial, final;
+      protected:
+        clock_t initial, final;
+    };
+
   };
-
 };

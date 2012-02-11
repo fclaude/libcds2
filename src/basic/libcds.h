@@ -99,7 +99,7 @@ namespace cds_basic
   /** Counts the number of 1s in x 
    * @param x cds_word type
    */
-  #define popcount __builtin_popcountl
+  #define popcount (cds_word)__builtin_popcountl
 
 
   /** Obtaines the index of the least significant 1-bit of x>1 */

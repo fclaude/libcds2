@@ -29,7 +29,7 @@ bool cmp_array(Array &a1, Array &a2) {
 
 TEST(Array,Empty) {
   Array * a = new Array(0ul,0ul);
-  ASSERT_EQ(a->getLength(),0);
+  ASSERT_EQ(a->getLength(),0ul);
   a->unuse();
 }
 

@@ -9,7 +9,8 @@ LIB=lib/libcds.a
 OBJ=src/basic/array.o
 
 libcds: include_files $(OBJ)
-	@ar rcs $(LIB) $(OBJECTS) 
+	@rm -f $(LIB)
+	@ar rs $(LIB) $(OBJ) 2> /dev/null
 
 %.o: %.cpp
 	@echo " [C++] Compiling $<"
@@ -18,9 +19,10 @@ libcds: include_files $(OBJ)
 include_files:
 	@find ./src/ -name *.h -exec ./copy_header.py {} \;
 
-tests: libcds
+test: libcds
+	@make -s -C gtest > /dev/null
 	@echo " [LNK] Compiling and linking test_basic"
-	@$(CPP) $(CPPFLAGS) -o test/test_basic test/test_basic.cpp -lgtest -lpthread $(LIB)	
+	@$(CPP) $(CPPFLAGS) -o tests/test_basic tests/test_basic.cpp -lpthread $(LIB)	-I./gtest/include/ gtest/src/gtest-all.o
 
 clean:
 	@echo " [CLN] Cleaning source tree"
@@ -30,4 +32,6 @@ clean:
 	@rm -rf includes/*
 	@mkdir includes/libcds
 	@touch includes/libcds/delete_me
-	@rm -f test/test_basic
+	@make -s -C gtest clean > /dev/null
+	@rm -f tests/test_basic
+

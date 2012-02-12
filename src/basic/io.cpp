@@ -1,5 +1,5 @@
 /**
- *    test_timeh.h
+ *    io.cpp
  *    Copyright (C) 2011  Francisco Claude F.
  *
  *    This program is free software: you can redistribute it and/or modify
@@ -16,40 +16,35 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TESTS_TEST_TIMEH_H_
-#define TESTS_TEST_TIMEH_H_
+#include <libcds/io.h>
 
-#include <libcds/time.h>
+#include <string>
+#include <vector>
 
-using cds::basic::Timer;
+namespace cds {
+namespace basic {
 
-int sleepTime = 0;
-int keepWaiting = 1;
+using std::string;
+using std::vector;
 
-void *myThread(void *_n) {
-  sleep(sleepTime);
-  keepWaiting = 0;
-  return NULL;
+vector<string> Tokenize(const string &str, const char delim) {
+  vector<string> tokens;
+  string::size_type last_pos = 0;
+  string::size_type pos = str.find_first_of(delim);
+  while (pos != string::npos) {
+    if (last_pos < pos) {
+      tokens.push_back(str.substr(last_pos, pos - last_pos));
+    }
+    last_pos = pos + 1;
+    if (last_pos >= str.length()) {
+      break;
+    }
+    pos = str.find_first_of(delim, pos + 1);
+  }
+  if (last_pos < str.length()) {
+    tokens.push_back(str.substr(last_pos));
+  }
+  return tokens;
 }
-
-
-void testTimer(int i) {
-  sleepTime = i;
-  keepWaiting = 1;
-  pthread_t th1;
-  pthread_create(&th1, NULL, myThread, NULL);
-  Timer t;
-  while (keepWaiting);
-  t.stop();
-  pthread_join(th1, NULL);
-  double diff = abs(t.elapsedTime() - 1000 * i);
-  EXPECT_GE(10, diff);
-}
-
-
-TEST(Sleep, 0_10Seconds) {
-  // for(int i=15;i<=16;i++)
-  //  testTimer(i);
-}
-
-#endif  // TESTS_TEST_TIMEH_H_
+};
+};

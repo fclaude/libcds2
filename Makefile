@@ -6,7 +6,7 @@ CPP=g++
 INC=-I./includes/
 LIB=lib/libcds.a
 
-OBJ=src/basic/array.o src/basic/io.o
+OBJ=src/basic/array.o src/basic/io.o src/immutable/bitsequence.o
 
 libcds: include_files $(OBJ)
 	@rm -f $(LIB)
@@ -16,8 +16,21 @@ libcds: include_files $(OBJ)
 	@echo " [C++] Compiling $<"
 	@$(CPP) $(CPPFLAGS) $(INCL) -c $< -o $@
 
+indent:
+	@find ./src/ -name *.h -exec python ./config/indent.py {} \;
+	@find ./tests/ -name *.h -exec python ./config/indent.py {} \;
+	@find ./src/ -name *.cpp -exec python ./config/indent.py {} \;
+	@find ./tests/ -name *.cpp -exec python ./config/indent.py {} \;
+	
+
+cpplint:
+	@find ./src/ -name *.h -exec python ./config/cpplint.py --filter=-runtime/sizeof,-whitespace/line_length,-runtime/references,-readability/streams,-runtime/int {} \;
+	@find ./src/ -name *.cpp -exec python ./config/cpplint.py --filter=-runtime/sizeof,-whitespace/line_length,-runtime/references,-readability/streams,-runtime/int {} \;
+	@find ./tests/ -name *.h -exec python ./config/cpplint.py --filter=-runtime/sizeof,-whitespace/line_length,-runtime/references,-readability/streams,-runtime/int {} \;
+	@find ./tests/ -name *.cpp -exec python ./config/cpplint.py --filter=-runtime/sizeof,-whitespace/line_length,-runtime/references,-readability/streams,-runtime/int {} \;
+	
 include_files:
-	@find ./src/ -name *.h -exec ./copy_header.py {} \;
+	@find ./src/ -name *.h -exec python ./config/copy_header.py {} \;
 
 test: libcds
 	@echo " [DEP] Compiling gtest library"
@@ -28,8 +41,9 @@ test: libcds
 
 clean:
 	@echo " [CLN] Cleaning source tree"
+	@find ./ -name *.orig -exec rm -f {} \;
 	@rm -f $(OBJ)
-	@rm $(LIB)
+	@rm -f $(LIB)
 	@touch lib/delete_me
 	@rm -rf includes/*
 	@mkdir includes/libcds

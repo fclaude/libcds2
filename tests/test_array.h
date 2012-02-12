@@ -16,29 +16,37 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef TESTS_TEST_ARRAY_H_
+#define TESTS_TEST_ARRAY_H_
+
 #include <libcds/array.h>
 
-bool cmp_array(Array &a1, Array &a2)
-{
-  if(a1.GetLength() != a2.GetLength()) return false;
-  for(cds_word i = 0; i < a1.GetLength(); i++)
-    if(a1[i] != a2[i]) return false;
+using cds::basic::Array;
+
+uint seed_test_array = 20;
+
+bool cmp_array(Array &a1, Array &a2) {
+  if (a1.GetLength() != a2.GetLength()) {
+    return false;
+  }
+  for (cds_word i = 0; i < a1.GetLength(); i++)
+    if (a1[i] != a2[i]) {
+      return false;
+    }
   return true;
 }
 
 
-TEST(Array,Empty)
-{
-  Array * a = new Array(0ul, 0ul);
+TEST(Array, Empty) {
+  Array *a = new Array(0ul, 0ul);
   ASSERT_EQ(a->GetLength(), 0ul);
   a->Unuse();
 }
 
 
-void testOneElem(cds_word bits)
-{
-  cds_word v = rand() & (((cds_word)1 << bits) - 1);
-  Array * a = new Array(1ul, ((cds_word)1ul << bits) - 1);
+void testOneElem(cds_word bits) {
+  cds_word v = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
+  Array *a = new Array(1ul, ((cds_word)1ul << bits) - 1);
   a->SetField(0, v);
   cds_word r = a->GetField(0);
   cds_word r2 = (*a)[0];
@@ -48,19 +56,18 @@ void testOneElem(cds_word bits)
 }
 
 
-TEST(Array,OneElem)
-{
-  for(cds_word i = 0; i < msb(kMaxCDSWord); i++)
+TEST(Array, OneElem) {
+  for (cds_word i = 0; i < msb(kMaxCDSWord); i++) {
     testOneElem(i);
+  }
 }
 
 
-void testThreeElem(cds_word bits)
-{
-  cds_word v1 = rand() & (((cds_word)1 << bits) - 1);
-  cds_word v2 = rand() & (((cds_word)1 << bits) - 1);
-  cds_word v3 = rand() & (((cds_word)1 << bits) - 1);
-  Array * a = new Array(3ul, bits);
+void testThreeElem(cds_word bits) {
+  cds_word v1 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
+  cds_word v2 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
+  cds_word v3 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
+  Array *a = new Array(3ul, bits);
   a->SetField(0, v1);
   a->SetField(1, v2);
   a->SetField(2, v3);
@@ -80,21 +87,19 @@ void testThreeElem(cds_word bits)
 }
 
 
-TEST(Array,ThreeElem)
-{
-  for(cds_word i = 1; i < msb(kMaxCDSWord); i++) {
+TEST(Array, ThreeElem) {
+  for (cds_word i = 1; i < msb(kMaxCDSWord); i++) {
     testThreeElem(i);
   }
 }
 
 
-void testArrayConstructor1(cds_word bits)
-{
-  cds_word v1 = rand() & (((cds_word)1 << bits) - 1);
-  cds_word v2 = rand() & (((cds_word)1 << bits) - 1);
-  cds_word v3 = rand() & (((cds_word)1 << bits) - 1);
+void testArrayConstructor1(cds_word bits) {
+  cds_word v1 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
+  cds_word v2 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
+  cds_word v3 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
   cds_word A[3] = {v1, v2, v3};
-  Array * a = new Array(A, 0, 3, bits);
+  Array *a = new Array(A, 0, 3, bits);
   cds_word r1a = a->GetField(0);
   cds_word r1b = (*a)[0];
   cds_word r2a = a->GetField(1);
@@ -111,13 +116,12 @@ void testArrayConstructor1(cds_word bits)
 }
 
 
-void testArrayConstructor2(cds_word bits)
-{
-  cds_word v1 = rand() & (((cds_word)1 << bits) - 1);
-  cds_word v2 = rand() & (((cds_word)1 << bits) - 1);
-  cds_word v3 = rand() & (((cds_word)1 << bits) - 1);
+void testArrayConstructor2(cds_word bits) {
+  cds_word v1 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
+  cds_word v2 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
+  cds_word v3 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
   cds_word A[3] = {v1, v2, v3};
-  Array * a = new Array(A, 0, 3);
+  Array *a = new Array(A, 0, 3);
   cds_word r1a = a->GetField(0);
   cds_word r1b = (*a)[0];
   cds_word r2a = a->GetField(1);
@@ -134,10 +138,11 @@ void testArrayConstructor2(cds_word bits)
 }
 
 
-TEST(Array,ArrayConstructor)
-{
-  for(cds_word i=1;i<msb(kMaxCDSWord);i++) {
+TEST(Array, ArrayConstructor) {
+  for (cds_word i = 1; i < msb(kMaxCDSWord); i++) {
     testArrayConstructor1(i);
     testArrayConstructor2(i);
   }
 }
+
+#endif  // TESTS_TEST_ARRAY_H_

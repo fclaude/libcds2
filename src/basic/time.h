@@ -16,47 +16,46 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef SRC_BASIC_TIME_H_
+#define SRC_BASIC_TIME_H_
 
 #include <libcds/libcds.h>
 
-namespace cds
-{
-  namespace basic
-  {
+namespace cds {
+namespace basic {
 
-    /** Timer class.
+/** Timer class.
+ */
+class Timer {
+  public:
+    /** Creates and starts the timer.
      */
-    class Timer
-    {
-      public:
-        /** Creates and starts the timer.
-         */
-        Timer() {
-          restart();
-        }
+    Timer() {
+      restart();
+    }
 
-        /** Restarts the timer.
-         */
-        void restart() {
-          initial = clock();
-        }
+    /** Restarts the timer.
+     */
+    void restart() {
+      initial = clock();
+    }
 
-        /** Stops the timer.
-         */
-        void stop() {
-          final = clock();
-        }
+    /** Stops the timer.
+     */
+    void stop() {
+      final = clock();
+    }
 
-        /** Computes the number of miliseconds elapsed from start to stop.
-         */
-        double elapsedTime() {
-          return 1000.*(final-initial)/CLOCKS_PER_SEC;
-        }
+    /** Computes the number of miliseconds elapsed from start to stop.
+     */
+    double elapsedTime() {
+      return 1000.*(final - initial) / CLOCKS_PER_SEC;
+    }
 
-      protected:
-        clock_t initial, final;
-    };
-
-  };
+  protected:
+    clock_t initial, final;
 };
+};
+};
+
+#endif  // SRC_BASIC_TIME_H_

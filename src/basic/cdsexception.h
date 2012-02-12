@@ -16,29 +16,31 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef SRC_BASIC_CDSEXCEPTION_H_
+#define SRC_BASIC_CDSEXCEPTION_H_
 
 #include <libcds/libcds.h>
 
-namespace cds
-{
-  namespace basic
-  {
+#include <string>
 
-    class CDSException
-    {
-      public:
-        CDSException(const string s) {
-          msg = s;
-        }
+namespace cds {
+namespace basic {
+using std::string;
 
-        string what() {
-          return msg;
-        }
+class CDSException {
+  public:
+    explicit CDSException(const string &s) {
+      msg = s;
+    }
 
-      protected:
-        string msg;
-    };
+    string what() {
+      return msg;
+    }
 
-  };
+  protected:
+    string msg;
 };
+};
+};
+
+#endif  // SRC_BASIC_CDSEXCEPTION_H_

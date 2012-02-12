@@ -10,7 +10,6 @@ LIBCDS 2 is the re-coding of [LIBCDS][libcds1] with these goals:
  - Improve code readability
  - Include unit tests ([googletest][googtest])
  - Improve documentation
- 
 
 Further long-term goals include:
 

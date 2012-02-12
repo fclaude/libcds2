@@ -30,8 +30,8 @@ Kernel configured for up to 4 processors.
 Processor type: i486 (Intel 80486)
 Processors active: 0 1 2 3
 Primary memory available: 4.00 gigabytes
-Default processor set: 99 tasks, 534 threads, 4 processors
-Load average: 5.08, Mach factor: 0.45
+Default processor set: 96 tasks, 566 threads, 4 processors
+Load average: 3.83, Mach factor: 1.05
 /bin/machine           = unknown
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
@@ -186,7 +186,7 @@ configure:4917: checking the name lister (/usr/bin/nm) interface
 configure:4924: g++ -c -g -O2  conftest.cpp >&5
 configure:4927: /usr/bin/nm "conftest.o"
 configure:4930: output
-0000000000000198 S _some_variable
+00000000000001a8 S _some_variable
 configure:4937: result: BSD nm
 configure:4940: checking whether ln -s works
 configure:4944: result: yes
@@ -588,6 +588,7 @@ on recoded.local
 config.status:1132: creating Makefile
 config.status:1132: creating scripts/gtest-config
 config.status:1132: creating build-aux/config.h
+config.status:1304: build-aux/config.h is unchanged
 config.status:1352: executing depfiles commands
 config.status:1352: executing libtool commands
 
@@ -691,15 +692,15 @@ lt_cv_sys_max_cmd_len=196608
 ## Output variables. ##
 ## ----------------- ##
 
-ACLOCAL='${SHELL} /Users/fclaude/Downloads/gtest-1.6.0/build-aux/missing --run aclocal-1.11'
+ACLOCAL='${SHELL} /Users/fclaude/Documents/code/libcds2/gtest/build-aux/missing --run aclocal-1.11'
 AMDEPBACKSLASH='\'
 AMDEP_FALSE='#'
 AMDEP_TRUE=''
-AMTAR='${SHELL} /Users/fclaude/Downloads/gtest-1.6.0/build-aux/missing --run tar'
+AMTAR='${SHELL} /Users/fclaude/Documents/code/libcds2/gtest/build-aux/missing --run tar'
 AR='ar'
-AUTOCONF='${SHELL} /Users/fclaude/Downloads/gtest-1.6.0/build-aux/missing --run autoconf'
-AUTOHEADER='${SHELL} /Users/fclaude/Downloads/gtest-1.6.0/build-aux/missing --run autoheader'
-AUTOMAKE='${SHELL} /Users/fclaude/Downloads/gtest-1.6.0/build-aux/missing --run automake-1.11'
+AUTOCONF='${SHELL} /Users/fclaude/Documents/code/libcds2/gtest/build-aux/missing --run autoconf'
+AUTOHEADER='${SHELL} /Users/fclaude/Documents/code/libcds2/gtest/build-aux/missing --run autoheader'
+AUTOMAKE='${SHELL} /Users/fclaude/Documents/code/libcds2/gtest/build-aux/missing --run automake-1.11'
 AWK='awk'
 CC='gcc'
 CCDEPMODE='depmode=gcc3'
@@ -738,7 +739,7 @@ LIBTOOL='$(SHELL) $(top_builddir)/libtool'
 LIPO='lipo'
 LN_S='ln -s'
 LTLIBOBJS=''
-MAKEINFO='${SHELL} /Users/fclaude/Downloads/gtest-1.6.0/build-aux/missing --run makeinfo'
+MAKEINFO='${SHELL} /Users/fclaude/Documents/code/libcds2/gtest/build-aux/missing --run makeinfo'
 MKDIR_P='build-aux/install-sh -c -d'
 NM='/usr/bin/nm'
 NMEDIT='nmedit'
@@ -799,7 +800,7 @@ host_vendor='apple'
 htmldir='${docdir}'
 includedir='${prefix}/include'
 infodir='${datarootdir}/info'
-install_sh='${SHELL} /Users/fclaude/Downloads/gtest-1.6.0/build-aux/install-sh'
+install_sh='${SHELL} /Users/fclaude/Documents/code/libcds2/gtest/build-aux/install-sh'
 libdir='${exec_prefix}/lib'
 libexecdir='${exec_prefix}/libexec'
 localedir='${datarootdir}/locale'

@@ -20,6 +20,8 @@ include_files:
 	@find ./src/ -name *.h -exec ./copy_header.py {} \;
 
 test: libcds
+	@echo " [DEP] Compiling gtest library"
+	@cd gtest; ./configure > /dev/null; cd ..
 	@make -s -C gtest > /dev/null
 	@echo " [LNK] Compiling and linking test_basic"
 	@$(CPP) $(CPPFLAGS) -o tests/test_basic tests/test_basic.cpp -lpthread $(LIB)	-I./gtest/include/ gtest/src/gtest-all.o

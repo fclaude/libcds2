@@ -448,7 +448,7 @@ Copyright (C) 2009 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/Users/fclaude/Downloads/gtest-1.6.0'
+ac_pwd='/Users/fclaude/Documents/code/libcds2/gtest'
 srcdir='.'
 INSTALL='/usr/bin/install -c'
 MKDIR_P='build-aux/install-sh -c -d'
@@ -921,7 +921,7 @@ S["CFLAGS"]="-g -O2"
 S["CC"]="gcc"
 S["am__untar"]="${AMTAR} xf -"
 S["am__tar"]="${AMTAR} chof - \"$$tardir\""
-S["AMTAR"]="${SHELL} /Users/fclaude/Downloads/gtest-1.6.0/build-aux/missing --run tar"
+S["AMTAR"]="${SHELL} /Users/fclaude/Documents/code/libcds2/gtest/build-aux/missing --run tar"
 S["am__leading_dot"]="."
 S["SET_MAKE"]=""
 S["AWK"]="awk"
@@ -929,12 +929,12 @@ S["mkdir_p"]="$(top_builddir)/build-aux/install-sh -c -d"
 S["MKDIR_P"]="build-aux/install-sh -c -d"
 S["INSTALL_STRIP_PROGRAM"]="$(install_sh) -c -s"
 S["STRIP"]="strip"
-S["install_sh"]="${SHELL} /Users/fclaude/Downloads/gtest-1.6.0/build-aux/install-sh"
-S["MAKEINFO"]="${SHELL} /Users/fclaude/Downloads/gtest-1.6.0/build-aux/missing --run makeinfo"
-S["AUTOHEADER"]="${SHELL} /Users/fclaude/Downloads/gtest-1.6.0/build-aux/missing --run autoheader"
-S["AUTOMAKE"]="${SHELL} /Users/fclaude/Downloads/gtest-1.6.0/build-aux/missing --run automake-1.11"
-S["AUTOCONF"]="${SHELL} /Users/fclaude/Downloads/gtest-1.6.0/build-aux/missing --run autoconf"
-S["ACLOCAL"]="${SHELL} /Users/fclaude/Downloads/gtest-1.6.0/build-aux/missing --run aclocal-1.11"
+S["install_sh"]="${SHELL} /Users/fclaude/Documents/code/libcds2/gtest/build-aux/install-sh"
+S["MAKEINFO"]="${SHELL} /Users/fclaude/Documents/code/libcds2/gtest/build-aux/missing --run makeinfo"
+S["AUTOHEADER"]="${SHELL} /Users/fclaude/Documents/code/libcds2/gtest/build-aux/missing --run autoheader"
+S["AUTOMAKE"]="${SHELL} /Users/fclaude/Documents/code/libcds2/gtest/build-aux/missing --run automake-1.11"
+S["AUTOCONF"]="${SHELL} /Users/fclaude/Documents/code/libcds2/gtest/build-aux/missing --run autoconf"
+S["ACLOCAL"]="${SHELL} /Users/fclaude/Documents/code/libcds2/gtest/build-aux/missing --run aclocal-1.11"
 S["VERSION"]="1.6.0"
 S["PACKAGE"]="gtest"
 S["CYGPATH_W"]="echo"

@@ -129,7 +129,7 @@ template <cds_word> cds_word LoadValue(istream &in) {
 #else
   unsigned long long v;
   in.read(reinterpret_cast<char *>(&v), sizeof(unsigned long long));
-  if (v > MAX_CDS_WORD) {
+  if (v > kMaxCDSWord) {
     throw CDSException("Value too large for the size of the word");
   }
   ret = (cds_word)v;
@@ -159,7 +159,7 @@ template <cds_word> cds_word *LoadValue(istream &in, const cds_word length) {
 #if __LP64__
   in.read(reinterpret_cast<char *>(ret), length * sizeof(cds_word));
 #else
-  for (uint i = 0; i < len; i++) {
+  for (uint i = 0; i < length; i++) {
     ret[i] = LoadValue<cds_word>(in);
   }
 #endif

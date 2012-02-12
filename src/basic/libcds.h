@@ -48,9 +48,13 @@ const cds_word kDoubleWordSize = (16 * sizeof(cds_word));
 const cds_word kBytesPerWord = (sizeof(cds_word));
 
 /** Maximum values for different types. */
-const cds_word kMaxCDSUchar = (((cds_word)1) << (8 * sizeof(cds_uchar)));
-const cds_word kMaxCDSUint = (((cds_word)1) << (8 * sizeof(cds_uint)));
-const cds_word kMaxCDSUshort = (((cds_word)1) << (8 * sizeof(cds_ushort)));
+const cds_word kMaxCDSUchar = 255;
+#if __LP64__
+const cds_word kMaxCDSUint = (((cds_word)1) << (8 * sizeof(cds_uint))) - 1;
+#else
+const cds_word kMaxCDSUint = ((((cds_word)1) << ((8 * sizeof(cds_uint) - 1))) - 1) * 2 + 1;
+#endif
+const cds_word kMaxCDSUshort = 65535;
 const cds_word kMaxCDSUlong = (((cds_word)1) << (8 * sizeof(cds_ulong) - 6));
 const cds_word kMaxCDSWord = kMaxCDSUlong;
 

@@ -134,9 +134,11 @@ TEST(Tokenize, ThreeStringsMid) {
 
 
 TEST(Transform, All) {
+#if __LP64__
   cds_word i1 = (cds_word)12345678901234ull;
   cds_word v1 = TransformString<cds_word>("12345678901234");
   ASSERT_EQ(i1, v1);
+#endif
   cds_uint i2 = 123456789u;
   cds_uint v2 = TransformString<cds_uint>("123456789");
   ASSERT_EQ(i2, v2);
@@ -192,6 +194,7 @@ TEST(LoadFile, IO) {
   string name = "inputs/input1";
   bool exit = true;
   bool failed = false;
+#if __LP64__
   try {
     cds_word len;
     cds_word *T = LoadFile<cds_word>(name, len);
@@ -201,6 +204,7 @@ TEST(LoadFile, IO) {
     string expected = "Error, invalid input";
     ASSERT_EQ(expected, e.what());
   }
+#endif
   try {
     cds_word len;
     cds_uint *T = LoadFile<cds_uint>(name, len);

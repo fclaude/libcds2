@@ -52,16 +52,24 @@ uint seed = 2;
 /** Test values are what we expect */
 TEST(TypeSize, ExpectedValues) {
   unsigned long long v;
-  v = (((unsigned long long)1) << 8);
+  v = (((unsigned long long)1) << 8) - 1;
   ASSERT_EQ(v, kMaxCDSUchar);
-  v = (((unsigned long long)1) << (8 * 2));
+  v = (((unsigned long long)1) << (8 * 2)) - 1;
   ASSERT_EQ(v, kMaxCDSUshort);
-  v = (((unsigned long long)1) << (8 * 4));
+  v = (((unsigned long long)1) << (8 * 4)) - 1;
   ASSERT_EQ(v, kMaxCDSUint);
+#if __LP64__
   v = (((unsigned long long)1) << (8 * 8 - 6));
+#else
+  v = (((unsigned long long)1) << (8 * 4 - 6));
+#endif
   ASSERT_EQ(v, kMaxCDSWord);
   ASSERT_EQ(v, kMaxCDSUlong);
+#if __LP64__
   v = 64;
+#else
+  v = 32;
+#endif
   ASSERT_EQ(v, kWordSize);
   v *= 2;
   ASSERT_EQ(v, kDoubleWordSize);
@@ -87,7 +95,7 @@ TEST(Bits, PopcountWord) {
     ASSERT_EQ(seq_popcount(i), popcount(i));
   }
   for (cds_word i = 0; i < 128 * kMaxCDSUchar; i++) {
-    ASSERT_EQ(seq_popcount((i << 32) | i), popcount((i << 32) | i));
+    ASSERT_EQ(seq_popcount((i << 30) | i), popcount((i << 30) | i));
   }
 }
 
@@ -319,7 +327,11 @@ TEST(Fields, 32Bits) {
   const cds_word k = 32;
   const cds_word N = 1000000;
   const cds_word array_length = N * k / kWordSize + 1;
+#if __LP64__
   cds_word mask = ((cds_word)1 << k) - 1;
+#else
+  cds_word mask = kMaxCDSUint;
+#endif
   cds_word A[array_length];
   for (cds_word i = 0; i < array_length; i++) {
     A[i] = 0;

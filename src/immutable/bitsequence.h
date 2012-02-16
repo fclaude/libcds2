@@ -1,4 +1,4 @@
-/******************************************************************************** 
+/********************************************************************************
 Copyright (c) 2012, Francisco Claude.
 All rights reserved.
 
@@ -119,7 +119,6 @@ class BitSequence : public cds::basic::ReferenceCounted {
 
     /** Reads a bitmap determining the type. */
     static BitSequence *Load(ifstream &fp);
-
 };
 };
 };

@@ -1,4 +1,4 @@
-/******************************************************************************** 
+/********************************************************************************
 Copyright (c) 2012, Rodrigo Gonzalez.
 Copyright (c) 2012, Francisco Claude.
 All rights reserved.
@@ -159,7 +159,7 @@ inline cds_word WordsLength(cds_word n, cds_word b) {
 }
 
 inline cds_word SafeCeil(cds_word k, cds_word n) {
-  return k/n + (k%n>0?1:0);
+  return k / n + (k % n > 0 ? 1 : 0);
 }
 
 /** Retrieve a given bitsequence from array A
@@ -284,17 +284,20 @@ inline cds_word GetField32(const cds_word *A, const cds_word index) {
 
 class ReferenceCounted {
   public:
-    ReferenceCounted() { users_count_ = 0; }
+    ReferenceCounted() {
+      users_count_ = 0;
+    }
     virtual ~ReferenceCounted() {}
     virtual void Unuse() {
-      //std::cout << "Someone doesn't want me anymore :-(" << std::endl;
-      assert( users_count_ > 0);
-      users_count_ --;
-      if (users_count_ == 0)
+      // std::cout << "Someone doesn't want me anymore :-(" << std::endl;
+      assert(users_count_ > 0);
+      users_count_--;
+      if (users_count_ == 0) {
         delete this;
+      }
     }
     virtual void Use() {
-      //std::cout << "I'm being used! :D" << std::endl;
+      // std::cout << "I'm being used! :D" << std::endl;
       users_count_++;
     }
   protected:

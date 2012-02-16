@@ -1,4 +1,4 @@
-/******************************************************************************** 
+/********************************************************************************
 Copyright (c) 2012, Francisco Claude.
 All rights reserved.
 
@@ -95,7 +95,7 @@ Array::Array(cds_word *A, cds_word i, cds_word j, cds_word bpe) {
 }
 
 Array::~Array() {
-  //std::cout << "Bye bye" << std::endl;
+  // std::cout << "Bye bye" << std::endl;
   delete [] data_;
 }
 
@@ -121,12 +121,14 @@ cds_word Array::LowerBound(cds_word value, cds_word ini, cds_word fin) const {
   count = fin - ini;
 
   while (count > 0) {
-    step = count / 2; 
+    step = count / 2;
     cds_word pos = ini + step;
     if (GetField(pos) < value) {
       ini = pos + 1;
-      count -= step + 1; 
-    } else count = step;
+      count -= step + 1;
+    } else {
+      count = step;
+    }
   }
   return ini;
 }
@@ -146,21 +148,24 @@ cds_word Array::UpperBound(cds_word value, cds_word ini, cds_word fin) const {
     if (!(value < GetField(pos))) {
       ini = pos + 1;
       count -= step + 1;
-    } else count = step;
+    } else {
+      count = step;
+    }
   }
   return ini;
 }
 
 cds_word Array::UpperBound(cds_word value) const {
-  return UpperBound(value, 0, length_);  
+  return UpperBound(value, 0, length_);
 }
 
 cds_word Array::BinarySearch(cds_word value, cds_word ini, cds_word fin) const {
   cds_word pos = LowerBound(value, ini, fin);
-  if (pos != length_ && !(value < GetField(pos))) 
+  if (pos != length_ && !(value < GetField(pos))) {
     return pos;
-  else
+  } else {
     return length_;
+  }
 }
 
 cds_word Array::BinarySearch(cds_word value) const {

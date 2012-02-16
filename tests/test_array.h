@@ -1,4 +1,4 @@
-/******************************************************************************** 
+/********************************************************************************
 Copyright (c) 2012, Francisco Claude.
 All rights reserved.
 
@@ -160,7 +160,7 @@ TEST(Array, ArrayConstructor) {
 }
 
 TEST(Array, LowerBound) {
-  Array * a = new Array(10, 3);
+  Array *a = new Array(10, 3);
   a->SetField(0, 1);
   a->SetField(1, 1);
   a->SetField(2, 1);
@@ -191,7 +191,7 @@ TEST(Array, LowerBound) {
 }
 
 TEST(Array, UpperBound) {
-  Array * a = new Array(10, 3);
+  Array *a = new Array(10, 3);
   a->SetField(0, 1);
   a->SetField(1, 1);
   a->SetField(2, 1);
@@ -222,7 +222,7 @@ TEST(Array, UpperBound) {
 }
 
 TEST(Array, BinarySearch) {
-  Array * a = new Array(10, 3);
+  Array *a = new Array(10, 3);
   a->SetField(0, 1);
   a->SetField(1, 1);
   a->SetField(2, 1);

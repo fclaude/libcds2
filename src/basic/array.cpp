@@ -95,6 +95,7 @@ Array::Array(cds_word *A, cds_word i, cds_word j, cds_word bpe) {
 }
 
 Array::~Array() {
+  //std::cout << "Bye bye" << std::endl;
   delete [] data_;
 }
 

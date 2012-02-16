@@ -43,7 +43,7 @@ namespace basic {
 using std::ifstream;
 using std::ofstream;
 
-class Array {
+class Array : public ReferenceCounted {
   public:
     /** Reads and Array from a file stream
      * @param input input file stream
@@ -65,7 +65,7 @@ class Array {
     Array(cds_word n, cds_word bpe);
 
     /** Destroys the array */
-    ~Array();
+    virtual ~Array();
 
     /** Retrieves Array[position]
      * @paran position positionition
@@ -125,18 +125,6 @@ class Array {
      */
     cds_word GetMax() const;
 
-    void Use() {
-      users_++;
-    }
-
-    void Unuse() {
-      assert(users_ > 0);
-      users_--;
-      if (users_ == 0) {
-        delete this;
-      }
-    }
-
     class ArrayModifier {
       public:
         ArrayModifier(cds_word *data, cds_word length, cds_word bits_per_item, cds_word position)
@@ -193,6 +181,8 @@ class Array {
     };
 
     // friend cds_word operator=(const ArrayModifier a);
+    friend class BitSequenceOneLevelRank;
+
   protected:
     /** Array where the data is stored */
     cds_word *data_;

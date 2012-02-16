@@ -53,7 +53,7 @@ using std::ofstream;
  *
  *  @author Francisco Claude
  */
-class BitSequence {
+class BitSequence : public cds::basic::ReferenceCounted {
   public:
     virtual ~BitSequence() {}
 
@@ -103,7 +103,7 @@ class BitSequence {
     virtual bool Access(const cds_word i) const;
 
     /** Returns the length in bits of the bitmap. */
-    virtual cds_word GetLength() const;
+    virtual cds_word GetLength() const = 0;
 
     /** Returns how many ones are in the bitstring. */
     virtual cds_word CountOnes() const;
@@ -120,9 +120,6 @@ class BitSequence {
     /** Reads a bitmap determining the type. */
     static BitSequence *Load(ifstream &fp);
 
-  protected:
-    /** Length of the bitstring. */
-    cds_word length_;
 };
 };
 };

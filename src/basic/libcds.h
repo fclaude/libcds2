@@ -39,6 +39,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stddef.h>
 
 #include <cassert>
+#include <iostream>
 
 namespace cds {
 namespace basic {
@@ -155,6 +156,10 @@ inline void BitSet(cds_word *e, const cds_word p, const bool bit = true) {
  */
 inline cds_word WordsLength(cds_word n, cds_word b) {
   return (n * b + kWordSize - 1) / kWordSize;
+}
+
+inline cds_word SafeCeil(cds_word k, cds_word n) {
+  return k/n + (k%n>0?1:0);
 }
 
 /** Retrieve a given bitsequence from array A
@@ -276,6 +281,25 @@ inline cds_word GetField32(const cds_word *A, const cds_word index) {
   const cds_uint *B = (const cds_uint *)A;
   return B[index];
 }
+
+class ReferenceCounted {
+  public:
+    ReferenceCounted() { users_count_ = 0; }
+    virtual ~ReferenceCounted() {}
+    virtual void Unuse() {
+      //std::cout << "Someone doesn't want me anymore :-(" << std::endl;
+      assert( users_count_ > 0);
+      users_count_ --;
+      if (users_count_ == 0)
+        delete this;
+    }
+    virtual void Use() {
+      //std::cout << "I'm being used! :D" << std::endl;
+      users_count_++;
+    }
+  protected:
+    cds_word users_count_;
+};
 };
 };
 

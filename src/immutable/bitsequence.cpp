@@ -46,7 +46,7 @@ cds_word BitSequence::Rank0(const cds_word i) const {
 }
 
 cds_word BitSequence::Rank1(const cds_word i) const {
-  if (i >= length_) {
+  if (i >= GetLength()) {
     throw CDSException("Out of bounds");
   }
   cds_word ini = 1;
@@ -54,7 +54,7 @@ cds_word BitSequence::Rank1(const cds_word i) const {
   if (fin == 0) {
     return 0;
   }
-  if (fin == length_) {
+  if (fin == GetLength()) {
     return i + 1;
   }
   while (ini < fin) {
@@ -77,8 +77,8 @@ cds_word BitSequence::Rank1(const cds_word i) const {
 
 cds_word BitSequence::Select0(const cds_word i) const {
   cds_word ones = CountOnes();
-  if (i > length_ - ones) {
-    return length_;
+  if (i > GetLength() - ones) {
+    return GetLength();
     // throw CDSException("Out of bounds");
   }
   if (i == 0) {
@@ -88,7 +88,7 @@ cds_word BitSequence::Select0(const cds_word i) const {
     return i - 1;
   }
   cds_word ini = 0;
-  cds_word fin = length_ - 1;
+  cds_word fin = GetLength() - 1;
   while (ini < fin) {
     cds_word pos = (ini + fin) / 2;
     cds_word br = Rank0(pos);
@@ -104,17 +104,17 @@ cds_word BitSequence::Select0(const cds_word i) const {
 cds_word BitSequence::Select1(const cds_word i) const {
   cds_word ones = CountOnes();
   if (i > ones) {
-    return length_;
+    return GetLength();
     // throw CDSException("Out of bounds");
   }
   if (i == 0) {
     return (cds_word) - 1;
   }
-  if (ones == length_) {
+  if (ones == GetLength()) {
     return i - 1;
   }
   cds_word ini = 0;
-  cds_word fin = length_ - 1;
+  cds_word fin = GetLength() - 1;
   while (ini < fin) {
     cds_word pos = (ini + fin) / 2;
     cds_word br = Rank1(pos);
@@ -155,16 +155,12 @@ bool BitSequence::Access(const cds_word i) const {
   return (Rank1(i) - (i != 0 ? Rank1(i - 1) : 0)) > 0;
 }
 
-cds_word BitSequence::GetLength() const {
-  return length_;
-}
-
 cds_word BitSequence::CountOnes() const {
-  return Rank1(length_ - 1);
+  return Rank1(GetLength() - 1);
 }
 
 cds_word BitSequence::CountZeros() const {
-  return Rank0(length_ - 1);
+  return Rank0(GetLength() - 1);
 }
 
 BitSequence *BitSequence::Load(ifstream &fp) {

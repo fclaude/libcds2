@@ -159,4 +159,21 @@ TEST(Array, ArrayConstructor) {
   }
 }
 
+TEST(Array, LowerBound) {
+  Array * a = new Array(10, 3);
+  a->SetField(0, 1);
+  a->SetField(1, 1);
+  a->SetField(2, 1);
+  a->SetField(3, 1);
+  a->SetField(4, 1);
+  a->SetField(5, 1);
+  a->SetField(6, 1);
+  a->SetField(7, 1);
+  a->SetField(8, 1);
+  a->SetField(9, 1);
+  cds_word expected_result = 10;
+  cds_word obtained_result = a->LowerBound(2);
+  ASSERT_EQ(expected_result, obtained_result);
+}
+
 #endif  // TESTS_TEST_ARRAY_H_

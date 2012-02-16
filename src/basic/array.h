@@ -125,6 +125,38 @@ class Array : public ReferenceCounted {
      */
     cds_word GetMax() const;
 
+    /** Returns the position of the first element between ini and fin-1 
+        that is not less than the value. 
+        If none, then it return fin.
+    */
+    cds_word LowerBound(cds_word value, cds_word ini, cds_word fin) const;
+
+    /** Returns the position of the first element that is not less than the value. 
+        If none, then it return the length.
+    */
+    cds_word LowerBound(cds_word value) const;
+
+    /** Returns the position of the first element between ini and fin-1 
+        that is greater than the value. 
+        If none, then it return fin.
+    */
+    cds_word UpperBound(cds_word value, cds_word ini, cds_word fin) const;
+
+    /** Returns the position of the first element that is greater than the value. 
+        If none, then it return fin.
+    */
+    cds_word UpperBound(cds_word value) const;
+
+    /* Binary search for a value in [ini,fin] and return the position of its first 
+        appareance. If the element is not present, it return fin.
+        */
+    cds_word BinarySearch(cds_word value, cds_word ini, cds_word fin) const;
+    
+    /* Binary search for a value in [0,length] and return the position of its first 
+        appareance. If the element is not present, it return fin.
+        */
+    cds_word BinarySearch(cds_word value) const;
+
     class ArrayModifier {
       public:
         ArrayModifier(cds_word *data, cds_word length, cds_word bits_per_item, cds_word position)

@@ -115,6 +115,58 @@ cds_word Array::GetMax() const {
   return max_value;
 }
 
+// Implementation based on the STL one.
+cds_word Array::LowerBound(cds_word value, cds_word ini, cds_word fin) const {
+  cds_word count, step;
+  count = fin - ini;
+
+  while (count > 0) {
+    step = count / 2; 
+    cds_word pos = ini + step;
+    if (GetField(pos) < value) {
+      ini = pos + 1;
+      count -= step + 1; 
+    } else count = step;
+  }
+  return ini;
+}
+
+cds_word Array::LowerBound(cds_word value) const {
+  return LowerBound(value, 0, length_);
+}
+
+// Also based on the STL version.
+cds_word Array::UpperBound(cds_word value, cds_word ini, cds_word fin) const {
+  cds_word count, step;
+  count = fin - ini;
+
+  while (count > 0) {
+    step = count / 2;
+    cds_word pos = ini + step;
+    if (!(value < GetField(pos))) {
+      ini = pos + 1;
+      count -= step + 1;
+    } else count = step;
+  }
+  return ini;
+}
+
+cds_word Array::UpperBound(cds_word value) const {
+  return UpperBound(value, 0, length_);  
+}
+
+cds_word Array::BinarySearch(cds_word value, cds_word ini, cds_word fin) const {
+  cds_word pos = LowerBound(value, ini, fin);
+  if (pos != length_ && !(value < GetField(pos))) 
+    return pos;
+  else
+    return length_;
+}
+
+cds_word Array::BinarySearch(cds_word value) const {
+  return BinarySearch(value, 0, length_);
+}
+
 void Array::InitData() {
   bits_per_item_ = msb(max_value_);
   uint_length_ = WordsLength(length_, bits_per_item_);

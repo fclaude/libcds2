@@ -8,6 +8,8 @@ LIB=lib/libcds.a
 
 OBJ=src/basic/array.o src/basic/io.o src/immutable/bitsequence.o
 
+GTEST_DIR=dep/gtest-1.6.0
+
 libcds: include_files $(OBJ)
 	@rm -f $(LIB)
 	@ar rs $(LIB) $(OBJ) 2> /dev/null
@@ -34,10 +36,10 @@ include_files:
 
 test: libcds
 	@echo " [DEP] Compiling gtest library"
-	@cd gtest; ./configure > /dev/null; cd ..
-	@make -s -C gtest > /dev/null
+	@cd $(GTEST_DIR); ./configure > /dev/null; cd ../..
+	@make -s -C $(GTEST_DIR) > /dev/null
 	@echo " [LNK] Compiling and linking test_basic"
-	@$(CPP) $(CPPFLAGS) -o tests/test_basic tests/test_basic.cpp -lpthread $(LIB)	-I./gtest/include/ gtest/src/gtest-all.o
+	@$(CPP) $(CPPFLAGS) -o tests/test_basic tests/test_basic.cpp -lpthread $(LIB)	-I./$(GTEST_DIR)/include/ $(GTEST_DIR)/src/gtest-all.o
 
 clean:
 	@echo " [CLN] Cleaning source tree"

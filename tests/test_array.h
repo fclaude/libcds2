@@ -174,6 +174,92 @@ TEST(Array, LowerBound) {
   cds_word expected_result = 10;
   cds_word obtained_result = a->LowerBound(2);
   ASSERT_EQ(expected_result, obtained_result);
+  expected_result = 8;
+  obtained_result = a->LowerBound(2, 0, 8);
+  ASSERT_EQ(expected_result, obtained_result);
+  expected_result = 0;
+  obtained_result = a->LowerBound(1, 0, 8);
+  ASSERT_EQ(expected_result, obtained_result);
+  a->SetField(9, 2);
+  expected_result = 9;
+  obtained_result = a->LowerBound(2);
+  ASSERT_EQ(expected_result, obtained_result);
+  a->SetField(9, 3);
+  expected_result = 9;
+  obtained_result = a->LowerBound(2);
+  ASSERT_EQ(expected_result, obtained_result);
+}
+
+TEST(Array, UpperBound) {
+  Array * a = new Array(10, 3);
+  a->SetField(0, 1);
+  a->SetField(1, 1);
+  a->SetField(2, 1);
+  a->SetField(3, 1);
+  a->SetField(4, 1);
+  a->SetField(5, 1);
+  a->SetField(6, 1);
+  a->SetField(7, 1);
+  a->SetField(8, 1);
+  a->SetField(9, 1);
+  cds_word expected_result = 10;
+  cds_word obtained_result = a->UpperBound(2);
+  ASSERT_EQ(expected_result, obtained_result);
+  expected_result = 8;
+  obtained_result = a->UpperBound(2, 0, 8);
+  ASSERT_EQ(expected_result, obtained_result);
+  expected_result = 8;
+  obtained_result = a->UpperBound(1, 0, 8);
+  ASSERT_EQ(expected_result, obtained_result);
+  a->SetField(9, 2);
+  expected_result = 10;
+  obtained_result = a->UpperBound(2);
+  ASSERT_EQ(expected_result, obtained_result);
+  a->SetField(9, 3);
+  expected_result = 9;
+  obtained_result = a->UpperBound(2);
+  ASSERT_EQ(expected_result, obtained_result);
+}
+
+TEST(Array, BinarySearch) {
+  Array * a = new Array(10, 3);
+  a->SetField(0, 1);
+  a->SetField(1, 1);
+  a->SetField(2, 1);
+  a->SetField(3, 1);
+  a->SetField(4, 1);
+  a->SetField(5, 1);
+  a->SetField(6, 1);
+  a->SetField(7, 1);
+  a->SetField(8, 1);
+  a->SetField(9, 1);
+  cds_word expected_result = 10;
+  cds_word obtained_result = a->BinarySearch(2);
+  ASSERT_EQ(expected_result, obtained_result);
+  expected_result = 8;
+  obtained_result = a->BinarySearch(2, 0, 8);
+  ASSERT_EQ(expected_result, obtained_result);
+  expected_result = 0;
+  obtained_result = a->BinarySearch(1, 0, 8);
+  ASSERT_EQ(expected_result, obtained_result);
+  a->SetField(9, 2);
+  expected_result = 9;
+  obtained_result = a->BinarySearch(2);
+  ASSERT_EQ(expected_result, obtained_result);
+  a->SetField(9, 3);
+  expected_result = 10;
+  obtained_result = a->BinarySearch(2);
+  ASSERT_EQ(expected_result, obtained_result);
+  a->SetField(8, 2);
+  expected_result = 8;
+  obtained_result = a->BinarySearch(2);
+  ASSERT_EQ(expected_result, obtained_result);
+  expected_result = 9;
+  obtained_result = a->BinarySearch(3);
+  ASSERT_EQ(expected_result, obtained_result);
+  expected_result = 10;
+  obtained_result = a->BinarySearch(4);
+  ASSERT_EQ(expected_result, obtained_result);
 }
 
 #endif  // TESTS_TEST_ARRAY_H_

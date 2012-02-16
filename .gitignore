@@ -1,0 +1,11 @@
+gtest/Makefile
+gtest/aclocal.m4
+gtest/config.log
+gtest/config.status
+gtest/configure
+gtest/fused-src/gtest/gtest-all.cc
+gtest/fused-src/gtest/gtest.h
+gtest/libtool
+gtest/scripts/gtest-config
+gtest/src/.deps/gtest-all.Plo
+gtest/src/.deps/gtest_main.Plo

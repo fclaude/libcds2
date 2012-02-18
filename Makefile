@@ -13,13 +13,17 @@ TESTOBJ= tests/test_main.o tests/test_array.o tests/test_ioh.o tests/test_libcds
 
 GTEST_DIR=./dep/gtest-1.6.0/
 
-libcds: include_files $(OBJ)
+libcds: cfg include_files $(OBJ)
 	@rm -f $(LIB)
 	@ar rs $(LIB) $(OBJ) 2> /dev/null
 
 %.o: %.cpp
 	@echo " [C++] Compiling $<"
 	@$(CPP) $(CPPFLAGS) $(INCL) -c $< -o $@
+
+cfg:
+	@echo " [MSG] Compiler: $(CPP)"
+	@echo " [MSG] Compiler flags: $(CPPFLAGS)"
 
 indent:
 	@find ./src/ -name *.h -exec python ./config/indent.py {} \;
@@ -44,11 +48,11 @@ test: libcds $(TESTOBJ)
 	@echo " [LNK] Compiling and linking test_array"
 	@$(CPP) $(CPPFLAGS) -o tests/test_array tests/test_array.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Compiling and linking test_ioh"
-	@$(CPP) $(CPPFLAGS) -o tests/test_array tests/test_ioh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@$(CPP) $(CPPFLAGS) -o tests/test_ioh tests/test_ioh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Compiling and linking test_libcdsh"
-	@$(CPP) $(CPPFLAGS) -o tests/test_array tests/test_libcdsh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@$(CPP) $(CPPFLAGS) -o tests/test_libcdsh tests/test_libcdsh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Compiling and linking test_timeh"
-	@$(CPP) $(CPPFLAGS) -o tests/test_array tests/test_timeh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@$(CPP) $(CPPFLAGS) -o tests/test_timeh tests/test_timeh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
 
 autotest: test
 	@echo "Not implemented" 
@@ -62,7 +66,7 @@ clean:
 	@rm -rf includes/*
 	@mkdir includes/libcds
 	@touch includes/libcds/delete_me
-	@make -s -C gtest clean > /dev/null
-	@rm -f$(TESTOBJ)
-	@rm -f tests/test_array
+	@make -s -C $(GTEST_DIR) clean > /dev/null
+	@rm -f $(TESTOBJ)
+	@rm -f tests/test_array tests/test_timeh tests/test_libcdsh tests/test_ioh
 

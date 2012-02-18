@@ -30,40 +30,42 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************************/
 
 
-#ifndef TESTS_TEST_TIMEH_H_
-#define TESTS_TEST_TIMEH_H_
-
+#include <libcds/libcds.h>
 #include <libcds/time.h>
+#include <libcds/io.h>
+#include <libcds/cdsexception.h>
 
+using cds::basic::Tokenize;
+using cds::basic::TransformString;
+using cds::basic::SaveValue;
+using cds::basic::LoadValue;
+using cds::basic::LoadFile;
+using cds::basic::CDSException;
 using cds::basic::Timer;
+using cds::basic::msb;
+using cds::basic::lsb;
+using cds::basic::cds_word;
+using cds::basic::cds_uint;
+using cds::basic::cds_uchar;
+using cds::basic::kMaxCDSUchar;
+using cds::basic::kMaxCDSUshort;
+using cds::basic::kMaxCDSUint;
+using cds::basic::kMaxCDSWord;
+using cds::basic::kMaxCDSUlong;
+using cds::basic::BitZero;
+using cds::basic::BitGet;
+using cds::basic::BitSet;
+using cds::basic::kWordSize;
+using cds::basic::kDoubleWordSize;
+using cds::basic::SetField;
+using cds::basic::SetVarField;
+using cds::basic::GetField;
+using cds::basic::GetVarField;
+using cds::basic::GetField8;
+using cds::basic::GetField16;
+using cds::basic::GetField32;
 
-int sleepTime = 0;
-int keepWaiting = 1;
 
-void *myThread(void *_n) {
-  sleep(sleepTime);
-  keepWaiting = 0;
-  return NULL;
+int main(int argc, char **argv) {
+  return 0;
 }
-
-
-void testTimer(int i) {
-  sleepTime = i;
-  keepWaiting = 1;
-  pthread_t th1;
-  pthread_create(&th1, NULL, myThread, NULL);
-  Timer t;
-  while (keepWaiting);
-  t.stop();
-  pthread_join(th1, NULL);
-  double diff = abs(t.elapsedTime() - 1000 * i);
-  EXPECT_GE(10, diff);
-}
-
-
-TEST(Sleep, 0_10Seconds) {
-  // for(int i=15;i<=16;i++)
-  //  testTimer(i);
-}
-
-#endif  // TESTS_TEST_TIMEH_H_

@@ -12,7 +12,7 @@ are permitted provided that the following conditions are met:
       this list of conditions and the following disclaimer in the documentation
       and/or other materials provided with the distribution.
 
-    * Neither the name of libcds. nor the names of its
+    * Neither the name of libcds nor the names of its
       contributors may be used to endorse or promote products derived from this
       software without specific prior written permission.
 
@@ -29,26 +29,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ********************************************************************************/
 
-
-#ifndef TESTS_TEST_ARRAY_H_
-#define TESTS_TEST_ARRAY_H_
-
+#include <gtest/gtest.h>
 #include <libcds/array.h>
 
 using cds::basic::Array;
+using cds::basic::cds_word;
+using cds::basic::kMaxCDSWord;
+using cds::basic::msb;
 
 uint seed_test_array = 20;
 
-bool cmp_array(Array &a1, Array &a2) {
-  if (a1.GetLength() != a2.GetLength()) {
-    return false;
-  }
-  for (cds_word i = 0; i < a1.GetLength(); i++)
-    if (a1[i] != a2[i]) {
-      return false;
-    }
-  return true;
-}
+// bool cmp_array(Array &a1, Array &a2) {
+//   if (a1.GetLength() != a2.GetLength()) {
+//     return false;
+//   }
+//   for (cds_word i = 0; i < a1.GetLength(); i++)
+//     if (a1[i] != a2[i]) {
+//       return false;
+//     }
+//   return true;
+// }
 
 
 TEST(Array, Empty) {
@@ -261,5 +261,3 @@ TEST(Array, BinarySearch) {
   obtained_result = a->BinarySearch(4);
   ASSERT_EQ(expected_result, obtained_result);
 }
-
-#endif  // TESTS_TEST_ARRAY_H_

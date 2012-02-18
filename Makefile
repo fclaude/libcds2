@@ -3,12 +3,15 @@
 CPPFLAGS=-O0 -g3 $(INC) -Wall
 
 CPP=g++
-INC=-I./includes/
+INC=-I./includes/ -I./dep/gtest-1.6.0/include/
 LIB=lib/libcds.a
 
 OBJ=src/basic/array.o src/basic/io.o src/immutable/bitsequence.o
 
-GTEST_DIR=dep/gtest-1.6.0
+TESTOBJ= tests/test_main.o tests/test_array.o tests/test_ioh.o tests/test_libcdsh.o \
+		tests/test_timeh.o 
+
+GTEST_DIR=./dep/gtest-1.6.0/
 
 libcds: include_files $(OBJ)
 	@rm -f $(LIB)
@@ -34,12 +37,12 @@ cpplint:
 include_files:
 	@find ./src/ -name *.h -exec python ./config/copy_header.py {} \;
 
-test: libcds
+test: libcds $(TESTOBJ)
 	@echo " [DEP] Compiling gtest library"
 	@cd $(GTEST_DIR); ./configure > /dev/null; cd ../..
 	@make -s -C $(GTEST_DIR) > /dev/null
-	@echo " [LNK] Compiling and linking test_basic"
-	@$(CPP) $(CPPFLAGS) -o tests/test_basic tests/test_basic.cpp -lpthread $(LIB)	-I./$(GTEST_DIR)/include/ $(GTEST_DIR)/src/gtest-all.o
+	@echo " [LNK] Compiling and linking test_array"
+	@$(CPP) $(CPPFLAGS) -o tests/test_array tests/test_array.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
 
 clean:
 	@echo " [CLN] Cleaning source tree"
@@ -51,5 +54,6 @@ clean:
 	@mkdir includes/libcds
 	@touch includes/libcds/delete_me
 	@make -s -C gtest clean > /dev/null
-	@rm -f tests/test_basic
+	@rm -f$(TESTOBJ)
+	@rm -f tests/test_array
 

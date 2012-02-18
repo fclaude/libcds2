@@ -12,7 +12,7 @@ are permitted provided that the following conditions are met:
       this list of conditions and the following disclaimer in the documentation
       and/or other materials provided with the distribution.
 
-    * Neither the name of libcds. nor the names of its
+    * Neither the name of libcds nor the names of its
       contributors may be used to endorse or promote products derived from this
       software without specific prior written permission.
 
@@ -30,9 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************************/
 
 
-#ifndef TESTS_TEST_IOH_H_
-#define TESTS_TEST_IOH_H_
-
+#include <gtest/gtest.h>
 #include <libcds/io.h>
 #include <libcds/cdsexception.h>
 
@@ -42,6 +40,14 @@ using cds::basic::SaveValue;
 using cds::basic::LoadValue;
 using cds::basic::LoadFile;
 using cds::basic::CDSException;
+using cds::basic::cds_word;
+using cds::basic::cds_uint;
+using cds::basic::cds_uchar;
+using cds::basic::kMaxCDSUchar;
+using cds::basic::kMaxCDSUshort;
+using cds::basic::kMaxCDSUint;
+using cds::basic::kMaxCDSWord;
+using cds::basic::kMaxCDSUlong;
 
 #include <string>
 #include <vector>
@@ -247,4 +253,3 @@ TEST(LoadFile, IO) {
   }
 }
 
-#endif  // TESTS_TEST_IOH_H_

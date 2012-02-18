@@ -43,6 +43,15 @@ test: libcds $(TESTOBJ)
 	@make -s -C $(GTEST_DIR) > /dev/null
 	@echo " [LNK] Compiling and linking test_array"
 	@$(CPP) $(CPPFLAGS) -o tests/test_array tests/test_array.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@echo " [LNK] Compiling and linking test_ioh"
+	@$(CPP) $(CPPFLAGS) -o tests/test_array tests/test_ioh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@echo " [LNK] Compiling and linking test_libcdsh"
+	@$(CPP) $(CPPFLAGS) -o tests/test_array tests/test_libcdsh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@echo " [LNK] Compiling and linking test_timeh"
+	@$(CPP) $(CPPFLAGS) -o tests/test_array tests/test_timeh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+
+autotest: test
+	@echo "Not implemented" 
 
 clean:
 	@echo " [CLN] Cleaning source tree"

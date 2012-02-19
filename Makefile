@@ -10,7 +10,8 @@ OBJ=src/basic/array.o src/basic/io.o src/immutable/bitsequence.o \
 	src/immutable/bitsequenceseq.o 
 
 TESTOBJ= tests/test_main.o tests/test_array.o tests/test_ioh.o tests/test_libcdsh.o \
-		tests/test_timeh.o tests/test_bitsequence1.o tests/test_bitsequence_utils.o
+		tests/test_timeh.o tests/test_bitsequence1.o tests/test_bitsequence_utils.o \
+		tests/test_bitsequence2.o
 
 GTEST_DIR=./dep/gtest-1.6.0/
 
@@ -48,14 +49,16 @@ test: libcds $(TESTOBJ)
 	@make -s -C $(GTEST_DIR) > /dev/null
 	@echo " [LNK] Compiling and linking test_array"
 	@$(CPP) $(CPPFLAGS) -o tests/test_array tests/test_array.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
-	@echo " [LNK] Compiling and linking test_ioh"
+	@echo " [LNK] Linking test_ioh"
 	@$(CPP) $(CPPFLAGS) -o tests/test_ioh tests/test_ioh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
-	@echo " [LNK] Compiling and linking test_libcdsh"
+	@echo " [LNK] Linking test_libcdsh"
 	@$(CPP) $(CPPFLAGS) -o tests/test_libcdsh tests/test_libcdsh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
-	@echo " [LNK] Compiling and linking test_timeh"
+	@echo " [LNK] Linking test_timeh"
 	@$(CPP) $(CPPFLAGS) -o tests/test_timeh tests/test_timeh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
-	@echo " [LNK] Compiling and linking test_bitsequence1"
+	@echo " [LNK] Linking test_bitsequence1"
 	@$(CPP) $(CPPFLAGS) -o tests/test_bitsequence1 tests/test_bitsequence1.o tests/test_bitsequence_utils.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@echo " [LNK] Linking test_bitsequence2"
+	@$(CPP) $(CPPFLAGS) -o tests/test_bitsequence2 tests/test_bitsequence2.o tests/test_bitsequence_utils.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
 
 autotest: test
 	@echo "Not implemented" 

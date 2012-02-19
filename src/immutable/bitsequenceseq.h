@@ -29,80 +29,59 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ********************************************************************************/
 
-#include <gtest/gtest.h>
+
+#ifndef SRC_IMMUTABLE_BITSEQUENCESEQ_H_
+#define SRC_IMMUTABLE_BITSEQUENCESEQ_H_
+
+
+#include <libcds/libcds.h>
+#include <libcds/io.h>
 #include <libcds/array.h>
 #include <libcds/immutable/bitsequence.h>
-#include <libcds/immutable/bitsequenceseq.h>
-#include "test_bitsequence_utils.h"
 
-using cds::immutable::BitSequence;
-using cds::immutable::BitSequenceSeq;
-using cds::basic::Array;
+
+#include <fstream>
+
+namespace cds {
+namespace immutable {
+
 using cds::basic::cds_word;
+using cds::basic::Array;
+using std::ifstream;
 using std::ofstream;
 
-class BitSequenceRank0: public BitSequence {
+/** Base class for static bitsequences, contains many abstract functions,
+ *  so this can't be instantiated. It includes base implementations for
+ *  rank0, select0 and select1 based on rank0.
+ *
+ *  @author Francisco Claude
+ */
+class BitSequenceSeq : public BitSequence {
   public:
-    BitSequenceRank0(Array * _a) {
-      bs_ = new BitSequenceSeq(_a);
-      bs_->Use();
-    }
-
-    virtual ~BitSequenceRank0() { 
-      bs_->Unuse(); 
-    }
-    
-    virtual cds_word GetLength() const {
-      return bs_->GetLength();
-    }
-
-    virtual cds_word Rank0(const cds_word i) const {
-      return bs_->Rank0(i);
-    }
-
-    virtual cds_word Rank0(const cds_word i, bool *access) const {
-      *access = Access(i);
-      return Rank0(i);
-    }
-
-    virtual cds_word Rank1(const cds_word i) const {
-      return i - Rank0(i) + 1;
-    }
-
-    virtual cds_word Rank1(const cds_word i, bool *access) const {
-      *access = Access(i);
-      return Rank1(i);
-    }
-
-    virtual void Save(ofstream &fp) const {
-    }
-
-    virtual cds_word GetSize() const {
-      return bs_->GetSize() + sizeof(*this);
-    }
-
-    virtual cds_word CountZeros() const { 
-      return bs_->CountZeros();
-    }
+    BitSequenceSeq(Array *array);
+    virtual ~BitSequenceSeq() {}
+    virtual cds_word Rank0(const cds_word i) const;
+    virtual cds_word Rank0(const cds_word i, bool *access) const;
+    virtual cds_word Select0(const cds_word i) const;
+    virtual cds_word Rank1(const cds_word i) const;
+    virtual cds_word Rank1(const cds_word i, bool *access) const;
+    virtual cds_word Select1(const cds_word i) const;
+    virtual cds_word SelectNext1(const cds_word i) const;
+    virtual cds_word SelectNext0(const cds_word i) const;
+    virtual cds_word SelectPrev1(const cds_word i) const;
+    virtual cds_word SelectPrev0(const cds_word i) const;
+    virtual bool Access(const cds_word i) const;
+    virtual cds_word GetLength() const;
+    virtual cds_word CountOnes() const;
+    virtual cds_word CountZeros() const;
+    virtual cds_word GetSize() const;
+    virtual void Save(ofstream &fp) const;
+    static BitSequence *Load(ifstream &fp);
 
   protected:
-    BitSequence * bs_;
+    Array * array_;
+};
+};
 };
 
-
-
-TEST(BitSequence, SupportingRank0) {
-  const cds_word kBitmapLength = 10000;
-  const cds_word kOnes = kBitmapLength/4;
-  unsigned int seed = 101;
-  Array *a = CreateRandomBitmap(kBitmapLength, kOnes, seed);
-  BitSequenceSeq *seq_bitseq = new BitSequenceSeq(a);
-  seq_bitseq->Use();
-  BitSequenceRank0 * bs = new BitSequenceRank0(a);
-  bs->Use();
-  TestBitSequence(seq_bitseq, bs);
-  a->Unuse();
-  bs->Unuse();
-  seq_bitseq->Unuse();
-}
-
+#endif  // SRC_IMMUTABLE_BITSEQUENCESEQ_H_

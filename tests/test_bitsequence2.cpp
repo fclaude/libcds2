@@ -41,14 +41,14 @@ using cds::basic::Array;
 using cds::basic::cds_word;
 using std::ofstream;
 
-class BitSequenceRank0: public BitSequence {
+class BitSequenceRank1: public BitSequence {
   public:
-    BitSequenceRank0(Array * _a) {
+    BitSequenceRank1(Array * _a) {
       bs_ = new BitSequenceSeq(_a);
       bs_->Use();
     }
 
-    virtual ~BitSequenceRank0() { 
+    virtual ~BitSequenceRank1() { 
       bs_->Unuse(); 
     }
     
@@ -57,7 +57,7 @@ class BitSequenceRank0: public BitSequence {
     }
 
     virtual cds_word Rank0(const cds_word i) const {
-      return bs_->Rank0(i);
+      return i - Rank1(i) + 1;
     }
 
     virtual cds_word Rank0(const cds_word i, bool *access) const {
@@ -66,7 +66,7 @@ class BitSequenceRank0: public BitSequence {
     }
 
     virtual cds_word Rank1(const cds_word i) const {
-      return i - Rank0(i) + 1;
+      return bs_->Rank1(i);
     }
 
     virtual cds_word Rank1(const cds_word i, bool *access) const {
@@ -91,14 +91,14 @@ class BitSequenceRank0: public BitSequence {
 
 
 
-TEST(BitSequence, SupportingRank0) {
+TEST(BitSequence, SupportingRank1) {
   const cds_word kBitmapLength = 10000;
   const cds_word kOnes = kBitmapLength/4;
   unsigned int seed = 101;
   Array *a = CreateRandomBitmap(kBitmapLength, kOnes, seed);
   BitSequenceSeq *seq_bitseq = new BitSequenceSeq(a);
   seq_bitseq->Use();
-  BitSequenceRank0 * bs = new BitSequenceRank0(a);
+  BitSequenceRank1 * bs = new BitSequenceRank1(a);
   bs->Use();
   TestBitSequence(seq_bitseq, bs);
   a->Unuse();

@@ -6,10 +6,11 @@ CPP=g++
 INC=-I./includes/ -I./dep/gtest-1.6.0/include/
 LIB=lib/libcds.a
 
-OBJ=src/basic/array.o src/basic/io.o src/immutable/bitsequence.o
+OBJ=src/basic/array.o src/basic/io.o src/immutable/bitsequence.o \
+	src/immutable/bitsequenceseq.o 
 
 TESTOBJ= tests/test_main.o tests/test_array.o tests/test_ioh.o tests/test_libcdsh.o \
-		tests/test_timeh.o 
+		tests/test_timeh.o tests/test_bitsequence1.o tests/test_bitsequence_utils.o
 
 GTEST_DIR=./dep/gtest-1.6.0/
 
@@ -53,6 +54,8 @@ test: libcds $(TESTOBJ)
 	@$(CPP) $(CPPFLAGS) -o tests/test_libcdsh tests/test_libcdsh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Compiling and linking test_timeh"
 	@$(CPP) $(CPPFLAGS) -o tests/test_timeh tests/test_timeh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@echo " [LNK] Compiling and linking test_bitsequence1"
+	@$(CPP) $(CPPFLAGS) -o tests/test_bitsequence1 tests/test_bitsequence1.o tests/test_bitsequence_utils.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
 
 autotest: test
 	@echo "Not implemented" 

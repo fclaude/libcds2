@@ -46,6 +46,7 @@ cds_word BitSequence::Rank0(const cds_word i) const {
 }
 
 cds_word BitSequence::Rank1(const cds_word i) const {
+  std::cout << "Shouldn't be here :-( " << std::endl;
   if (i >= GetLength()) {
     throw CDSException("Out of bounds");
   }
@@ -73,6 +74,16 @@ cds_word BitSequence::Rank1(const cds_word i) const {
     return ini - 1;
   }
   return ini;
+}
+
+cds_word BitSequence::Rank1(const cds_word i, bool *access) const {
+  *access = Access(i);
+  return Rank1(i);
+}
+
+cds_word BitSequence::Rank0(const cds_word i, bool *access) const {
+  *access = Access(i);
+  return Rank0(i);
 }
 
 cds_word BitSequence::Select0(const cds_word i) const {
@@ -132,11 +143,16 @@ cds_word BitSequence::SelectNext1(const cds_word i) const {
 }
 
 cds_word BitSequence::SelectPrev1(const cds_word i) const {
-  cds_word v = Rank1(i);
-  if (v < 2) {
-    return (cds_word) - 1;
+  bool value;
+  cds_word v = Rank1(i, &value);
+  if (value == true)
+    return i;
+  else {
+    if (v == 0) {
+      return (cds_word) -1;
+    }
+    return Select1(v);
   }
-  return Select1(v - 1);
 }
 
 cds_word BitSequence::SelectNext0(const cds_word i) const {
@@ -144,11 +160,16 @@ cds_word BitSequence::SelectNext0(const cds_word i) const {
 }
 
 cds_word BitSequence::SelectPrev0(const cds_word i) const {
-  size_t v = Rank0(i);
-  if (v < 2) {
-    return (size_t) - 1;
+  bool value;
+  cds_word v = Rank0(i, &value);
+  if (value == false)
+    return i;
+  else {
+    if (v == 0) {
+      return (cds_word) -1;
+    }
+    return Select0(v);
   }
-  return Select0(v - 1);
 }
 
 bool BitSequence::Access(const cds_word i) const {

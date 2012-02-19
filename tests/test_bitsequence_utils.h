@@ -1,4 +1,4 @@
-/********************************************************************************
+ /********************************************************************************
 Copyright (c) 2012, Francisco Claude.
 All rights reserved.
 
@@ -12,7 +12,7 @@ are permitted provided that the following conditions are met:
       this list of conditions and the following disclaimer in the documentation
       and/or other materials provided with the distribution.
 
-    * Neither the name of libcds. nor the names of its
+    * Neither the name of libcds nor the names of its
       contributors may be used to endorse or promote products derived from this
       software without specific prior written permission.
 
@@ -29,43 +29,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ********************************************************************************/
 
+#ifndef TESTS_TEST_BITSEQUENCE_UTILS_H_
+#define TESTS_TEST_BITSEQUENCE_UTILS_H_
 
 #include <libcds/libcds.h>
-#include <libcds/time.h>
-#include <libcds/io.h>
-#include <libcds/cdsexception.h>
+#include <libcds/array.h>
+#include <libcds/immutable/bitsequence.h>
 
-using cds::basic::Tokenize;
-using cds::basic::TransformString;
-using cds::basic::SaveValue;
-using cds::basic::LoadValue;
-using cds::basic::LoadFile;
-using cds::basic::CDSException;
-using cds::basic::Timer;
-using cds::basic::msb;
-using cds::basic::lsb;
+using cds::basic::Array;
 using cds::basic::cds_word;
-using cds::basic::cds_uint;
-using cds::basic::cds_uchar;
-using cds::basic::kMaxCDSUchar;
-using cds::basic::kMaxCDSUshort;
-using cds::basic::kMaxCDSUint;
-using cds::basic::kMaxCDSWord;
-using cds::basic::kMaxCDSUlong;
-using cds::basic::BitZero;
-using cds::basic::BitGet;
-using cds::basic::BitSet;
-using cds::basic::kWordSize;
-using cds::basic::kDoubleWordSize;
-using cds::basic::SetField;
-using cds::basic::SetVarField;
-using cds::basic::GetField;
-using cds::basic::GetVarField;
-using cds::basic::GetField8;
-using cds::basic::GetField16;
-using cds::basic::GetField32;
+using cds::immutable::BitSequence;
 
+Array * CreateRandomBitmap(const cds_word kBitmapLength, const cds_word kOnes, unsigned int seed);
+void TestBitSequence(BitSequence *model, BitSequence *tested);
 
-int main(int argc, char **argv) {
-  return 0;
-}
+#endif  // TESTS_TEST_BITSEQUENCE_UTILS_H_

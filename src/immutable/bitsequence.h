@@ -59,6 +59,7 @@ class BitSequence : public cds::basic::ReferenceCounted {
 
     /** Returns the number of zeros until position i. */
     virtual cds_word Rank0(const cds_word i) const;
+    virtual cds_word Rank0(const cds_word i, bool *access) const;
 
     /** Returns the position of the i-th zero
      * It returns (size_t)-1 if i=0, length if i>num_zeros, or the
@@ -68,6 +69,7 @@ class BitSequence : public cds::basic::ReferenceCounted {
 
     /** Returns the number of ones until position i. */
     virtual cds_word Rank1(const cds_word i) const;
+    virtual cds_word Rank1(const cds_word i, bool *access) const;
 
     /** Returns the position of the i-th one
      * It returns (cds_word)-1 if i=0, length if i>num_ones, or the
@@ -101,6 +103,8 @@ class BitSequence : public cds::basic::ReferenceCounted {
 
     /** Returns the i-th bit. */
     virtual bool Access(const cds_word i) const;
+
+
 
     /** Returns the length in bits of the bitmap. */
     virtual cds_word GetLength() const = 0;

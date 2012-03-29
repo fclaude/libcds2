@@ -34,6 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SRC_BASIC_TIME_H_
 
 #include <libcds/libcds.h>
+#include <sys/time.h>
 
 namespace cds {
 namespace basic {
@@ -44,6 +45,9 @@ class Timer {
   public:
     /** Creates and starts the timer.
      */
+     
+    struct timeval tv1,tv2;
+    
     Timer() {
       restart();
     }

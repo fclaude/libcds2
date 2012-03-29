@@ -46,32 +46,53 @@ class Timer {
     /** Creates and starts the timer.
      */
      
-    struct timeval tv1,tv2;
     
     Timer() {
-      restart();
+       getrusage(RUSAGE_SELF, &ru);
+       initial_ru = ru.ru_utime;
+       gettimeofday(&initial,NULL);
+      //restart();
     }
 
     /** Restarts the timer.
      */
     void restart() {
-      initial = clock();
+       getrusage(RUSAGE_SELF, &ru);
+       initial_ru = ru.ru_utime;
+       gettimeofday(&initial,NULL);
+      //initial = clock();
     }
 
     /** Stops the timer.
      */
     void stop() {
-      final = clock();
+       getrusage(RUSAGE_SELF, &ru);
+       final_ru = ru.ru_utime;
+       gettimeofday(&final,NULL);
+      //final = clock();
     }
 
-    /** Computes the number of miliseconds elapsed from start to stop.
+    /** Computes the number of microsecond elapsed from start to stop
+     * This time is for wall-clock time
      */
     double elapsedTime() {
-      return 1000.*(final - initial) / CLOCKS_PER_SEC;
+       return (final.tv_sec-initial.tv_sec)*1000000+(final.tv_usec-initial.tv_usec);
+      //return 1000.*(final - initial) / CLOCKS_PER_SEC;
+    }
+    
+     /** Computes the number of microsecond elapsed from start to stop
+     * This time is for  process CPU usage
+     */
+    double elapsedTimeCPU(){
+       return (final_ru.tv_sec-initial_ru.tv_sec)*1000000+(final_ru.tv_usec-initial_ru.tv_usec);
     }
 
   protected:
-    clock_t initial, final;
+      struct timeval initial, final;
+      struct timeval initial_ru, final_ru;
+      struct rusage ru;
+      
+    //clock_t initial, final;
 };
 };
 };

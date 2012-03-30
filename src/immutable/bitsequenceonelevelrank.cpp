@@ -1,5 +1,5 @@
 /********************************************************************************
-Copyright (c) 2012, Francisco Claude.
+Copyright (c) 2012, Francisco Claude and Rodrigo Canovas.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -91,20 +91,18 @@ cds_word BitSequenceOneLevelRank::Select0(const cds_word i) const {
 }
 
 cds_word BitSequenceOneLevelRank::Select1(const cds_word i) const {
-  if (i == 0) {
-    return (cds_word) - 1;
-  }
-  cds_word pos_so_far
+  if (i == 0) return (cds_word) - 1;
   cds_word sampling_pos = sampling_->LowerBound(i);
-  cds_word count_so_far = sampling_->GetField(sampling_pos);
+  cds_word count_so_far = sampling_->GetField(sampling_pos - 1);
   cds_word *data = bitmap_->data_;
-  if(count_so_far > i){
-     sampling_pos--;
-     count_so_far = sampling_->GetField(sampling_pos);
+  cds_word pos_so_far = sampling_pos * sampling_rate_;
+  cds_word first_word = pos_so_far / kWordSize;
+  cds_word ones = popcount(data[first_word]);
+  while((count_so_far + ones) < i){
+    count_so_far += ones;
+    first_word++;
+    ones = popcount(data[first_word]);
   }
-  pos_so_far = sampling_pos * sampling_rate_;
-  
-
   
   return 0;
 }
@@ -143,7 +141,7 @@ cds_word BitSequenceOneLevelRank::GetLength() const {
 }
 
 cds_word BitSequenceOneLevelRank::GetSize() const {
-  return 0;
+  return sizeof(BitSequenceOneLevelRank) + bitmap_->GetSize() + sampling_->GetSize();
 }
 
 void BitSequenceOneLevelRank::save(ofstream &out) const {}

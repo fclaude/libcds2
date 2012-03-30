@@ -1,5 +1,5 @@
 /********************************************************************************
-Copyright (c) 2012, Francisco Claude.
+Copyright (c) 2012, Francisco Claude and Rodrigo Canovas.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -48,10 +48,7 @@ class Timer {
      
     
     Timer() {
-       getrusage(RUSAGE_SELF, &ru);
-       initial_ru = ru.ru_utime;
-       gettimeofday(&initial,NULL);
-      //restart();
+       restart();
     }
 
     /** Restarts the timer.
@@ -59,8 +56,7 @@ class Timer {
     void restart() {
        getrusage(RUSAGE_SELF, &ru);
        initial_ru = ru.ru_utime;
-       gettimeofday(&initial,NULL);
-      //initial = clock();
+       gettimeofday(&initial, NULL);
     }
 
     /** Stops the timer.
@@ -68,31 +64,27 @@ class Timer {
     void stop() {
        getrusage(RUSAGE_SELF, &ru);
        final_ru = ru.ru_utime;
-       gettimeofday(&final,NULL);
-      //final = clock();
+       gettimeofday(&final, NULL);
     }
 
     /** Computes the number of microsecond elapsed from start to stop
      * This time is for wall-clock time
      */
     double elapsedTime() {
-       return (final.tv_sec-initial.tv_sec)*1000000+(final.tv_usec-initial.tv_usec);
-      //return 1000.*(final - initial) / CLOCKS_PER_SEC;
+       return (final.tv_sec - initial.tv_sec) * 1000000 + (final.tv_usec - initial.tv_usec);
     }
     
      /** Computes the number of microsecond elapsed from start to stop
      * This time is for  process CPU usage
      */
     double elapsedTimeCPU(){
-       return (final_ru.tv_sec-initial_ru.tv_sec)*1000000+(final_ru.tv_usec-initial_ru.tv_usec);
+       return (final_ru.tv_sec - initial_ru.tv_sec) * 1000000 + (final_ru.tv_usec - initial_ru.tv_usec);
     }
 
   protected:
       struct timeval initial, final;
       struct timeval initial_ru, final_ru;
       struct rusage ru;
-      
-    //clock_t initial, final;
 };
 };
 };

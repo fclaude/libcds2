@@ -114,8 +114,21 @@ class Array : public ReferenceCounted {
         */
     virtual cds_word BinarySearch(cds_word value) const = 0;
 
+    /** Loads an array from disk */
     static Array *Load(ifstream &input);
+
+    /** Creates an array copying part of a previously existing array
+     * @param A source array
+     * @param i initial positionition
+     * @param j final positionition
+     * @param bpe size per field (in bits), use 0 for auto
+     */
     static Array *Create(cds_word *A, cds_word i, cds_word j, cds_word bpe = 0);
+
+    /** Creates and array with n elements that can store elements between 0 and 2^{bpe}-1
+     * @param n length (in elements) of the array
+     * @param bpe size per field (in bits)
+     */
     static Array *Create(cds_word n, cds_word bpe);
 };
 

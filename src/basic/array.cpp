@@ -364,6 +364,5 @@ template <cds_word bpe> cds_word ArrayTpl<bpe>::SetField(const cds_word position
   cds::basic::SetField(data_, bpe, position, v);
   return v;
 }
-
 };
 };

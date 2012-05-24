@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <libcds/array.h>
 #include <libcds/immutable/bitsequence.h>
 #include <libcds/immutable/bitsequenceseq.h>
-#include "test_bitsequence_utils.h"
+#include "./test_bitsequence_utils.h"
 
 using cds::immutable::BitSequence;
 using cds::immutable::BitSequenceSeq;
@@ -43,15 +43,15 @@ using std::ofstream;
 
 class BitSequenceRank1: public BitSequence {
   public:
-    BitSequenceRank1(Array * _a) {
+    explicit BitSequenceRank1(Array *_a) {
       bs_ = new BitSequenceSeq(_a);
       bs_->Use();
     }
 
-    virtual ~BitSequenceRank1() { 
-      bs_->Unuse(); 
+    virtual ~BitSequenceRank1() {
+      bs_->Unuse();
     }
-    
+
     virtual cds_word GetLength() const {
       return bs_->GetLength();
     }
@@ -81,24 +81,24 @@ class BitSequenceRank1: public BitSequence {
       return bs_->GetSize() + sizeof(*this);
     }
 
-    virtual cds_word CountZeros() const { 
+    virtual cds_word CountZeros() const {
       return bs_->CountZeros();
     }
 
   protected:
-    BitSequence * bs_;
+    BitSequence *bs_;
 };
 
 
 
 TEST(BitSequence, SupportingRank1) {
   const cds_word kBitmapLength = 10000;
-  const cds_word kOnes = kBitmapLength/4;
+  const cds_word kOnes = kBitmapLength / 4;
   unsigned int seed = 101;
   Array *a = CreateRandomBitmap(kBitmapLength, kOnes, seed);
   BitSequenceSeq *seq_bitseq = new BitSequenceSeq(a);
   seq_bitseq->Use();
-  BitSequenceRank1 * bs = new BitSequenceRank1(a);
+  BitSequenceRank1 *bs = new BitSequenceRank1(a);
   bs->Use();
   TestBitSequence(seq_bitseq, bs);
   a->Unuse();

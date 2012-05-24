@@ -45,46 +45,44 @@ class Timer {
   public:
     /** Creates and starts the timer.
      */
-     
-    
     Timer() {
-       restart();
+      restart();
     }
 
     /** Restarts the timer.
      */
     void restart() {
-       getrusage(RUSAGE_SELF, &ru);
-       initial_ru = ru.ru_utime;
-       gettimeofday(&initial, NULL);
+      getrusage(RUSAGE_SELF, &ru);
+      initial_ru = ru.ru_utime;
+      gettimeofday(&initial, NULL);
     }
 
     /** Stops the timer.
      */
     void stop() {
-       getrusage(RUSAGE_SELF, &ru);
-       final_ru = ru.ru_utime;
-       gettimeofday(&final, NULL);
+      getrusage(RUSAGE_SELF, &ru);
+      final_ru = ru.ru_utime;
+      gettimeofday(&final, NULL);
     }
 
     /** Computes the number of microsecond elapsed from start to stop
      * This time is for wall-clock time
      */
     double elapsedTime() {
-       return (final.tv_sec - initial.tv_sec) * 1000000 + (final.tv_usec - initial.tv_usec);
+      return (final.tv_sec - initial.tv_sec) * 1000000 + (final.tv_usec - initial.tv_usec);
     }
-    
-     /** Computes the number of microsecond elapsed from start to stop
-     * This time is for  process CPU usage
-     */
-    double elapsedTimeCPU(){
-       return (final_ru.tv_sec - initial_ru.tv_sec) * 1000000 + (final_ru.tv_usec - initial_ru.tv_usec);
+
+    /** Computes the number of microsecond elapsed from start to stop
+    * This time is for  process CPU usage
+    */
+    double elapsedTimeCPU() {
+      return (final_ru.tv_sec - initial_ru.tv_sec) * 1000000 + (final_ru.tv_usec - initial_ru.tv_usec);
     }
 
   protected:
-      struct timeval initial, final;
-      struct timeval initial_ru, final_ru;
-      struct rusage ru;
+    struct timeval initial, final;
+    struct timeval initial_ru, final_ru;
+    struct rusage ru;
 };
 };
 };

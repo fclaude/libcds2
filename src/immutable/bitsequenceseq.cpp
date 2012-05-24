@@ -37,21 +37,23 @@ namespace immutable {
 using cds::basic::cds_word;
 using cds::basic::Array;
 
-BitSequenceSeq::BitSequenceSeq(Array * array) {
+BitSequenceSeq::BitSequenceSeq(Array *array) {
   array_ = array;
 }
 
 cds_word BitSequenceSeq::Rank1(const cds_word i) const {
   cds_word cnt = 0;
-  for (cds_word k = 0; k <= i; k++)
+  for (cds_word k = 0; k <= i; k++) {
     cnt += array_->GetField(k);
+  }
   return cnt;
 }
 
 cds_word BitSequenceSeq::Rank0(const cds_word i) const {
   cds_word cnt = 0;
-  for (cds_word k = 0; k <= i; k++)
+  for (cds_word k = 0; k <= i; k++) {
     cnt += 1 - array_->GetField(k);
+  }
   return cnt;
 }
 
@@ -66,69 +68,79 @@ cds_word BitSequenceSeq::Rank1(const cds_word i, bool *access) const {
 }
 
 cds_word BitSequenceSeq::Select1(const cds_word i) const {
-  if (i == 0) return (cds_word)-1;
+  if (i == 0) {
+    return (cds_word) - 1;
+  }
   cds_word cnt = 0;
   for (cds_word k = 0; k < array_->GetLength(); k++) {
     cnt += array_->GetField(k);
-    if (cnt == i)
+    if (cnt == i) {
       return k;
+    }
   }
   return array_->GetLength();
 }
 
 cds_word BitSequenceSeq::SelectNext1(const cds_word i) const {
   for (cds_word k = i; k < array_->GetLength(); k++) {
-    if (1 == array_->GetField(k))
+    if (1 == array_->GetField(k)) {
       return k;
+    }
   }
   return array_->GetLength();
 }
 
 cds_word BitSequenceSeq::SelectPrev1(const cds_word i) const {
   for (cds_word k = i; k > 0; k--) {
-    if (1 == array_->GetField(k))
+    if (1 == array_->GetField(k)) {
       return k;
+    }
   }
   if (array_->GetField(0) == 1) {
     return 0;
   } else {
-    return (cds_word)-1;
+    return (cds_word) - 1;
   }
 }
 
 cds_word BitSequenceSeq::Select0(const cds_word i) const {
-  if (i == 0) return (cds_word)-1;
+  if (i == 0) {
+    return (cds_word) - 1;
+  }
   cds_word cnt = 0;
   for (cds_word k = 0; k < array_->GetLength(); k++) {
     cnt += 1 - array_->GetField(k);
-    if (cnt == i)
+    if (cnt == i) {
       return k;
+    }
   }
   return array_->GetLength();
 }
 
 cds_word BitSequenceSeq::SelectNext0(const cds_word i) const {
   for (cds_word k = i; k < array_->GetLength(); k++) {
-    if (0 == array_->GetField(k))
+    if (0 == array_->GetField(k)) {
       return k;
+    }
   }
   return array_->GetLength();
 }
 
 cds_word BitSequenceSeq::SelectPrev0(const cds_word i) const {
   for (cds_word k = i; k > 0; k--) {
-    if (0 == array_->GetField(k))
+    if (0 == array_->GetField(k)) {
       return k;
+    }
   }
-  return (array_->GetField(0)==1)?((cds_word)-1):0;
+  return (array_->GetField(0) == 1) ? ((cds_word) - 1) : 0;
 }
 
-cds_word BitSequenceSeq::CountOnes() const { 
-  return Rank1(array_->GetLength()-1);  
+cds_word BitSequenceSeq::CountOnes() const {
+  return Rank1(array_->GetLength() - 1);
 }
 
-cds_word BitSequenceSeq::CountZeros() const { 
-  return Rank0(array_->GetLength()-1);
+cds_word BitSequenceSeq::CountZeros() const {
+  return Rank0(array_->GetLength() - 1);
 }
 
 cds_word BitSequenceSeq::GetSize() const {
@@ -145,6 +157,5 @@ cds_word BitSequenceSeq::GetLength() const {
 bool BitSequenceSeq::Access(const cds_word i) const {
   return array_->GetField(i) > 0;
 }
-
 };
 };

@@ -37,6 +37,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #include <cassert>
 #include <iostream>
@@ -246,21 +247,13 @@ inline void SetField(cds_word *A, const cds_word len, const cds_word index, cons
   }
 }
 
-/** Retrieve a given index from array A where every value uses 4 bits
- * @param A Array
- * @param index Position to be retrieved
- */
-inline cds_word GetField4(const cds_word *A, const cds_word index) {
-  cds_word i = index / 8, j = (index & 0x7) << 2;
-  return (A[i] << (28 - j)) >> (28);
-}
 
 /** Retrieve a given index from array A where every value uses 8 bits
  * @param A Array
  * @param index Position to be retrieved
  */
 inline cds_word GetField8(const cds_word *A, const cds_word index) {
-  const cds_uchar *B = (const cds_uchar *)A;
+  const uint8_t *B = (const uint8_t *)A;
   return B[index];
 }
 
@@ -269,7 +262,7 @@ inline cds_word GetField8(const cds_word *A, const cds_word index) {
  * @param index Position to be retrieved
  */
 inline cds_word GetField16(const cds_word *A, const cds_word index) {
-  const cds_ushort *B = (const cds_ushort *)A;
+  const uint16_t *B = (const uint16_t *)A;
   return B[index];
 }
 
@@ -278,9 +271,32 @@ inline cds_word GetField16(const cds_word *A, const cds_word index) {
  * @param index Position to be retrieved
  */
 inline cds_word GetField32(const cds_word *A, const cds_word index) {
-  const cds_uint *B = (const cds_uint *)A;
+  const uint32_t *B = (const uint32_t *)A;
   return B[index];
 }
+
+/** Retrieve a given index from array A where every value uses 2 bits
+ * @param A Array
+ * @param index Position to be retrieved
+ */
+inline cds_word GetField2(const cds_word *A, const cds_word index) {
+  cds_word i = index / 4, j = index % 4;
+  return (GetField8(A, i) >> (2 * j)) & 3;
+}
+
+/** Retrieve a given index from array A where every value uses 4 bits
+ * @param A Array
+ * @param index Position to be retrieved
+ */
+inline cds_word GetField4(const cds_word *A, const cds_word index) {
+  cds_word i = index / 2;
+  if ((index & 1) == 0) {
+    return GetField8(A, i) & 15;
+  } else {
+    return (GetField8(A, i) >> 4) & 15;
+  }
+}
+
 
 class ReferenceCounted {
   public:

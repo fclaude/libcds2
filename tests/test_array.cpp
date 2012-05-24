@@ -33,6 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <libcds/array.h>
 
 using cds::basic::Array;
+using cds::basic::ArrayTpl;
 using cds::basic::cds_word;
 using cds::basic::kMaxCDSWord;
 using cds::basic::msb;
@@ -52,7 +53,7 @@ uint seed_test_array = 20;
 
 
 TEST(Array, Empty) {
-  Array *a = new Array(0ul, 0ul);
+  Array *a = Array::Create(0, 0);
   ASSERT_EQ(a->GetLength(), 0ul);
   a->Unuse();
 }
@@ -60,7 +61,7 @@ TEST(Array, Empty) {
 
 void testOneElem(cds_word bits) {
   cds_word v = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
-  Array *a = new Array(1ul, ((cds_word)1ul << bits) - 1);
+  Array *a = Array::Create(1, bits);
   a->SetField(0, v);
   cds_word r = a->GetField(0);
   cds_word r2 = (*a)[0];
@@ -81,7 +82,7 @@ void testThreeElem(cds_word bits) {
   cds_word v1 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
   cds_word v2 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
   cds_word v3 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
-  Array *a = new Array(3ul, bits);
+  Array *a = Array::Create(3, bits);
   a->SetField(0, v1);
   a->SetField(1, v2);
   a->SetField(2, v3);
@@ -101,9 +102,12 @@ void testThreeElem(cds_word bits) {
 }
 
 
+#define REP 1000
 TEST(Array, ThreeElem) {
   for (cds_word i = 1; i < msb(kMaxCDSWord); i++) {
-    testThreeElem(i);
+    for (cds_word j = 0; j < REP; j++) {
+      testThreeElem(i);
+    }
   }
 }
 
@@ -113,7 +117,7 @@ void testArrayConstructor1(cds_word bits) {
   cds_word v2 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
   cds_word v3 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
   cds_word A[3] = {v1, v2, v3};
-  Array *a = new Array(A, 0, 3, bits);
+  Array *a = Array::Create(A, 0, 2, bits);
   cds_word r1a = a->GetField(0);
   cds_word r1b = (*a)[0];
   cds_word r2a = a->GetField(1);
@@ -135,7 +139,7 @@ void testArrayConstructor2(cds_word bits) {
   cds_word v2 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
   cds_word v3 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
   cds_word A[3] = {v1, v2, v3};
-  Array *a = new Array(A, 0, 3);
+  Array *a = Array::Create(A, 0, 2);
   cds_word r1a = a->GetField(0);
   cds_word r1b = (*a)[0];
   cds_word r2a = a->GetField(1);
@@ -160,7 +164,7 @@ TEST(Array, ArrayConstructor) {
 }
 
 TEST(Array, LowerBound) {
-  Array *a = new Array(10, 3);
+  Array *a = Array::Create(10, 3);
   a->SetField(0, 1);
   a->SetField(1, 1);
   a->SetField(2, 1);
@@ -191,7 +195,7 @@ TEST(Array, LowerBound) {
 }
 
 TEST(Array, UpperBound) {
-  Array *a = new Array(10, 3);
+  Array *a = Array::Create(10, 3);
   a->SetField(0, 1);
   a->SetField(1, 1);
   a->SetField(2, 1);
@@ -222,7 +226,7 @@ TEST(Array, UpperBound) {
 }
 
 TEST(Array, BinarySearch) {
-  Array *a = new Array(10, 3);
+  Array *a = Array::Create(10, 3);
   a->SetField(0, 1);
   a->SetField(1, 1);
   a->SetField(2, 1);
@@ -260,4 +264,26 @@ TEST(Array, BinarySearch) {
   expected_result = 10;
   obtained_result = a->BinarySearch(4);
   ASSERT_EQ(expected_result, obtained_result);
+}
+
+void testForSpeed(Array *A, cds_word *Original) {
+  cds_word len = A->GetLength();
+  for (cds_word i = 0; i < len; i++) {
+    cds_word pos = rand_r(&seed_test_array) % len;
+    ASSERT_EQ(A->GetField(pos), Original[pos]);
+  }
+}
+
+#define N 10000000
+TEST(Array, Timing) {
+  cds_word *Original = new cds_word[N];
+  for (cds_word i = 0; i < N; i++) {
+    Original[i] = rand_r(&seed_test_array) % 2;
+  }
+  for (cds_word i = 1; i < msb(kMaxCDSWord); i++) {
+    Array *A = Array::Create(Original, 0, N, i);
+    testForSpeed(A, Original);
+    A->Unuse();
+  }
+  delete [] Original;
 }

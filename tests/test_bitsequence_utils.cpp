@@ -1,20 +1,20 @@
- /********************************************************************************
+/********************************************************************************
 Copyright (c) 2012, Francisco Claude.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
 
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
+   * Redistributions of source code must retain the above copyright notice,
+     this list of conditions and the following disclaimer.
 
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
+   * Redistributions in binary form must reproduce the above copyright notice,
+     this list of conditions and the following disclaimer in the documentation
+     and/or other materials provided with the distribution.
 
-    * Neither the name of libcds nor the names of its
-      contributors may be used to endorse or promote products derived from this
-      software without specific prior written permission.
+   * Neither the name of libcds nor the names of its
+     contributors may be used to endorse or promote products derived from this
+     software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -36,12 +36,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using cds::immutable::BitSequence;
 using cds::basic::Array;
+using cds::basic::ArrayTpl;
 using cds::basic::cds_word;
 
-Array * CreateRandomBitmap(const cds_word kBitmapLength, const cds_word kOnes, unsigned int seed) {
-  Array *ret=new Array(kBitmapLength, 1ul);
+Array *CreateRandomBitmap(const cds_word kBitmapLength, const cds_word kOnes, unsigned int seed) {
+  Array *ret = Array::Create(kBitmapLength, 1);
   ret->Use();
-  for (cds_word i = 0; i < kOnes; ) {
+  for (cds_word i = 0; i < kOnes;) {
     cds_word pos = rand_r(&seed) % kBitmapLength;
     if (ret->GetField(pos) == 0) {
       ret->SetField(pos, 1);
@@ -71,27 +72,27 @@ void TestBitSequence(BitSequence *model, BitSequence *tested) {
   }
   for (cds_word i = 0; i < kOnes; i++) {
     cds_word exp = model->Select1(i);
-    cds_word rec = tested->Select1(i); 
+    cds_word rec = tested->Select1(i);
     ASSERT_EQ(exp, rec);
   }
   for (cds_word i = 0; i < kBitmapLength; i++) {
     cds_word exp = model->SelectNext1(i);
-    cds_word rec = tested->SelectNext1(i); 
+    cds_word rec = tested->SelectNext1(i);
     ASSERT_EQ(exp, rec);
   }
   for (cds_word i = 0; i < kBitmapLength; i++) {
     cds_word exp = model->SelectNext0(i);
-    cds_word rec = tested->SelectNext0(i); 
+    cds_word rec = tested->SelectNext0(i);
     ASSERT_EQ(exp, rec);
   }
   for (cds_word i = 0; i < kBitmapLength; i++) {
     cds_word exp = model->SelectPrev0(i);
-    cds_word rec = tested->SelectPrev0(i); 
+    cds_word rec = tested->SelectPrev0(i);
     ASSERT_EQ(exp, rec);
   }
   for (cds_word i = 0; i < kBitmapLength; i++) {
     cds_word exp = model->SelectPrev1(i);
-    cds_word rec = tested->SelectPrev1(i); 
+    cds_word rec = tested->SelectPrev1(i);
     ASSERT_EQ(exp, rec);
   }
   cds_word exp, rec;

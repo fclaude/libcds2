@@ -54,6 +54,8 @@ using cds::basic::SetField;
 using cds::basic::SetVarField;
 using cds::basic::GetField;
 using cds::basic::GetVarField;
+using cds::basic::GetField2;
+using cds::basic::GetField4;
 using cds::basic::GetField8;
 using cds::basic::GetField16;
 using cds::basic::GetField32;
@@ -261,6 +263,30 @@ TEST(Fields, AllBits) {
   }
 }
 
+TEST(Fields, 2Bits) {
+  const cds_word k = 2;
+  const cds_word N = 1000000;
+  const cds_word array_length = N * k / kWordSize + 1;
+  cds_word mask = ((cds_word)1 << k) - 1;
+  cds_word A[array_length];
+  for (cds_word i = 0; i < array_length; i++) {
+    A[i] = 0;
+  }
+
+  for (cds_word i = 0; i < N; i++) {
+    cds_word exp = i & mask;
+    SetField(A, k, i, exp);
+    ASSERT_EQ(exp, GetField(A, k, i));
+    ASSERT_EQ(exp, GetField2(A, i));
+  }
+
+  for (cds_word i = 0; i < N; i++) {
+    cds_word exp = i & mask;
+    SetVarField(A, k * i, k * (i + 1) - 1, exp);
+    ASSERT_EQ(exp, GetVarField(A, k * i, k * (i + 1) - 1));
+  }
+}
+
 
 TEST(Fields, 4Bits) {
   const cds_word k = 4;
@@ -276,6 +302,7 @@ TEST(Fields, 4Bits) {
     cds_word exp = i & mask;
     SetField(A, k, i, exp);
     ASSERT_EQ(exp, GetField(A, k, i));
+    ASSERT_EQ(exp, GetField4(A, i));
   }
 
   for (cds_word i = 0; i < N; i++) {

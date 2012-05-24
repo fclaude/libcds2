@@ -34,7 +34,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SRC_BASIC_ARRAY_H_
 
 #include <libcds/libcds.h>
+#include <libcds/io.h>
 
+#include <algorithm>
 #include <fstream>
 
 namespace cds {
@@ -42,38 +44,20 @@ namespace basic {
 
 using std::ifstream;
 using std::ofstream;
+using std::max;
 
 class Array : public ReferenceCounted {
   public:
-    /** Reads and Array from a file stream
-     * @param input input file stream
-     */
-    explicit Array(ifstream &input);
-
-    /** Creates an array copying part of a previously existing array
-     * @param A source array
-     * @param i initial positionition
-     * @param j final positionition
-     * @param bpe bits per element (0 uses the max in A[i,j]
-     */
-    Array(cds_word *A, cds_word i, cds_word j, cds_word bpe = 0);
-
-    /** Creates and array with n elements that can store elements between 0 and _maxValue
-     * @param n length (in elements) of the array
-     * @param _maxValue maximum value that could be stored in the array
-     */
-    Array(cds_word n, cds_word bpe);
-
     /** Destroys the array */
-    virtual ~Array();
+    virtual ~Array() {}
 
     /** Retrieves Array[position]
      * @paran position positionition
      * @return Array[position]
      */
-    inline cds_word GetField(const cds_word position) const {
-      assert(position < length_);
-      return cds::basic::GetField(data_, bits_per_item_, position);
+    virtual cds_word GetField(const cds_word position) const = 0;
+    cds_word operator[](const cds_word position) const {
+      return GetField(position);
     }
 
     /** Assigns v to Array[position]
@@ -81,147 +65,115 @@ class Array : public ReferenceCounted {
      * @param v value
      * @return Array[position]
      */
-    inline cds_word SetField(const cds_word position, const cds_word v) {
-      assert(position < length_);
-      assert(v <= max_value_);
-      cds::basic::SetField(data_, bits_per_item_, position, v);
-      return v;
-    }
-
-    /** operator [] for getField
-     */
-    cds_word const operator[](const cds_word position) const {
-      assert(position < length_);
-      return cds::basic::GetField(data_, bits_per_item_, position);
-    }
-
-    /** Operator [] for modifying array
-    This is not thread-safe
-     *
-    ArrayModifier & operator[](const cds_word position) {
-      assert(position<length);
-      static ArrayModifier ret = ArrayModifier(data,length,bits_per_item,position);
-      return ret;
-      }*/
+    virtual cds_word SetField(const cds_word position, const cds_word v) = 0;
 
     /** Saves the array into a file */
-    void Save(ofstream &out) const;
+    virtual void Save(ofstream &out) const = 0;
 
     /** Returns the size of the array in bytes
      */
-    inline cds_word GetSize() const {
-      return sizeof(cds_word) * uint_length_
-             + sizeof(cds_word) * 4
-             + sizeof(cds_word *);
-    }
+    virtual cds_word GetSize() const = 0;
 
     /** Returns the length of the array
      */
-    inline cds_word GetLength() const {
-      return length_;
-    }
+    virtual cds_word GetLength() const = 0;
 
     /** Returns the maximum value in the array
      */
-    cds_word GetMax() const;
+    virtual cds_word GetMax() const = 0;
 
     /** Returns the position of the first element between ini and fin-1
         that is not less than the value.
         If none, then it return fin.
     */
-    cds_word LowerBound(cds_word value, cds_word ini, cds_word fin) const;
+    virtual cds_word LowerBound(cds_word value, cds_word ini, cds_word fin) const = 0;
 
     /** Returns the position of the first element that is not less than the value.
         If none, then it return the length.
     */
-    cds_word LowerBound(cds_word value) const;
+    virtual cds_word LowerBound(cds_word value) const = 0;
 
     /** Returns the position of the first element between ini and fin-1
         that is greater than the value.
         If none, then it return fin.
     */
-    cds_word UpperBound(cds_word value, cds_word ini, cds_word fin) const;
+    virtual cds_word UpperBound(cds_word value, cds_word ini, cds_word fin) const = 0;
 
     /** Returns the position of the first element that is greater than the value.
         If none, then it return fin.
     */
-    cds_word UpperBound(cds_word value) const;
+    virtual cds_word UpperBound(cds_word value) const = 0;
 
     /* Binary search for a value in [ini,fin] and return the position of its first
         appareance. If the element is not present, it return fin.
         */
-    cds_word BinarySearch(cds_word value, cds_word ini, cds_word fin) const;
+    virtual cds_word BinarySearch(cds_word value, cds_word ini, cds_word fin) const = 0;
 
     /* Binary search for a value in [0,length] and return the position of its first
         appareance. If the element is not present, it return fin.
         */
-    cds_word BinarySearch(cds_word value) const;
+    virtual cds_word BinarySearch(cds_word value) const = 0;
 
-    class ArrayModifier {
-      public:
-        ArrayModifier(cds_word *data, cds_word length, cds_word bits_per_item, cds_word position)
-          : data_(data), length_(length), bits_per_item_(bits_per_item), position_(position) {}
+    static Array *Load(ifstream &input);
+    static Array *Create(cds_word *A, cds_word i, cds_word j, cds_word bpe = 0);
+    static Array *Create(cds_word n, cds_word bpe);
+};
 
-        inline cds_word operator=(const cds_word v) {
-          cds::basic::SetField(data_, bits_per_item_, position_, v);
-          return v;
-        }
+template <cds_word bpe> class ArrayTpl : public Array {
+  public:
+    /** Reads and ArrayTpl from a file stream
+     * @param input input file stream
+     */
+    explicit ArrayTpl(ifstream &input);
 
-        inline cds_word getValue() {
-          return cds::basic::GetField(data_, bits_per_item_, position_);
-        }
+    /** Creates an array copying part of a previously existing array
+     * @param A source array
+     * @param i initial positionition
+     * @param j final positionition
+     */
+    ArrayTpl(cds_word *A, cds_word i, cds_word j);
 
-        inline bool operator==(const ArrayModifier &v) {
-          return cds::basic::GetField(data_, bits_per_item_, position_)
-                 == cds::basic::GetField(v.data_, v.bits_per_item_, v.position_);
-        }
+    /** Creates and array with n elements that can store elements between 0 and _maxValue
+     * @param n length (in elements) of the array
+     */
+    explicit ArrayTpl(cds_word n);
 
-        inline bool operator!=(const ArrayModifier &v) {
-          return cds::basic::GetField(data_, bits_per_item_, position_)
-                 != cds::basic::GetField(v.data_, v.bits_per_item_, v.position_);
-        }
+    /** Destroys the array */
+    virtual ~ArrayTpl();
 
-        inline bool operator<(const ArrayModifier &v) {
-          return cds::basic::GetField(data_, bits_per_item_, position_)
-                 < cds::basic::GetField(v.data_, v.bits_per_item_, v.position_);
-        }
+    virtual cds_word GetField(const cds_word position) const;
 
-        inline bool operator<=(const ArrayModifier &v) {
-          return cds::basic::GetField(data_, bits_per_item_, position_)
-                 <= cds::basic::GetField(v.data_, v.bits_per_item_, v.position_);
-        }
+    virtual cds_word SetField(const cds_word position, const cds_word v);
 
-        inline bool operator>(const ArrayModifier &v) {
-          return cds::basic::GetField(data_, bits_per_item_, position_)
-                 > cds::basic::GetField(v.data_, v.bits_per_item_, v.position_);
-        }
+    virtual void Save(ofstream &out) const;
 
-        inline bool operator>=(const ArrayModifier &v) {
-          return cds::basic::GetField(data_, bits_per_item_, position_)
-                 >= cds::basic::GetField(v.data_, v.bits_per_item_, v.position_);
-        }
+    virtual cds_word GetSize() const;
 
-        inline operator cds_word() {
-          return cds::basic::GetField(data_, bits_per_item_, position_);
-        }
+    virtual cds_word GetLength() const;
 
-      protected:
-        cds_word *data_;
-        cds_word length_;
-        cds_word bits_per_item_;
-        cds_word position_;
-    };
+    virtual cds_word GetMax() const;
 
-    // friend cds_word operator=(const ArrayModifier a);
+    virtual cds_word LowerBound(cds_word value, cds_word ini, cds_word fin) const;
+
+    virtual cds_word LowerBound(cds_word value) const;
+
+    virtual cds_word UpperBound(cds_word value, cds_word ini, cds_word fin) const;
+
+    virtual cds_word UpperBound(cds_word value) const;
+
+    virtual cds_word BinarySearch(cds_word value, cds_word ini, cds_word fin) const;
+
+    virtual cds_word BinarySearch(cds_word value) const;
+
+
+    // friend cds_word operator=(const ArrayTplModifier a);
     friend class BitSequenceOneLevelRank;
 
   protected:
-    /** Array where the data is stored */
+    /** ArrayTpl where the data is stored */
     cds_word *data_;
     /** Length of the array in number of elements */
     cds_word length_;
-    /** Length in bits of each field */
-    cds_word bits_per_item_;
     /** Maximum value stored in the array */
     cds_word max_value_;
     /** Length of the array in number of uints */
@@ -229,7 +181,7 @@ class Array : public ReferenceCounted {
 
     cds_word users_;
 
-    /** Initializes the array, all the values to 0
+    /** Initializes the array, all the values are assigned to 0
      */
     void InitData();
 };

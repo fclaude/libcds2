@@ -58,7 +58,7 @@ using std::ofstream;
  */
 class BitSequenceSeq : public BitSequence {
   public:
-    BitSequenceSeq(Array *array);
+    explicit BitSequenceSeq(Array *array);
     virtual ~BitSequenceSeq() {}
     virtual cds_word Rank0(const cds_word i) const;
     virtual cds_word Rank0(const cds_word i, bool *access) const;
@@ -79,7 +79,7 @@ class BitSequenceSeq : public BitSequence {
     static BitSequence *Load(ifstream &fp);
 
   protected:
-    Array * array_;
+    Array *array_;
 };
 };
 };

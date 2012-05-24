@@ -145,11 +145,11 @@ cds_word BitSequence::SelectNext1(const cds_word i) const {
 cds_word BitSequence::SelectPrev1(const cds_word i) const {
   bool value;
   cds_word v = Rank1(i, &value);
-  if (value == true)
+  if (value == true) {
     return i;
-  else {
+  } else {
     if (v == 0) {
-      return (cds_word) -1;
+      return (cds_word) - 1;
     }
     return Select1(v);
   }
@@ -162,11 +162,11 @@ cds_word BitSequence::SelectNext0(const cds_word i) const {
 cds_word BitSequence::SelectPrev0(const cds_word i) const {
   bool value;
   cds_word v = Rank0(i, &value);
-  if (value == false)
+  if (value == false) {
     return i;
-  else {
+  } else {
     if (v == 0) {
-      return (cds_word) -1;
+      return (cds_word) - 1;
     }
     return Select0(v);
   }

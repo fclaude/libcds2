@@ -254,7 +254,7 @@ template <cds_word bpe> cds_word ArrayTpl<bpe>::GetMax() const {
   return max_value;
 }
 
-// Implementation based on the STL one.
+// Implementation based on the STL lower_bound implementation.
 template <cds_word bpe> cds_word ArrayTpl<bpe>::LowerBound(cds_word value, cds_word ini, cds_word fin) const {
   cds_word count, step;
   count = fin - ini;

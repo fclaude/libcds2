@@ -322,17 +322,17 @@ template <cds_word bpe> void ArrayTpl<bpe>::InitData() {
 
 template <> cds_word ArrayTpl<32>::GetField(const cds_word position) const {
   assert(position < length_);
-  return cds::basic::GetField32(data_, position);
+  return reinterpret_cast<uint32_t *>(data_)[position];
 }
 
 template <> cds_word ArrayTpl<16>::GetField(const cds_word position) const {
   assert(position < length_);
-  return cds::basic::GetField16(data_, position);
+  return reinterpret_cast<uint16_t *>(data_)[position];
 }
 
 template <> cds_word ArrayTpl<8>::GetField(const cds_word position) const {
   assert(position < length_);
-  return cds::basic::GetField8(data_, position);
+  return reinterpret_cast<uint8_t *>(data_)[position];
 }
 
 template <> cds_word ArrayTpl<4>::GetField(const cds_word position) const {

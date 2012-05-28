@@ -40,17 +40,6 @@ using cds::basic::msb;
 
 uint seed_test_array = 20;
 
-// bool cmp_array(Array &a1, Array &a2) {
-//   if (a1.GetLength() != a2.GetLength()) {
-//     return false;
-//   }
-//   for (cds_word i = 0; i < a1.GetLength(); i++)
-//     if (a1[i] != a2[i]) {
-//       return false;
-//     }
-//   return true;
-// }
-
 
 TEST(Array, Empty) {
   Array *a = Array::Create(0, 0);
@@ -266,24 +255,254 @@ TEST(Array, BinarySearch) {
   ASSERT_EQ(expected_result, obtained_result);
 }
 
-void testForSpeed(Array *A, cds_word *Original) {
-  cds_word len = A->GetLength();
-  for (cds_word i = 0; i < len; i++) {
-    cds_word pos = rand_r(&seed_test_array) % len;
-    ASSERT_EQ(A->GetField(pos), Original[pos]);
-  }
-}
 
-#define N 10000000
-TEST(Array, Timing) {
-  cds_word *Original = new cds_word[N];
+#define N 1000000
+cds_word *Original;
+
+void startUp() {
+  Original = new cds_word[N];
   for (cds_word i = 0; i < N; i++) {
     Original[i] = rand_r(&seed_test_array) % 2;
   }
-  for (cds_word i = 1; i < msb(kMaxCDSWord); i++) {
-    Array *A = Array::Create(Original, 0, N, i);
-    testForSpeed(A, Original);
-    A->Unuse();
+}
+
+void testForSpeed(cds_word bits) {
+  Array *A = Array::Create(Original, 0, N, bits);
+  for (cds_word i = 0; i < N; i++) {
+    cds_word pos = rand_r(&seed_test_array) % N;
+    ASSERT_EQ(A->GetField(pos), Original[pos]);
   }
-  delete [] Original;
+  A->Unuse();
+}
+
+TEST(Array, StartTiming) {
+  startUp();
+}
+
+TEST(Array, Timing1) {
+  testForSpeed(1);
+}
+
+TEST(Array, Timing2) {
+  testForSpeed(2);
+}
+
+TEST(Array, Timing3) {
+  testForSpeed(3);
+}
+
+TEST(Array, Timing4) {
+  testForSpeed(4);
+}
+
+TEST(Array, Timing5) {
+  testForSpeed(5);
+}
+
+TEST(Array, Timing6) {
+  testForSpeed(6);
+}
+
+TEST(Array, Timing7) {
+  testForSpeed(7);
+}
+
+TEST(Array, Timing8) {
+  testForSpeed(8);
+}
+
+TEST(Array, Timing9) {
+  testForSpeed(9);
+}
+
+TEST(Array, Timing10) {
+  testForSpeed(10);
+}
+
+TEST(Array, Timing11) {
+  testForSpeed(11);
+}
+
+TEST(Array, Timing12) {
+  testForSpeed(12);
+}
+
+TEST(Array, Timing13) {
+  testForSpeed(13);
+}
+
+TEST(Array, Timing14) {
+  testForSpeed(14);
+}
+
+TEST(Array, Timing15) {
+  testForSpeed(15);
+}
+
+TEST(Array, Timing16) {
+  testForSpeed(16);
+}
+
+TEST(Array, Timing17) {
+  testForSpeed(17);
+}
+
+TEST(Array, Timing18) {
+  testForSpeed(18);
+}
+
+TEST(Array, Timing19) {
+  testForSpeed(19);
+}
+
+TEST(Array, Timing20) {
+  testForSpeed(20);
+}
+
+TEST(Array, Timing21) {
+  testForSpeed(21);
+}
+
+TEST(Array, Timing22) {
+  testForSpeed(22);
+}
+
+TEST(Array, Timing23) {
+  testForSpeed(23);
+}
+
+TEST(Array, Timing24) {
+  testForSpeed(24);
+}
+
+TEST(Array, Timing25) {
+  testForSpeed(25);
+}
+
+TEST(Array, Timing26) {
+  testForSpeed(26);
+}
+
+TEST(Array, Timing27) {
+  testForSpeed(27);
+}
+
+TEST(Array, Timing28) {
+  testForSpeed(28);
+}
+
+TEST(Array, Timing29) {
+  testForSpeed(29);
+}
+
+TEST(Array, Timing30) {
+  testForSpeed(30);
+}
+
+TEST(Array, Timing31) {
+  testForSpeed(31);
+}
+
+TEST(Array, Timing32) {
+  testForSpeed(32);
+}
+
+TEST(Array, Timing33) {
+  testForSpeed(33);
+}
+
+TEST(Array, Timing34) {
+  testForSpeed(34);
+}
+
+TEST(Array, Timing35) {
+  testForSpeed(35);
+}
+
+TEST(Array, Timing36) {
+  testForSpeed(36);
+}
+
+TEST(Array, Timing37) {
+  testForSpeed(37);
+}
+
+TEST(Array, Timing38) {
+  testForSpeed(38);
+}
+
+TEST(Array, Timing39) {
+  testForSpeed(39);
+}
+
+TEST(Array, Timing40) {
+  testForSpeed(40);
+}
+
+TEST(Array, Timing41) {
+  testForSpeed(41);
+}
+
+TEST(Array, Timing42) {
+  testForSpeed(42);
+}
+
+TEST(Array, Timing43) {
+  testForSpeed(43);
+}
+
+TEST(Array, Timing44) {
+  testForSpeed(44);
+}
+
+TEST(Array, Timing45) {
+  testForSpeed(45);
+}
+
+TEST(Array, Timing46) {
+  testForSpeed(46);
+}
+
+TEST(Array, Timing47) {
+  testForSpeed(47);
+}
+
+TEST(Array, Timing48) {
+  testForSpeed(48);
+}
+
+TEST(Array, Timing49) {
+  testForSpeed(49);
+}
+
+TEST(Array, Timing50) {
+  testForSpeed(50);
+}
+
+TEST(Array, Timing51) {
+  testForSpeed(51);
+}
+
+TEST(Array, Timing52) {
+  testForSpeed(52);
+}
+
+TEST(Array, Timing53) {
+  testForSpeed(53);
+}
+
+TEST(Array, Timing54) {
+  testForSpeed(54);
+}
+
+TEST(Array, Timing55) {
+  testForSpeed(55);
+}
+
+TEST(Array, Timing56) {
+  testForSpeed(56);
+}
+
+TEST(Array, Timing57) {
+  testForSpeed(57);
 }

@@ -293,7 +293,7 @@ inline cds_word GetField4(const cds_word *A, const cds_word index) {
   if ((index & 1) == 0) {
     return GetField8(A, i) & 15;
   } else {
-    return (GetField8(A, i) >> 4) & 15;
+    return (GetField8(A, i) >> 4);
   }
 }
 
@@ -303,19 +303,21 @@ class ReferenceCounted {
     ReferenceCounted() {
       users_count_ = 0;
     }
+
     virtual ~ReferenceCounted() {}
+
     virtual void Unuse() {
-      // std::cout << "Someone doesn't want me anymore :-(" << std::endl;
       assert(users_count_ > 0);
       users_count_--;
       if (users_count_ == 0) {
         delete this;
       }
     }
+
     virtual void Use() {
-      // std::cout << "I'm being used! :D" << std::endl;
       users_count_++;
     }
+
   protected:
     cds_word users_count_;
 };

@@ -63,7 +63,7 @@ class BitSequenceOneLevelRank : public BitSequence {
     BitSequenceOneLevelRank(Array *bitmap, cds_word sampling_rate);
 
     virtual ~BitSequenceOneLevelRank() {}
-    // virtual cds_word Select0(const cds_word i) const;
+    virtual cds_word Select0(const cds_word i) const;
     virtual cds_word Rank1(const cds_word i) const;
     virtual cds_word Select1(const cds_word i) const;
     virtual bool Access(const cds_word i) const;

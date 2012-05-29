@@ -91,9 +91,45 @@ cds_word BitSequenceOneLevelRank::Rank1(const cds_word i) const {
          + count_so_far;
 }
 
-// cds_word BitSequenceOneLevelRank::Select0(const cds_word i) const {
-//   return 0;
-// }
+cds_word BitSequenceOneLevelRank::Select0(const cds_word i) const {
+  if (i == 0) {
+    return static_cast<cds_word>(-1);
+  }
+
+  cds_word ini = 0, fin = sampling_->GetLength();
+  cds_word count, step;
+  count = fin - ini;
+
+  while (count > 0) {
+    step = count / 2;
+    cds_word pos = ini + step;
+    if (pos - sampling_->GetField(pos) < i) {
+      ini = pos + 1;
+      count -= step + 1;
+    } else {
+      count = step;
+    }
+  }
+
+  cds_word last_word = cds::basic::SafeCeil(GetLength(), kWordSize);
+  cds_word sampling_pos = ini - 1;
+  cds_word count_so_far = sampling_->GetField(sampling_pos);
+  cds_word *data = bitmap_->data_;
+  cds_word pos_so_far = sampling_pos * sampling_rate_;
+  cds_word first_word = pos_so_far / kWordSize;
+  cds_word zeroes = popcount(~data[first_word]);
+
+  while ((count_so_far + zeroes) < i && first_word < last_word) {
+    count_so_far += zeroes;
+    first_word++;
+    zeroes = popcount(~data[first_word]);
+  }
+
+  if (i - count_so_far > popcount(~data[first_word]))
+    return GetLength();
+
+  return first_word * kWordSize + cds::basic::select(~data[first_word], i - count_so_far);
+}
 
 cds_word BitSequenceOneLevelRank::Select1(const cds_word i) const {
   if (i == 0) {

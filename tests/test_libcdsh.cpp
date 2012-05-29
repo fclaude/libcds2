@@ -40,6 +40,7 @@ using cds::basic::lsb;
 using cds::basic::cds_word;
 using cds::basic::cds_uint;
 using cds::basic::cds_uchar;
+using cds::basic::popcount;
 using cds::basic::kMaxCDSUchar;
 using cds::basic::kMaxCDSUshort;
 using cds::basic::kMaxCDSUint;

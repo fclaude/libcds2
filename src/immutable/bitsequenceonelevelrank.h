@@ -34,9 +34,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SRC_IMMUTABLE_BITSEQUENCEONELEVELRANK_H_
 
 
+#include <libcds/array.h>
 #include <libcds/libcds.h>
 #include <libcds/io.h>
-
+#include <libcds/immutable/bitsequence.h>
 
 #include <fstream>
 
@@ -47,6 +48,10 @@ using cds::basic::cds_word;
 using std::ifstream;
 using std::ofstream;
 
+using cds::basic::Array;
+using cds::basic::ArrayTpl;
+using cds::basic::popcount;
+
 /** Base class for static bitsequences, contains many abstract functions,
  *  so this can't be instantiated. It includes base implementations for
  *  rank0, select0 and select1 based on rank0.
@@ -55,16 +60,12 @@ using std::ofstream;
  */
 class BitSequenceOneLevelRank : public BitSequence {
   public:
-    virtual BitSequenceOneLevelRank(Array *bitmap, cds_word sampling_rate);
+    BitSequenceOneLevelRank(Array *bitmap, cds_word sampling_rate);
 
     virtual ~BitSequenceOneLevelRank() {}
-    virtual cds_word Select0(const cds_word i) const;
+    // virtual cds_word Select0(const cds_word i) const;
     virtual cds_word Rank1(const cds_word i) const;
     virtual cds_word Select1(const cds_word i) const;
-    virtual cds_word SelectNext1(const cds_word i) const;
-    virtual cds_word SelectNext0(const cds_word i) const;
-    virtual cds_word SelectPrev1(const cds_word i) const;
-    virtual cds_word SelectPrev0(const cds_word i) const;
     virtual bool Access(const cds_word i) const;
     virtual cds_word GetLength() const;
     virtual cds_word GetSize() const;
@@ -73,9 +74,10 @@ class BitSequenceOneLevelRank : public BitSequence {
     static BitSequenceOneLevelRank *Load(ifstream &fp);
 
   protected:
-    Array *bitmap_;
+    ArrayTpl<1> *bitmap_;
     cds_word sampling_rate_;
     Array *sampling_;
+    cds_word length_;
 };
 };
 };

@@ -74,44 +74,6 @@ const cds_word kMaxCDSUshort = 65535;
 const cds_word kMaxCDSUlong = (((cds_word)1) << (8 * sizeof(cds_ulong) - 6));
 const cds_word kMaxCDSWord = kMaxCDSUlong;
 
-/** We borrow some macros from the kernel :-) */
-#define likely(x)       __builtin_expect((x), 1)
-#define unlikely(x)     __builtin_expect((x), 0)
-
-/** Bits required to represent a number between 0 and n */
-#if __LP64__
-inline cds_word msb(cds_word n) {
-  cds_word ret = 0;
-  if (unlikely(n == 0)) {
-    return 0;
-  }
-  asm("bsr %1, %0" : "=r"(ret) : "r"(n));
-  return ret + 1;
-}
-#else
-inline cds_word msb(cds_word n) {
-  cds_word ret = 0;
-  if (unlikely(n == 0)) {
-    return 0;
-  }
-  asm("bsr %1, %0" : "=r"(ret) : "r"(n));
-  return ret + 1;
-}
-#endif
-
-/** Counts the number of 1s in x
- * @param x cds_word type
- */
-#define popcount (cds_word)__builtin_popcountl
-
-/** Obtaines the index of the least significant 1-bit of x>1 */
-inline cds_word lsb(cds_word x) {
-  if (unlikely(x == 0)) {
-    return sizeof(cds_word) * 8;
-  }
-  return __builtin_ffsl(x) - 1;
-}
-
 /** Bunch of functions to set and get individual bits from an array of words. */
 
 /** Retrieve a given index from array A where every value uses len bits
@@ -297,6 +259,61 @@ inline cds_word GetField4(const cds_word *A, const cds_word index) {
   }
 }
 
+/** We borrow some macros from the kernel :-) */
+#define likely(x)       __builtin_expect((x), 1)
+#define unlikely(x)     __builtin_expect((x), 0)
+
+/** Bits required to represent a number between 0 and n */
+#if __LP64__
+inline cds_word msb(cds_word n) {
+  cds_word ret = 0;
+  if (unlikely(n == 0)) {
+    return 0;
+  }
+  asm("bsr %1, %0" : "=r"(ret) : "r"(n));
+  return ret + 1;
+}
+#else
+inline cds_word msb(cds_word n) {
+  cds_word ret = 0;
+  if (unlikely(n == 0)) {
+    return 0;
+  }
+  asm("bsr %1, %0" : "=r"(ret) : "r"(n));
+  return ret + 1;
+}
+#endif
+
+/** Counts the number of 1s in x
+ * @param x cds_word type
+ */
+// #define popcount (cds_word)__builtin_popcountl
+inline cds_word popcount(cds_word x) {
+  if (unlikely(x == 0)) return 0;
+  return __builtin_popcountl(x);
+}
+
+/** Obtaines the index of the least significant 1-bit of x>1 */
+inline cds_word lsb(cds_word x) {
+  if (unlikely(x == 0)) {
+    return sizeof(cds_word) * 8;
+  }
+  return __builtin_ffsl(x) - 1;
+}
+
+/** Temporary implementation for select */
+inline cds_word select(cds_word x, cds_word pos) {
+  if (pos == 0) return (cds_word)-1;
+  cds_word i = 0;
+  while (true) {
+    if (BitGet(&x, i)) {
+      pos--;
+      if (pos == 0) break;
+    }
+    i++;
+  }
+  return i;
+}
 
 class ReferenceCounted {
   public:

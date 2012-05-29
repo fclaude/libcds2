@@ -46,12 +46,12 @@ class Timer {
     /** Creates and starts the timer.
      */
     Timer() {
-      restart();
+      Restart();
     }
 
     /** Restarts the timer.
      */
-    void restart() {
+    void Restart() {
       getrusage(RUSAGE_SELF, &ru);
       initial_ru = ru.ru_utime;
       gettimeofday(&initial, NULL);
@@ -59,7 +59,7 @@ class Timer {
 
     /** Stops the timer.
      */
-    void stop() {
+    void Stop() {
       getrusage(RUSAGE_SELF, &ru);
       final_ru = ru.ru_utime;
       gettimeofday(&final, NULL);
@@ -68,14 +68,14 @@ class Timer {
     /** Computes the number of microsecond elapsed from start to stop
      * This time is for wall-clock time
      */
-    double elapsedTime() {
+    double ElapsedTime() {
       return (final.tv_sec - initial.tv_sec) * 1000000 + (final.tv_usec - initial.tv_usec);
     }
 
     /** Computes the number of microsecond elapsed from start to stop
     * This time is for  process CPU usage
     */
-    double elapsedTimeCPU() {
+    double ElapsedTimeCPU() {
       return (final_ru.tv_sec - initial_ru.tv_sec) * 1000000 + (final_ru.tv_usec - initial_ru.tv_usec);
     }
 

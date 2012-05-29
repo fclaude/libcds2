@@ -35,11 +35,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <libcds/libcds.h>
 #include <libcds/io.h>
+// #include <libcds/immutable/bitsequenceonelevelrank.h>
 
 #include <algorithm>
 #include <fstream>
 
 namespace cds {
+
+    namespace immutable {
+        class BitSequenceOneLevelRank;
+    }
+
 namespace basic {
 
 using std::ifstream;
@@ -180,7 +186,7 @@ template <cds_word bpe> class ArrayTpl : public Array {
 
 
     // friend cds_word operator=(const ArrayTplModifier a);
-    friend class BitSequenceOneLevelRank;
+    friend class cds::immutable::BitSequenceOneLevelRank;
 
   protected:
     /** ArrayTpl where the data is stored */

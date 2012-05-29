@@ -37,29 +37,16 @@ using cds::basic::Timer;
 int sleepTime = 0;
 int keepWaiting = 1;
 
-void *myThread(void *_n) {
-  sleep(sleepTime);
-  keepWaiting = 0;
-  return NULL;
-}
-
-
 void testTimer(int i) {
-  sleepTime = i;
-  keepWaiting = 1;
-  pthread_t th1;
-  pthread_create(&th1, NULL, myThread, NULL);
   Timer t;
-  while (keepWaiting);
-  t.stop();
-  pthread_join(th1, NULL);
-  double diff = abs(t.elapsedTime() - 1000 * i);
-  EXPECT_GE(10, diff);
+  sleep(i);
+  t.Stop();
+  double diff = abs(t.ElapsedTime() - i * 1000000.0);
+  EXPECT_GE(std::max(t.ElapsedTime() / 20, 100.), diff);
 }
-
 
 TEST(Sleep, 0_10Seconds) {
-  // for(int i=15;i<=16;i++)
-  //  testTimer(i);
+  for(int i=0;i<=10;i++)
+   testTimer(i);
 }
 

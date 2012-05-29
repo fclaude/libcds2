@@ -43,6 +43,7 @@ uint seed_test_array = 20;
 
 TEST(Array, Empty) {
   Array *a = Array::Create(0, 0);
+  a->Use();
   ASSERT_EQ(a->GetLength(), 0ul);
   a->Unuse();
 }
@@ -51,6 +52,7 @@ TEST(Array, Empty) {
 void testOneElem(cds_word bits) {
   cds_word v = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
   Array *a = Array::Create(1, bits);
+  a->Use();
   a->SetField(0, v);
   cds_word r = a->GetField(0);
   cds_word r2 = (*a)[0];
@@ -72,6 +74,7 @@ void testThreeElem(cds_word bits) {
   cds_word v2 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
   cds_word v3 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
   Array *a = Array::Create(3, bits);
+  a->Use();
   a->SetField(0, v1);
   a->SetField(1, v2);
   a->SetField(2, v3);
@@ -107,6 +110,7 @@ void testArrayConstructor1(cds_word bits) {
   cds_word v3 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
   cds_word A[3] = {v1, v2, v3};
   Array *a = Array::Create(A, 0, 2, bits);
+  a->Use();
   cds_word r1a = a->GetField(0);
   cds_word r1b = (*a)[0];
   cds_word r2a = a->GetField(1);
@@ -129,6 +133,7 @@ void testArrayConstructor2(cds_word bits) {
   cds_word v3 = rand_r(&seed_test_array) & (((cds_word)1 << bits) - 1);
   cds_word A[3] = {v1, v2, v3};
   Array *a = Array::Create(A, 0, 2);
+  a->Use();
   cds_word r1a = a->GetField(0);
   cds_word r1b = (*a)[0];
   cds_word r2a = a->GetField(1);
@@ -154,6 +159,7 @@ TEST(Array, ArrayConstructor) {
 
 TEST(Array, LowerBound) {
   Array *a = Array::Create(10, 3);
+  a->Use();
   a->SetField(0, 1);
   a->SetField(1, 1);
   a->SetField(2, 1);
@@ -181,10 +187,12 @@ TEST(Array, LowerBound) {
   expected_result = 9;
   obtained_result = a->LowerBound(2);
   ASSERT_EQ(expected_result, obtained_result);
+  a->Unuse();
 }
 
 TEST(Array, UpperBound) {
   Array *a = Array::Create(10, 3);
+  a->Use();
   a->SetField(0, 1);
   a->SetField(1, 1);
   a->SetField(2, 1);
@@ -212,10 +220,12 @@ TEST(Array, UpperBound) {
   expected_result = 9;
   obtained_result = a->UpperBound(2);
   ASSERT_EQ(expected_result, obtained_result);
+  a->Unuse();
 }
 
 TEST(Array, BinarySearch) {
   Array *a = Array::Create(10, 3);
+  a->Use();
   a->SetField(0, 1);
   a->SetField(1, 1);
   a->SetField(2, 1);
@@ -253,6 +263,7 @@ TEST(Array, BinarySearch) {
   expected_result = 10;
   obtained_result = a->BinarySearch(4);
   ASSERT_EQ(expected_result, obtained_result);
+  a->Unuse();
 }
 
 
@@ -268,6 +279,7 @@ void startUp() {
 
 void testForSpeed(cds_word bits) {
   Array *A = Array::Create(Original, 0, N, bits);
+  A->Use();
   for (cds_word i = 0; i < N; i++) {
     cds_word pos = rand_r(&seed_test_array) % N;
     ASSERT_EQ(A->GetField(pos), Original[pos]);

@@ -42,11 +42,12 @@ using cds::basic::LoadValue;
 using cds::basic::SaveValue;
 
 cds_word BitSequence::Rank0(const cds_word i) const {
+  assert(i < GetLength());
   return i + 1 - Rank1(i);
 }
 
 cds_word BitSequence::Rank1(const cds_word i) const {
-  std::cout << "Shouldn't be here :-( " << std::endl;
+  assert(i < GetLength());
   if (i >= GetLength()) {
     throw CDSException("Out of bounds");
   }
@@ -77,11 +78,13 @@ cds_word BitSequence::Rank1(const cds_word i) const {
 }
 
 cds_word BitSequence::Rank1(const cds_word i, bool *access) const {
+  assert(i < GetLength());
   *access = Access(i);
   return Rank1(i);
 }
 
 cds_word BitSequence::Rank0(const cds_word i, bool *access) const {
+  assert(i < GetLength());
   *access = Access(i);
   return Rank0(i);
 }
@@ -191,6 +194,7 @@ BitSequence *BitSequence::Load(ifstream &fp) {
   switch (r) {
       // case DARRAY_HDR: return BitSequenceDArray::load(fp);
     default:
+      assert(false);
       throw CDSException("Unknown type");
   }
   return NULL;

@@ -195,14 +195,14 @@ template <cds_word bpe> ArrayTpl<bpe>::ArrayTpl(ifstream &input) {
   max_value_ = LoadValue<cds_word>(input);
   uint_length_ = LoadValue<cds_word>(input);
   data_ = LoadValue<cds_word>(input, uint_length_);
-  Use();
+  // Use();
 }
 
 template <cds_word bpe> ArrayTpl<bpe>::ArrayTpl(cds_word n) {
   length_ = n;
   max_value_ = ((cds_word)1 << bpe) - 1;
   InitData();
-  Use();
+  // Use();
 }
 
 template <cds_word bpe> ArrayTpl<bpe>::ArrayTpl(cds_word *A, cds_word i, cds_word j) {
@@ -220,7 +220,7 @@ template <cds_word bpe> ArrayTpl<bpe>::ArrayTpl(cds_word *A, cds_word i, cds_wor
     assert(A[k] <= max_value_);
     SetField(k - i, A[k]);
   }
-  Use();
+  // Use();
 }
 
 template <cds_word bpe> cds_word ArrayTpl<bpe>::GetSize() const {
@@ -256,6 +256,8 @@ template <cds_word bpe> cds_word ArrayTpl<bpe>::GetMax() const {
 
 // Implementation based on the STL lower_bound implementation.
 template <cds_word bpe> cds_word ArrayTpl<bpe>::LowerBound(cds_word value, cds_word ini, cds_word fin) const {
+  assert(ini <= fin);
+  assert(fin <= length_);
   cds_word count, step;
   count = fin - ini;
 
@@ -278,6 +280,8 @@ template <cds_word bpe> cds_word ArrayTpl<bpe>::LowerBound(cds_word value) const
 
 // Also based on the STL version.
 template <cds_word bpe> cds_word ArrayTpl<bpe>::UpperBound(cds_word value, cds_word ini, cds_word fin) const {
+  assert(ini <= fin);
+  assert(fin <= length_);
   cds_word count, step;
   count = fin - ini;
 
@@ -299,6 +303,8 @@ template <cds_word bpe> cds_word ArrayTpl<bpe>::UpperBound(cds_word value) const
 }
 
 template <cds_word bpe> cds_word ArrayTpl<bpe>::BinarySearch(cds_word value, cds_word ini, cds_word fin) const {
+  assert(ini <= fin);
+  assert(fin <= length_);
   cds_word pos = LowerBound(value, ini, fin);
   if (pos != length_ && !(value < GetField(pos))) {
     return pos;

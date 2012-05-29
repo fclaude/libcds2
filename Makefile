@@ -1,18 +1,41 @@
 
-# CPPFLAGS=-O0 -g3 $(INC) -Wall
-CPPFLAGS=-O3 $(INC) -Wall
-# CPPFLAGS=-O3 $(INC) -Wall -DNDEBUG -msse4 -funsafe-loop-optimizations -funsafe-math-optimizations -funswitch-loops -fvariable-expansion-in-unroller -funroll-loops -msse4.2
+CPPFLAGS=	-O0 \
+			-g3 \
+			$(INC) \
+			-Wall
+# CPPFLAGS=	-O3 \
+# 			$(INC) \
+# 			-Wall
+# CPPFLAGS=	-O3 \
+# 			$(INC) \
+# 			-Wall \
+# 			-DNDEBUG \
+# 			-msse4 \
+# 			-funsafe-loop-optimizations \
+# 			-funsafe-math-optimizations \
+# 			-funswitch-loops \
+# 			-fvariable-expansion-in-unroller \
+# 			-funroll-loops
 
 CPP=g++
 INC=-I./includes/ -I./dep/gtest-1.6.0/include/
 LIB=lib/libcds.a
 
-OBJ=src/basic/array.o src/basic/io.o src/immutable/bitsequence.o \
-	src/immutable/bitsequenceseq.o
+OBJ=	src/basic/array.o \
+		src/basic/io.o \
+		src/immutable/bitsequence.o \
+		src/immutable/bitsequenceseq.o \
+		src/immutable/bitsequenceonelevelrank.o
 
-TESTOBJ= tests/test_main.o tests/test_array.o tests/test_ioh.o tests/test_libcdsh.o \
-		tests/test_timeh.o tests/test_bitsequence1.o tests/test_bitsequence_utils.o \
-		tests/test_bitsequence2.o
+TESTOBJ= tests/test_main.o \
+		tests/test_array.o \
+		tests/test_ioh.o \
+		tests/test_libcdsh.o \
+		tests/test_timeh.o \
+		tests/test_bitsequence.o \
+		tests/test_bitsequence1.o \
+		tests/test_bitsequence2.o \
+		tests/test_bitsequence_utils.o
 
 GTEST_DIR=./dep/gtest-1.6.0/
 
@@ -56,6 +79,8 @@ test: libcds $(TESTOBJ)
 	@$(CPP) $(CPPFLAGS) -o tests/test_libcdsh tests/test_libcdsh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_timeh"
 	@$(CPP) $(CPPFLAGS) -o tests/test_timeh tests/test_timeh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@echo " [LNK] Linking test_bitsequence"
+	@$(CPP) $(CPPFLAGS) -o tests/test_bitsequence tests/test_bitsequence.o tests/test_bitsequence_utils.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_bitsequence1"
 	@$(CPP) $(CPPFLAGS) -o tests/test_bitsequence1 tests/test_bitsequence1.o tests/test_bitsequence_utils.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_bitsequence2"
@@ -75,6 +100,11 @@ clean:
 	@touch includes/libcds/delete_me
 	@make -s -C $(GTEST_DIR) clean > /dev/null
 	@rm -f $(TESTOBJ)
-	@rm -f tests/test_array tests/test_timeh tests/test_libcdsh tests/test_ioh
-	@rm -f tests/test_bitsequence1 tests/test_bitsequence2
+	@rm -f tests/test_array
+	@rm -f tests/test_timeh
+	@rm -f tests/test_libcdsh
+	@rm -f tests/test_ioh
+	@rm -f tests/test_bitsequence
+	@rm -f tests/test_bitsequence1
+	@rm -f tests/test_bitsequence2
 

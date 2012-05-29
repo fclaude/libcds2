@@ -65,12 +65,12 @@ void TestBitSequence(BitSequence *model, BitSequence *tested) {
     ASSERT_EQ(exp, rec);
     ASSERT_EQ(access_expected, access);
   }
-  for (cds_word i = 0; i < kBitmapLength - kOnes + 1; i++) {
+  for (cds_word i = 1; i < kBitmapLength - kOnes + 1; i++) {
     cds_word exp = model->Select0(i);
     cds_word rec = tested->Select0(i);
     ASSERT_EQ(exp, rec);
   }
-  for (cds_word i = 0; i < kOnes; i++) {
+  for (cds_word i = 1; i < kOnes; i++) {
     cds_word exp = model->Select1(i);
     cds_word rec = tested->Select1(i);
     ASSERT_EQ(exp, rec);

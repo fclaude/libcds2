@@ -30,7 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************************/
 
 
-#include <libcds/immutable/bitsequence.h>
+#include <libcds/immutable/bitsequenceonelevelrank.h>
 #include <libcds/cdsexception.h>
 #include <libcds/io.h>
 
@@ -40,9 +40,10 @@ namespace immutable {
 using cds::basic::CDSException;
 using cds::basic::LoadValue;
 using cds::basic::SaveValue;
+using cds::basic::kWordSize;
 
 BitSequenceOneLevelRank::BitSequenceOneLevelRank(Array *bitmap, cds_word sampling_rate) {
-  bitmap_ = bitmap;
+  bitmap_ = reinterpret_cast<ArrayTpl<1>*>(bitmap);
   bitmap_->Use();
   sampling_rate_ = sampling_rate * kWordSize;
   cds_word ones_count = 0;
@@ -50,92 +51,78 @@ BitSequenceOneLevelRank::BitSequenceOneLevelRank(Array *bitmap, cds_word samplin
     if (bitmap_->GetField(i) == 1) {
       ones_count++;
     }
-  sampling_ = new Array(cds::basic::SafeCeil(bitmap_->GetLength(), sampling_rate_),
+  sampling_ = Array::Create(cds::basic::SafeCeil(bitmap_->GetLength(), sampling_rate_),
                         cds::basic::msb(ones_count));
   sampling_->Use();
   ones_count = 0;
   for (size_t i = 0; i < bitmap_->GetLength(); i++) {
+    if (i % sampling_rate_ == 0) {
+      sampling_->SetField(i / sampling_rate_, ones_count);
+    }
     if (bitmap_->GetField(i) == 1) {
       ones_count++;
-    }
-    if ((i + 1) % sampling_rate_ == 0) {
-      sampling_->SetField(i / sampling_rate_, ones_count);
     }
   }
 }
 
 cds_word BitSequenceOneLevelRank::Rank1(const cds_word i) const {
-  if (i >= length_) {
+  assert(i < GetLength());
+  if (i >= bitmap_->GetLength()) {
     throw CDSException("Rank1 out of bounds");
   }
+
   if (i == 0) {
     return bitmap_->GetField(i);
   }
-  cds_word sampling_pos = (i - 1) / sampling_rate_;
+
+  cds_word sampling_pos = i / sampling_rate_;
   cds_word count_so_far = sampling_->GetField(sampling_pos);
   cds_word starting_pos = sampling_pos * sampling_rate_;
   cds_word *data = bitmap_->data_;
   cds_word first_word = starting_pos / kWordSize;
 
-  while (starting_pos + kWordSize < i) {
+  while (starting_pos + kWordSize <= i) {
     count_so_far += popcount(data[first_word]);
     starting_pos += kWordSize;
     first_word++;
   }
-  return popcount(data[first_pos] & ((~1) << (kWordSize + starting_pos - i)))
+
+  return popcount(data[first_word] << (kWordSize - i + starting_pos - 1))
          + count_so_far;
 }
 
-cds_word BitSequenceOneLevelRank::Select0(const cds_word i) const {
-  return 0;
-}
+// cds_word BitSequenceOneLevelRank::Select0(const cds_word i) const {
+//   return 0;
+// }
 
 cds_word BitSequenceOneLevelRank::Select1(const cds_word i) const {
   if (i == 0) {
-    throw CDSException("Select1 out of bounds");
+    return static_cast<cds_word>(-1);
   }
-  cds_word sampling_pos = sampling_->LowerBound(i);
-  cds_word count_so_far = sampling_->GetField(sampling_pos - 1);
+
+  // We find the word that contains the answer
+  cds_word last_word = cds::basic::SafeCeil(GetLength(), kWordSize);
+  cds_word sampling_pos = sampling_->LowerBound(i) - 1;
+  cds_word count_so_far = sampling_->GetField(sampling_pos);
   cds_word *data = bitmap_->data_;
   cds_word pos_so_far = sampling_pos * sampling_rate_;
   cds_word first_word = pos_so_far / kWordSize;
   cds_word ones = popcount(data[first_word]);
-  while ((count_so_far + ones) < i) {
+
+  while ((count_so_far + ones) < i && first_word < last_word) {
     count_so_far += ones;
     first_word++;
     ones = popcount(data[first_word]);
   }
 
-  return 0;
-}
+  if (i - count_so_far > popcount(data[first_word]))
+    return GetLength();
 
-cds_word BitSequenceOneLevelRank::SelectNext1(const cds_word i) const {
-  return Select1((i == 0 ? 0 : Rank1(i - 1)) + 1);
-}
-
-cds_word BitSequenceOneLevelRank::SelectPrev1(const cds_word i) const {
-  cds_word v = Rank1(i);
-  if (v < 2) {
-    return (cds_word) - 1;
-  }
-  return Select1(v - 1);
-}
-
-cds_word BitSequenceOneLevelRank::SelectNext0(const cds_word i) const {
-  return Select0((i == 0 ? 0 : Rank0(i - 1)) + 1);
-}
-
-cds_word BitSequenceOneLevelRank::SelectPrev0(const cds_word i) const {
-  size_t v = Rank0(i);
-  if (v < 2) {
-    return (size_t) - 1;
-  }
-  return Select0(v - 1);
+  return first_word * kWordSize + cds::basic::select(data[first_word], i - count_so_far);
 }
 
 bool BitSequenceOneLevelRank::Access(const cds_word i) const {
-  cds_word *data = bitmap_->data_;
-  return BitGet(data, i);
+  return bitmap_->GetField(i);
 }
 
 cds_word BitSequenceOneLevelRank::GetLength() const {
@@ -146,7 +133,9 @@ cds_word BitSequenceOneLevelRank::GetSize() const {
   return sizeof(BitSequenceOneLevelRank) + bitmap_->GetSize() + sampling_->GetSize();
 }
 
-void BitSequenceOneLevelRank::save(ofstream &out) const {}
+void BitSequenceOneLevelRank::Save(ofstream &out) const {
+
+}
 
 BitSequenceOneLevelRank *BitSequenceOneLevelRank::Load(ifstream &fp) {
   cds_word r = LoadValue<cds_word>(fp);

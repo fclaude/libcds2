@@ -33,75 +33,52 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <libcds/array.h>
 #include <libcds/immutable/bitsequence.h>
 #include <libcds/immutable/bitsequenceseq.h>
+#include <libcds/immutable/bitsequenceonelevelrank.h>
 #include "./test_bitsequence_utils.h"
 
 using cds::immutable::BitSequence;
+using cds::immutable::BitSequenceOneLevelRank;
 using cds::immutable::BitSequenceSeq;
 using cds::basic::Array;
 using cds::basic::cds_word;
 using std::ofstream;
 
-class BitSequenceRank0: public BitSequence {
-  public:
-    explicit BitSequenceRank0(Array *_a) {
-      bs_ = new BitSequenceSeq(_a);
-      bs_->Use();
-    }
-
-    virtual ~BitSequenceRank0() {
-      bs_->Unuse();
-    }
-
-    virtual cds_word GetLength() const {
-      return bs_->GetLength();
-    }
-
-    virtual cds_word Rank0(const cds_word i) const {
-      return bs_->Rank0(i);
-    }
-
-    virtual cds_word Rank0(const cds_word i, bool *access) const {
-      *access = Access(i);
-      return Rank0(i);
-    }
-
-    virtual cds_word Rank1(const cds_word i) const {
-      return i - Rank0(i) + 1;
-    }
-
-    virtual cds_word Rank1(const cds_word i, bool *access) const {
-      *access = Access(i);
-      return Rank1(i);
-    }
-
-    virtual void Save(ofstream &fp) const {
-    }
-
-    virtual cds_word GetSize() const {
-      return bs_->GetSize() + sizeof(*this);
-    }
-
-    virtual cds_word CountZeros() const {
-      return bs_->CountZeros();
-    }
-
-  protected:
-    BitSequence *bs_;
-};
-
-
-
-TEST(BitSequence, SupportingRank0) {
+void testBitSequenceOneLevelRank(cds_word sample) {
   const cds_word kBitmapLength = 10000;
   const cds_word kOnes = kBitmapLength / 4;
   unsigned int seed = 101;
   Array *a = CreateRandomBitmap(kBitmapLength, kOnes, seed);
+  a->Use();
   BitSequenceSeq *seq_bitseq = new BitSequenceSeq(a);
   seq_bitseq->Use();
-  BitSequenceRank0 *bs = new BitSequenceRank0(a);
+  BitSequence *bs = new BitSequenceOneLevelRank(a, sample);
   bs->Use();
   TestBitSequence(seq_bitseq, bs);
-  a->Unuse();
   bs->Unuse();
+  a->Unuse();
   seq_bitseq->Unuse();
+}
+
+TEST(BitSequence, BitSequenceOneLevelRank1) {
+  testBitSequenceOneLevelRank(1);
+}
+
+TEST(BitSequence, BitSequenceOneLevelRank7) {
+  testBitSequenceOneLevelRank(7);
+}
+
+TEST(BitSequence, BitSequenceOneLevelRank20) {
+  testBitSequenceOneLevelRank(20);
+}
+
+TEST(BitSequence, BitSequenceOneLevelRank32) {
+  testBitSequenceOneLevelRank(32);
+}
+
+TEST(BitSequence, BitSequenceOneLevelRank33) {
+  testBitSequenceOneLevelRank(33);
+}
+
+TEST(BitSequence, BitSequenceOneLevelRank40) {
+  testBitSequenceOneLevelRank(40);
 }

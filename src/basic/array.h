@@ -210,11 +210,11 @@ template <cds_word bpe> class ArrayTpl : public Array {
     /** Length of the array in number of elements */
     cds_word length_;
     /** Maximum value stored in the array */
-    cds_word max_value_;
+    // cds_word max_value_;
     /** Length of the array in number of uints */
-    cds_word uint_length_;
+    // cds_word uint_length_;
 
-    cds_word users_;
+    // cds_word users_;
 
     /** Initializes the array, all the values are assigned to 0
      */

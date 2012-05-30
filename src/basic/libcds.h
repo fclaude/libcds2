@@ -321,6 +321,12 @@ inline cds_word select(cds_word x, cds_word pos) {
   return i;
 }
 
+inline void PrintBinary(cds_word x) {
+  for (cds_word i = 0; i < kWordSize; i++)
+    std::cout << BitGet(&x, i);
+  std::cout << std::endl;
+}
+
 class ReferenceCounted {
   public:
     ReferenceCounted() {

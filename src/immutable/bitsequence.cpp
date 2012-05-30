@@ -180,6 +180,14 @@ bool BitSequence::Access(const cds_word i) const {
   return (Rank1(i) - (i != 0 ? Rank1(i - 1) : 0)) > 0;
 }
 
+bool BitSequence::Access(const cds_word i, cds_word *r) const {
+  *r = Rank1(i);
+  bool ret = (*r - (i != 0 ? Rank1(i - 1) : 0)) > 0;
+  if (!ret)
+    *r = i - *r + 1;
+  return ret;
+}
+
 cds_word BitSequence::CountOnes() const {
   return Rank1(GetLength() - 1);
 }

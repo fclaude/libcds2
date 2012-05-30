@@ -58,45 +58,43 @@ Array *Array::Create(cds_word *A, cds_word i, cds_word j, cds_word bpe) {
   return ret;
 }
 
+template <cds_word bpe> void ArrayTpl<bpe>::Save(ostream &out) const {
+  SaveValue(out, bpe);
+  SaveValue(out, length_);
+  cds_word uint_length = WordsLength(length_, bpe);
+  SaveValue(out, data_, uint_length);
+}
+
 template <cds_word bpe> ArrayTpl<bpe>::ArrayTpl(istream &input) {
   length_ = LoadValue<cds_word>(input);
-  max_value_ = LoadValue<cds_word>(input);
-  uint_length_ = LoadValue<cds_word>(input);
-  data_ = LoadValue<cds_word>(input, uint_length_);
+  cds_word uint_length = WordsLength(length_, bpe);
+  data_ = LoadValue<cds_word>(input, uint_length);
 }
 
 template <cds_word bpe> ArrayTpl<bpe>* ArrayTpl<bpe>::Load(istream &input) {
   cds_word id = LoadValue<cds_word>(input);
-  if (id != bpe)
+  if (id != bpe) {
+    std::cout << "Returning null: " << bpe << " - " << id << std::endl;
     return NULL;
+  }
   return new ArrayTpl<bpe>(input);
 }
 
 template <cds_word bpe> ArrayTpl<bpe>::ArrayTpl(cds_word n) {
   length_ = n;
-  max_value_ = ((cds_word)1 << bpe) - 1;
   InitData();
 }
 
 template <cds_word bpe> ArrayTpl<bpe>::ArrayTpl(cds_word *A, cds_word i, cds_word j) {
-  max_value_ = 0;
-  if (bpe == 0) {
-    for (cds_word k = i; k <= j; k++) {
-      max_value_ = max(max_value_, A[k]);
-    }
-  } else {
-    max_value_ = ((cds_word)1 << bpe) - 1;
-  }
   length_ = j - i + 1;
   InitData();
   for (cds_word k = i; k <= j; k++) {
-    assert(A[k] <= max_value_);
     SetField(k - i, A[k]);
   }
 }
 
 template <cds_word bpe> cds_word ArrayTpl<bpe>::GetSize() const {
-  return sizeof(cds_word) * uint_length_
+  return sizeof(cds_word) * WordsLength(length_, bpe)
          + sizeof(cds_word) * 4
          + sizeof(cds_word *);
 }
@@ -108,14 +106,6 @@ template <cds_word bpe> cds_word ArrayTpl<bpe>::GetLength() const {
 
 template <cds_word bpe> ArrayTpl<bpe>::~ArrayTpl() {
   delete [] data_;
-}
-
-template <cds_word bpe> void ArrayTpl<bpe>::Save(ostream &out) const {
-  SaveValue(out, bpe);
-  SaveValue(out, length_);
-  SaveValue(out, max_value_);
-  SaveValue(out, uint_length_);
-  SaveValue(out, data_, uint_length_);
 }
 
 template <cds_word bpe> cds_word ArrayTpl<bpe>::GetMax() const {
@@ -206,9 +196,9 @@ template <cds_word bpe> cds_word ArrayTpl<bpe>::BinarySearch(cds_word value) con
 }
 
 template <cds_word bpe> void ArrayTpl<bpe>::InitData() {
-  uint_length_ = WordsLength(length_, bpe);
-  data_ = new cds_word[uint_length_];
-  for (cds_word i = 0; i < uint_length_; i++) {
+  cds_word uint_length = WordsLength(length_, bpe);
+  data_ = new cds_word[uint_length];
+  for (cds_word i = 0; i < uint_length; i++) {
     data_[i] = 0;
   }
 }
@@ -253,7 +243,6 @@ template <cds_word bpe> cds_word ArrayTpl<bpe>::GetField(const cds_word position
 
 template <cds_word bpe> cds_word ArrayTpl<bpe>::SetField(const cds_word position, const cds_word v) {
   assert(position < length_);
-  assert(v <= max_value_);
   cds::basic::SetField(data_, bpe, position, v);
   return v;
 }

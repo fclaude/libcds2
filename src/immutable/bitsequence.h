@@ -47,7 +47,7 @@ using cds::basic::cds_word;
 using std::istream;
 using std::ostream;
 
-const cds_word kBitSequenceOneLevelRankID = 1;
+const cds_word kBitSequenceOneLevelRankID = 2;
 
 /** Base class for static bitsequences, contains many abstract functions,
  *  so this can't be instantiated. It includes base implementations for
@@ -105,8 +105,7 @@ class BitSequence : public cds::basic::ReferenceCounted {
 
     /** Returns the i-th bit. */
     virtual bool Access(const cds_word i) const;
-
-
+    virtual bool Access(const cds_word i, cds_word *r) const;
 
     /** Returns the length in bits of the bitmap. */
     virtual cds_word GetLength() const = 0;

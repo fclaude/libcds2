@@ -36,27 +36,47 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <libcds/immutable/bitsequenceonelevelrank.h>
 #include "./test_bitsequence_utils.h"
 
+#include <sstream>
+
 using cds::immutable::BitSequence;
 using cds::immutable::BitSequenceOneLevelRank;
 using cds::immutable::BitSequenceSeq;
 using cds::basic::Array;
 using cds::basic::cds_word;
-using std::ostream;
+
+using std::stringbuf;
+using std::ios_base;
+using std::iostream;
 
 void testBitSequenceOneLevelRank(cds_word sample) {
   const cds_word kBitmapLength = 10000;
   const cds_word kOnes = kBitmapLength / 4;
   unsigned int seed = 101;
+  char *buffer = new char[kBitmapLength];
+  stringbuf *sbuf = new stringbuf(ios_base::in | ios_base::out);
+  sbuf->pubsetbuf(buffer, kBitmapLength);
+  iostream io(sbuf);
+
   Array *a = CreateRandomBitmap(kBitmapLength, kOnes, seed);
   a->Use();
   BitSequenceSeq *seq_bitseq = new BitSequenceSeq(a);
   seq_bitseq->Use();
   BitSequence *bs = new BitSequenceOneLevelRank(a, sample);
   bs->Use();
+  bs->Save(io);
+  //io.seekg(0);
   TestBitSequence(seq_bitseq, bs);
   bs->Unuse();
+
+  bs = BitSequenceOneLevelRank::Load(io);
+  bs->Use();
+  TestBitSequence(seq_bitseq, bs);
+  bs->Unuse();
+
   a->Unuse();
   seq_bitseq->Unuse();
+  delete sbuf;
+  delete [] buffer;
 }
 
 TEST(BitSequence, BitSequenceOneLevelRank1) {

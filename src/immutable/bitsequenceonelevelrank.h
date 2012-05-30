@@ -65,9 +65,12 @@ class BitSequenceOneLevelRank : public BitSequence {
     virtual ~BitSequenceOneLevelRank() {}
     virtual cds_word Select0(const cds_word i) const;
     virtual cds_word Rank1(const cds_word i) const;
+    virtual cds_word Rank1(const cds_word i, bool *a) const;
+    virtual cds_word Rank0(const cds_word i, bool *a) const;
     virtual cds_word Select1(const cds_word i) const;
     virtual cds_word SelectNext1(const cds_word i) const;
     virtual bool Access(const cds_word i) const;
+    virtual bool Access(const cds_word i, cds_word *r) const;
     virtual cds_word GetLength() const;
     virtual cds_word GetSize() const;
     virtual void Save(ostream &fp) const;

@@ -67,6 +67,39 @@ BitSequenceOneLevelRank::BitSequenceOneLevelRank(Array *bitmap, cds_word samplin
   }
 }
 
+bool BitSequenceOneLevelRank::Access(const cds_word i, cds_word *r) const {
+  assert(i < GetLength());
+  if (i >= bitmap_->GetLength()) {
+    throw CDSException("Rank1 out of bounds");
+  }
+
+  if (i == 0) {
+    *r = bitmap_->GetField(i);
+    return *r;
+  }
+
+  cds_word sampling_pos = i / sampling_rate_;
+  cds_word count_so_far = sampling_->GetField(sampling_pos);
+  cds_word starting_pos = sampling_pos * sampling_rate_;
+  cds_word *data = bitmap_->data_;
+  cds_word first_word = starting_pos / kWordSize;
+
+  while (starting_pos + kWordSize <= i) {
+    count_so_far += popcount(data[first_word]);
+    starting_pos += kWordSize;
+    first_word++;
+  }
+
+  cds_word pos_in_word = i - starting_pos;
+  *r = popcount(data[first_word] << (kWordSize - 1 - pos_in_word))
+         + count_so_far;
+  if (1 & (data[first_word] >> pos_in_word))
+    return true;
+
+  *r = i - *r + 1;
+  return false;
+}
+
 cds_word BitSequenceOneLevelRank::Rank1(const cds_word i) const {
   assert(i < GetLength());
   if (i >= bitmap_->GetLength()) {
@@ -91,6 +124,39 @@ cds_word BitSequenceOneLevelRank::Rank1(const cds_word i) const {
 
   return popcount(data[first_word] << (kWordSize - i + starting_pos - 1))
          + count_so_far;
+}
+
+cds_word BitSequenceOneLevelRank::Rank1(const cds_word i, bool *a) const {
+  assert(i < GetLength());
+  if (i >= bitmap_->GetLength()) {
+    throw CDSException("Rank1 out of bounds");
+  }
+
+  if (i == 0) {
+    *a = bitmap_->GetField(i);
+    return *a;
+  }
+
+  cds_word sampling_pos = i / sampling_rate_;
+  cds_word count_so_far = sampling_->GetField(sampling_pos);
+  cds_word starting_pos = sampling_pos * sampling_rate_;
+  cds_word *data = bitmap_->data_;
+  cds_word first_word = starting_pos / kWordSize;
+
+  while (starting_pos + kWordSize <= i) {
+    count_so_far += popcount(data[first_word]);
+    starting_pos += kWordSize;
+    first_word++;
+  }
+
+  cds_word pos_in_word = i - starting_pos;
+  *a = 1 & (data[first_word] >> pos_in_word);
+  return popcount(data[first_word] << (kWordSize - 1 - pos_in_word))
+         + count_so_far;
+}
+
+cds_word BitSequenceOneLevelRank::Rank0(const cds_word i, bool *a) const {
+  return i + 1 - Rank1(i, a);
 }
 
 cds_word BitSequenceOneLevelRank::Select0(const cds_word i) const {
@@ -215,6 +281,7 @@ cds_word BitSequenceOneLevelRank::GetSize() const {
 }
 
 void BitSequenceOneLevelRank::Save(ostream &out) const {
+  SaveValue(out, kBitSequenceOneLevelRankID);
   bitmap_->Save(out);
   sampling_->Save(out);
   SaveValue(out, length_);
@@ -223,8 +290,10 @@ void BitSequenceOneLevelRank::Save(ostream &out) const {
 
 BitSequenceOneLevelRank *BitSequenceOneLevelRank::Load(istream &fp) {
   cds_word r = LoadValue<cds_word>(fp);
-  if (r != kBitSequenceOneLevelRankID)
+  if (r != kBitSequenceOneLevelRankID) {
+    assert(false);
     return NULL;
+  }
   BitSequenceOneLevelRank * ret = new BitSequenceOneLevelRank();
   ret->bitmap_ = ArrayTpl<1>::Load(fp);
   ret->sampling_ = Array::Load(fp);

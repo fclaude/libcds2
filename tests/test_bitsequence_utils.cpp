@@ -62,8 +62,26 @@ void TestBitSequence(BitSequence *model, BitSequence *tested) {
     bool access;
     rec = tested->Rank0(i, &access);
     bool access_expected = model->Access(i);
-    ASSERT_EQ(exp, rec);
     ASSERT_EQ(access_expected, access);
+    ASSERT_EQ(exp, rec);
+  }
+  for (cds_word i = 0; i < kBitmapLength; i++) {
+    cds_word exp = model->Rank1(i);
+    cds_word rec = tested->Rank1(i);
+    ASSERT_EQ(exp, rec);
+    bool access;
+    rec = tested->Rank1(i, &access);
+    bool access_expected = model->Access(i);
+    ASSERT_EQ(access_expected, access);
+    ASSERT_EQ(exp, rec);
+  }
+  for (cds_word i = 0; i < kBitmapLength; i++) {
+    cds_word exp;
+    cds_word rec;
+    bool access = tested->Access(i, &rec);
+    bool access_expected = model->Access(i, &exp);
+    ASSERT_EQ(access_expected, access);
+    ASSERT_EQ(exp, rec);
   }
   for (cds_word i = 1; i < kBitmapLength - kOnes + 1; i++) {
     cds_word exp = model->Select0(i);

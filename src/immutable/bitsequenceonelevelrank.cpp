@@ -145,7 +145,7 @@ cds_word BitSequenceOneLevelRank::Select1(const cds_word i) const {
   cds_word first_word = pos_so_far / kWordSize;
   cds_word ones = popcount(data[first_word]);
 
-  while ((count_so_far + ones) < i && first_word < last_word) {
+  while ((count_so_far + ones) < i && first_word < last_word + 1) {
     count_so_far += ones;
     first_word++;
     ones = popcount(data[first_word]);
@@ -155,6 +155,47 @@ cds_word BitSequenceOneLevelRank::Select1(const cds_word i) const {
     return GetLength();
 
   return first_word * kWordSize + cds::basic::select(data[first_word], i - count_so_far);
+}
+
+cds_word BitSequenceOneLevelRank::SelectNext1(const cds_word i) const {
+  cds_word *data = bitmap_->data_;
+  cds_word tmp_word = (data[i / kWordSize] >> (i % kWordSize));
+  if (popcount(tmp_word)) {
+    return i + cds::basic::select(tmp_word, 1);
+  }
+
+  cds_word last_word = cds::basic::SafeCeil(GetLength(), kWordSize);
+  cds_word first_word = i / kWordSize + 1;
+  cds_word sampling_pos = i / sampling_rate_ + 1;
+  cds_word seq_search_limit = std::min(sampling_pos * sampling_rate_ / kWordSize, last_word + 1);
+
+  while (first_word < seq_search_limit) {
+    if (data[first_word]) {
+      return first_word * kWordSize + cds::basic::select(data[first_word], 1);
+    }
+    first_word++;
+  }
+
+  sampling_pos--;
+  cds_word new_i = sampling_->GetField(sampling_pos) + 1;
+  sampling_pos = sampling_->LowerBoundExp(new_i, sampling_pos, sampling_->GetLength());
+  cds_word pos_so_far = sampling_pos * sampling_rate_;
+  first_word = pos_so_far / kWordSize;
+
+  cds_word count_so_far = new_i - 1;
+  cds_word ones = popcount(data[first_word]);
+
+  while ((count_so_far + ones) < new_i && first_word < last_word + 1) {
+    count_so_far += ones;
+    first_word++;
+    ones = popcount(data[first_word]);
+  }
+
+  if (new_i - count_so_far > popcount(data[first_word])) {
+    return GetLength();
+  }
+
+  return first_word * kWordSize + cds::basic::select(data[first_word], new_i - count_so_far);
 }
 
 bool BitSequenceOneLevelRank::Access(const cds_word i) const {

@@ -89,15 +89,26 @@ class Array : public ReferenceCounted {
     virtual cds_word GetMax() const = 0;
 
     /** Returns the position of the first element between ini and fin-1
-        that is not less than the value.
+        that is not less than the value. It performs a binary search.
         If none, then it return fin.
     */
     virtual cds_word LowerBound(cds_word value, cds_word ini, cds_word fin) const = 0;
 
     /** Returns the position of the first element that is not less than the value.
-        If none, then it return the length.
+        If none, then it return the length. It performs a binary search.
     */
     virtual cds_word LowerBound(cds_word value) const = 0;
+
+    /** Returns the position of the first element between ini and fin-1
+        that is not less than the value. It performs an exponential search.
+        If none, then it return fin.
+    */
+    virtual cds_word LowerBoundExp(cds_word value, cds_word ini, cds_word fin) const = 0;
+
+    /** Returns the position of the first element that is not less than the value.
+        If none, then it return the length. It performs an exponential search.
+    */
+    virtual cds_word LowerBoundExp(cds_word value) const = 0;
 
     /** Returns the position of the first element between ini and fin-1
         that is greater than the value.
@@ -175,6 +186,10 @@ template <cds_word bpe> class ArrayTpl : public Array {
     virtual cds_word LowerBound(cds_word value, cds_word ini, cds_word fin) const;
 
     virtual cds_word LowerBound(cds_word value) const;
+
+    virtual cds_word LowerBoundExp(cds_word value, cds_word ini, cds_word fin) const;
+
+    virtual cds_word LowerBoundExp(cds_word value) const;
 
     virtual cds_word UpperBound(cds_word value, cds_word ini, cds_word fin) const;
 

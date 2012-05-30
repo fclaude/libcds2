@@ -278,6 +278,21 @@ template <cds_word bpe> cds_word ArrayTpl<bpe>::LowerBound(cds_word value) const
   return LowerBound(value, 0, length_);
 }
 
+template <cds_word bpe> cds_word ArrayTpl<bpe>::LowerBoundExp(cds_word value, cds_word ini, cds_word fin) const {
+  cds_word sum = 1;
+  while (ini + sum < fin) {
+    if (GetField(ini + sum) >= value)
+      return LowerBound(value, ini, ini + sum);
+    ini += sum;
+    sum *= 2;
+  }
+  return LowerBound(value, ini, fin);
+}
+
+template <cds_word bpe> cds_word ArrayTpl<bpe>::LowerBoundExp(cds_word value) const {
+  return LowerBoundExp(value, 0, length_);
+}
+
 // Also based on the STL version.
 template <cds_word bpe> cds_word ArrayTpl<bpe>::UpperBound(cds_word value, cds_word ini, cds_word fin) const {
   assert(ini <= fin);
@@ -324,7 +339,6 @@ template <cds_word bpe> void ArrayTpl<bpe>::InitData() {
     data_[i] = 0;
   }
 }
-
 
 template <> cds_word ArrayTpl<32>::GetField(const cds_word position) const {
   assert(position < length_);

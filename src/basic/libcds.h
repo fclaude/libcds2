@@ -122,7 +122,7 @@ inline cds_word WordsLength(cds_word n, cds_word b) {
 }
 
 inline cds_word SafeCeil(cds_word k, cds_word n) {
-  return k / n + (k % n > 0 ? 1 : 0);
+  return (k + n - 1) / n;
 }
 
 /** Retrieve a given bitsequence from array A

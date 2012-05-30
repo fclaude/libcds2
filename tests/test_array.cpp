@@ -190,6 +190,39 @@ TEST(Array, LowerBound) {
   a->Unuse();
 }
 
+TEST(Array, LowerBoundExp) {
+  Array *a = Array::Create(10, 3);
+  a->Use();
+  a->SetField(0, 1);
+  a->SetField(1, 1);
+  a->SetField(2, 1);
+  a->SetField(3, 1);
+  a->SetField(4, 1);
+  a->SetField(5, 1);
+  a->SetField(6, 1);
+  a->SetField(7, 1);
+  a->SetField(8, 1);
+  a->SetField(9, 1);
+  cds_word expected_result = 10;
+  cds_word obtained_result = a->LowerBoundExp(2);
+  ASSERT_EQ(expected_result, obtained_result);
+  expected_result = 8;
+  obtained_result = a->LowerBoundExp(2, 0, 8);
+  ASSERT_EQ(expected_result, obtained_result);
+  expected_result = 0;
+  obtained_result = a->LowerBoundExp(1, 0, 8);
+  ASSERT_EQ(expected_result, obtained_result);
+  a->SetField(9, 2);
+  expected_result = 9;
+  obtained_result = a->LowerBoundExp(2);
+  ASSERT_EQ(expected_result, obtained_result);
+  a->SetField(9, 3);
+  expected_result = 9;
+  obtained_result = a->LowerBoundExp(2);
+  ASSERT_EQ(expected_result, obtained_result);
+  a->Unuse();
+}
+
 TEST(Array, UpperBound) {
   Array *a = Array::Create(10, 3);
   a->Use();

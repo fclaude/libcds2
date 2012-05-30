@@ -34,6 +34,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <libcds/cdsexception.h>
 #include <libcds/io.h>
 
+#include <algorithm>
+
 namespace cds {
 namespace immutable {
 
@@ -52,7 +54,7 @@ BitSequenceOneLevelRank::BitSequenceOneLevelRank(Array *bitmap, cds_word samplin
       ones_count++;
     }
   sampling_ = Array::Create(cds::basic::SafeCeil(bitmap_->GetLength(), sampling_rate_),
-                        cds::basic::msb(ones_count));
+                            cds::basic::msb(ones_count));
   sampling_->Use();
   ones_count = 0;
   for (size_t i = 0; i < bitmap_->GetLength(); i++) {
@@ -125,8 +127,9 @@ cds_word BitSequenceOneLevelRank::Select0(const cds_word i) const {
     zeroes = popcount(~data[first_word]);
   }
 
-  if (i - count_so_far > popcount(~data[first_word]))
+  if (i - count_so_far > popcount(~data[first_word])) {
     return GetLength();
+  }
 
   return first_word * kWordSize + cds::basic::select(~data[first_word], i - count_so_far);
 }
@@ -151,8 +154,9 @@ cds_word BitSequenceOneLevelRank::Select1(const cds_word i) const {
     ones = popcount(data[first_word]);
   }
 
-  if (i - count_so_far > popcount(data[first_word]))
+  if (i - count_so_far > popcount(data[first_word])) {
     return GetLength();
+  }
 
   return first_word * kWordSize + cds::basic::select(data[first_word], i - count_so_far);
 }
@@ -211,7 +215,7 @@ cds_word BitSequenceOneLevelRank::GetSize() const {
 }
 
 void BitSequenceOneLevelRank::Save(ofstream &out) const {
-
+  return;
 }
 
 BitSequenceOneLevelRank *BitSequenceOneLevelRank::Load(ifstream &fp) {

@@ -289,7 +289,9 @@ inline cds_word msb(cds_word n) {
  */
 // #define popcount (cds_word)__builtin_popcountl
 inline cds_word popcount(cds_word x) {
-  if (unlikely(x == 0)) return 0;
+  if (unlikely(x == 0)) {
+    return 0;
+  }
   return __builtin_popcountl(x);
 }
 
@@ -303,12 +305,16 @@ inline cds_word lsb(cds_word x) {
 
 /** Temporary implementation for select */
 inline cds_word select(cds_word x, cds_word pos) {
-  if (pos == 0) return (cds_word)-1;
+  if (pos == 0) {
+    return (cds_word) - 1;
+  }
   cds_word i = 0;
   while (true) {
     if (BitGet(&x, i)) {
       pos--;
-      if (pos == 0) break;
+      if (pos == 0) {
+        break;
+      }
     }
     i++;
   }

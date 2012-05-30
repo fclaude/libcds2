@@ -32,6 +32,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <gtest/gtest.h>
 #include <libcds/time.h>
 
+#include <algorithm>
+
 using cds::basic::Timer;
 
 int sleepTime = 0;
@@ -42,11 +44,12 @@ void testTimer(int i) {
   sleep(i);
   t.Stop();
   double diff = abs(t.ElapsedTime() - i * 1000000.0);
-  EXPECT_GE(std::max(t.ElapsedTime() / 20, 100.), diff);
+  EXPECT_GE(std::max(t.ElapsedTime() / 20, 100.0), diff);
 }
 
 TEST(Sleep, 0_10Seconds) {
-  for(int i=0;i<=10;i++)
-   testTimer(i);
+  for (int i = 0; i <= 10; i++) {
+    testTimer(i);
+  }
 }
 

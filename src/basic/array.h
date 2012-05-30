@@ -42,9 +42,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace cds {
 
-    namespace immutable {
-        class BitSequenceOneLevelRank;
-    }
+namespace immutable {
+class BitSequenceOneLevelRank;
+}
 
 namespace basic {
 

@@ -281,8 +281,9 @@ template <cds_word bpe> cds_word ArrayTpl<bpe>::LowerBound(cds_word value) const
 template <cds_word bpe> cds_word ArrayTpl<bpe>::LowerBoundExp(cds_word value, cds_word ini, cds_word fin) const {
   cds_word sum = 1;
   while (ini + sum < fin) {
-    if (GetField(ini + sum) >= value)
+    if (GetField(ini + sum) >= value) {
       return LowerBound(value, ini, ini + sum);
+    }
     ini += sum;
     sum *= 2;
   }

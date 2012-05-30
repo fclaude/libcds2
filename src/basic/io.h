@@ -66,14 +66,14 @@ template <typename T> T TransformString(const string &s) {
   return ret;
 }
 
-/** Saves a value into an ofstream.
+/** Saves a value into an ostream.
  */
 template <typename T> void SaveValue(ostream &out, T val) {
   assert(out.good());
   out.write(reinterpret_cast<char *>(&val), sizeof(T));
 }
 
-/** Loads a value from an ifstream.
+/** Loads a value from an istream.
  */
 template <typename T> T LoadValue(istream &in) {
   assert(in.good());
@@ -82,14 +82,14 @@ template <typename T> T LoadValue(istream &in) {
   return ret;
 }
 
-/** Saves len values into an ofstream.
+/** Saves len values into an ostream.
  */
 template <typename T> void SaveValue(ostream &out, T *val, const cds_word length) {
   assert(out.good());
   out.write(reinterpret_cast<char *>(val), length * sizeof(T));
 }
 
-/** Loads len values from an ifstream.
+/** Loads len values from an istream.
  */
 template <typename T> T *LoadValue(istream &in, const cds_word length) {
   assert(in.good());
@@ -121,7 +121,7 @@ template <typename T> T *LoadFile(const string &name, cds_word &content_length) 
   return ret;
 }
 
-/** Saves a value into an ofstream.
+/** Saves a value into an ostream.
  */
 template <cds_word> void SaveValue(ostream &out, const cds_word value) {
   assert(out.good());
@@ -133,7 +133,7 @@ template <cds_word> void SaveValue(ostream &out, const cds_word value) {
 #endif
 }
 
-/** Loads a value from an ifstream.
+/** Loads a value from an istream.
  */
 template <cds_word> cds_word LoadValue(istream &in) {
   assert(in.good());
@@ -151,7 +151,7 @@ template <cds_word> cds_word LoadValue(istream &in) {
   return ret;
 }
 
-/** Saves len values into an ofstream.
+/** Saves len values into an ostream.
  */
 template <cds_word> void SaveValue(ostream &out, const cds_word *values, const cds_word length) {
   assert(out.good());
@@ -165,7 +165,7 @@ template <cds_word> void SaveValue(ostream &out, const cds_word *values, const c
 #endif
 }
 
-/** Loads len values from an ifstream.
+/** Loads len values from an istream.
  */
 template <cds_word> cds_word *LoadValue(istream &in, const cds_word length) {
   assert(in.good());

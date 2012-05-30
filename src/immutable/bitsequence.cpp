@@ -31,6 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 #include <libcds/immutable/bitsequence.h>
+#include <libcds/immutable/bitsequenceonelevelrank.h>
 #include <libcds/cdsexception.h>
 #include <libcds/io.h>
 
@@ -187,11 +188,13 @@ cds_word BitSequence::CountZeros() const {
   return Rank0(GetLength() - 1);
 }
 
-BitSequence *BitSequence::Load(ifstream &fp) {
+BitSequence *BitSequence::Load(istream &fp) {
   cds_word r = LoadValue<cds_word>(fp);
   size_t pos = fp.tellg();
   fp.seekg(pos - sizeof(cds_word));
   switch (r) {
+      case kBitSequenceOneLevelRankID:
+        return BitSequenceOneLevelRank::Load(fp);
       // case DARRAY_HDR: return BitSequenceDArray::load(fp);
     default:
       assert(false);

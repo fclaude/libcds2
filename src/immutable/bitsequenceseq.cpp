@@ -147,7 +147,7 @@ cds_word BitSequenceSeq::GetSize() const {
   return array_->GetSize() + sizeof(*this);
 }
 
-void BitSequenceSeq::Save(ofstream &fp) const {
+void BitSequenceSeq::Save(ostream &fp) const {
 }
 
 cds_word BitSequenceSeq::GetLength() const {

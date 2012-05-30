@@ -47,8 +47,8 @@ namespace immutable {
 
 using cds::basic::cds_word;
 using cds::basic::Array;
-using std::ifstream;
-using std::ofstream;
+using std::istream;
+using std::ostream;
 
 /** Base class for static bitsequences, contains many abstract functions,
  *  so this can't be instantiated. It includes base implementations for
@@ -75,8 +75,8 @@ class BitSequenceSeq : public BitSequence {
     virtual cds_word CountOnes() const;
     virtual cds_word CountZeros() const;
     virtual cds_word GetSize() const;
-    virtual void Save(ofstream &fp) const;
-    static BitSequence *Load(ifstream &fp);
+    virtual void Save(ostream &fp) const;
+    static BitSequence *Load(istream &fp);
 
   protected:
     Array *array_;

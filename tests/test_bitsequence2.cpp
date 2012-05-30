@@ -39,7 +39,7 @@ using cds::immutable::BitSequence;
 using cds::immutable::BitSequenceSeq;
 using cds::basic::Array;
 using cds::basic::cds_word;
-using std::ofstream;
+using std::ostream;
 
 class BitSequenceRank1: public BitSequence {
   public:
@@ -74,7 +74,7 @@ class BitSequenceRank1: public BitSequence {
       return Rank1(i);
     }
 
-    virtual void Save(ofstream &fp) const {
+    virtual void Save(ostream &fp) const {
     }
 
     virtual cds_word GetSize() const {

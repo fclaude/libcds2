@@ -48,8 +48,8 @@ class BitSequenceOneLevelRank;
 
 namespace basic {
 
-using std::ifstream;
-using std::ofstream;
+using std::istream;
+using std::ostream;
 using std::max;
 
 class Array : public ReferenceCounted {
@@ -74,7 +74,7 @@ class Array : public ReferenceCounted {
     virtual cds_word SetField(const cds_word position, const cds_word v) = 0;
 
     /** Saves the array into a file */
-    virtual void Save(ofstream &out) const = 0;
+    virtual void Save(ostream &out) const = 0;
 
     /** Returns the size of the array in bytes
      */
@@ -132,7 +132,7 @@ class Array : public ReferenceCounted {
     virtual cds_word BinarySearch(cds_word value) const = 0;
 
     /** Loads an array from disk */
-    static Array *Load(ifstream &input);
+    static Array *Load(istream &input);
 
     /** Creates an array copying part of a previously existing array
      * @param A source array
@@ -154,7 +154,7 @@ template <cds_word bpe> class ArrayTpl : public Array {
     /** Reads and ArrayTpl from a file stream
      * @param input input file stream
      */
-    explicit ArrayTpl(ifstream &input);
+    explicit ArrayTpl(istream &input);
 
     /** Creates an array copying part of a previously existing array
      * @param A source array
@@ -175,7 +175,7 @@ template <cds_word bpe> class ArrayTpl : public Array {
 
     virtual cds_word SetField(const cds_word position, const cds_word v);
 
-    virtual void Save(ofstream &out) const;
+    virtual void Save(ostream &out) const;
 
     virtual cds_word GetSize() const;
 
@@ -199,6 +199,7 @@ template <cds_word bpe> class ArrayTpl : public Array {
 
     virtual cds_word BinarySearch(cds_word value) const;
 
+    static ArrayTpl<bpe> *Load(istream &input);
 
     // friend cds_word operator=(const ArrayTplModifier a);
     friend class cds::immutable::BitSequenceOneLevelRank;

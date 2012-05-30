@@ -45,8 +45,8 @@ namespace cds {
 namespace immutable {
 
 using cds::basic::cds_word;
-using std::ifstream;
-using std::ofstream;
+using std::istream;
+using std::ostream;
 
 using cds::basic::Array;
 using cds::basic::ArrayTpl;
@@ -70,15 +70,17 @@ class BitSequenceOneLevelRank : public BitSequence {
     virtual bool Access(const cds_word i) const;
     virtual cds_word GetLength() const;
     virtual cds_word GetSize() const;
-    virtual void Save(ofstream &fp) const;
+    virtual void Save(ostream &fp) const;
 
-    static BitSequenceOneLevelRank *Load(ifstream &fp);
+    static BitSequenceOneLevelRank *Load(istream &fp);
 
   protected:
     ArrayTpl<1> *bitmap_;
     cds_word sampling_rate_;
     Array *sampling_;
     cds_word length_;
+
+    BitSequenceOneLevelRank() {}
 };
 };
 };

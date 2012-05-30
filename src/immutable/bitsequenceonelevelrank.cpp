@@ -214,20 +214,23 @@ cds_word BitSequenceOneLevelRank::GetSize() const {
   return sizeof(BitSequenceOneLevelRank) + bitmap_->GetSize() + sampling_->GetSize();
 }
 
-void BitSequenceOneLevelRank::Save(ofstream &out) const {
-  return;
+void BitSequenceOneLevelRank::Save(ostream &out) const {
+  bitmap_->Save(out);
+  sampling_->Save(out);
+  SaveValue(out, length_);
+  SaveValue(out, sampling_rate_);
 }
 
-BitSequenceOneLevelRank *BitSequenceOneLevelRank::Load(ifstream &fp) {
+BitSequenceOneLevelRank *BitSequenceOneLevelRank::Load(istream &fp) {
   cds_word r = LoadValue<cds_word>(fp);
-  size_t pos = fp.tellg();
-  fp.seekg(pos - sizeof(cds_word));
-  switch (r) {
-      // case DARRAY_HDR: return BitSequenceOneLevelRankDArray::load(fp);
-    default:
-      throw CDSException("Unknown type");
-  }
-  return NULL;
+  if (r != kBitSequenceOneLevelRankID)
+    return NULL;
+  BitSequenceOneLevelRank * ret = new BitSequenceOneLevelRank();
+  ret->bitmap_ = ArrayTpl<1>::Load(fp);
+  ret->sampling_ = Array::Load(fp);
+  ret->length_ = LoadValue<cds_word>(fp);
+  ret->sampling_rate_ = LoadValue<cds_word>(fp);
+  return ret;
 }
 };
 };

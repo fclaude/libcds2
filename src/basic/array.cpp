@@ -39,26 +39,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace cds {
 namespace basic {
 
-using std::ifstream;
-using std::ofstream;
+using std::istream;
+using std::ostream;
 
 using cds::basic::Array;
 using cds::basic::ArrayTpl;
 
-Array *Array::Load(ifstream &input) {
-  return NULL;
-}
-
 Array *Array::Create(cds_word *A, cds_word i, cds_word j, cds_word bpe) {
   cds_word max_value = 0;
-  if (bpe == 0) {
-    for (cds_word k = i; k <= j; k++) {
-      max_value = max(max_value, A[k]);
-    }
-  } else {
-    max_value = ((cds_word)1 << bpe) - 1;
+  for (cds_word k = i; k <= j; k++) {
+    max_value = max(max_value, A[k]);
   }
-  Array *ret = Create(j - i + 1, msb(max_value));
+  Array *ret = Create(j - i + 1, max(msb(max_value), bpe));
   for (cds_word k = i; k <= j; k++) {
     assert(A[k] <= max_value);
     ret->SetField(k - i, A[k]);
@@ -66,143 +58,24 @@ Array *Array::Create(cds_word *A, cds_word i, cds_word j, cds_word bpe) {
   return ret;
 }
 
-Array *Array::Create(cds_word n, cds_word bpe) {
-  switch (bpe) {
-    case 0:
-      return new ArrayTpl<0>(n);
-    case 1:
-      return new ArrayTpl<1>(n);
-    case 2:
-      return new ArrayTpl<2>(n);
-    case 3:
-      return new ArrayTpl<3>(n);
-    case 4:
-      return new ArrayTpl<4>(n);
-    case 5:
-      return new ArrayTpl<5>(n);
-    case 6:
-      return new ArrayTpl<6>(n);
-    case 7:
-      return new ArrayTpl<7>(n);
-    case 8:
-      return new ArrayTpl<8>(n);
-    case 9:
-      return new ArrayTpl<9>(n);
-    case 10:
-      return new ArrayTpl<10>(n);
-    case 11:
-      return new ArrayTpl<11>(n);
-    case 12:
-      return new ArrayTpl<12>(n);
-    case 13:
-      return new ArrayTpl<13>(n);
-    case 14:
-      return new ArrayTpl<14>(n);
-    case 15:
-      return new ArrayTpl<15>(n);
-    case 16:
-      return new ArrayTpl<16>(n);
-    case 17:
-      return new ArrayTpl<17>(n);
-    case 18:
-      return new ArrayTpl<18>(n);
-    case 19:
-      return new ArrayTpl<19>(n);
-    case 20:
-      return new ArrayTpl<20>(n);
-    case 21:
-      return new ArrayTpl<21>(n);
-    case 22:
-      return new ArrayTpl<22>(n);
-    case 23:
-      return new ArrayTpl<23>(n);
-    case 24:
-      return new ArrayTpl<24>(n);
-    case 25:
-      return new ArrayTpl<25>(n);
-    case 26:
-      return new ArrayTpl<26>(n);
-    case 27:
-      return new ArrayTpl<27>(n);
-    case 28:
-      return new ArrayTpl<28>(n);
-    case 29:
-      return new ArrayTpl<29>(n);
-    case 30:
-      return new ArrayTpl<30>(n);
-    case 31:
-      return new ArrayTpl<31>(n);
-    case 32:
-      return new ArrayTpl<32>(n);
-    case 33:
-      return new ArrayTpl<33>(n);
-    case 34:
-      return new ArrayTpl<34>(n);
-    case 35:
-      return new ArrayTpl<35>(n);
-    case 36:
-      return new ArrayTpl<36>(n);
-    case 37:
-      return new ArrayTpl<37>(n);
-    case 38:
-      return new ArrayTpl<38>(n);
-    case 39:
-      return new ArrayTpl<39>(n);
-    case 40:
-      return new ArrayTpl<40>(n);
-    case 41:
-      return new ArrayTpl<41>(n);
-    case 42:
-      return new ArrayTpl<42>(n);
-    case 43:
-      return new ArrayTpl<43>(n);
-    case 44:
-      return new ArrayTpl<44>(n);
-    case 45:
-      return new ArrayTpl<45>(n);
-    case 46:
-      return new ArrayTpl<46>(n);
-    case 47:
-      return new ArrayTpl<47>(n);
-    case 48:
-      return new ArrayTpl<48>(n);
-    case 49:
-      return new ArrayTpl<49>(n);
-    case 50:
-      return new ArrayTpl<50>(n);
-    case 51:
-      return new ArrayTpl<51>(n);
-    case 52:
-      return new ArrayTpl<52>(n);
-    case 53:
-      return new ArrayTpl<53>(n);
-    case 54:
-      return new ArrayTpl<54>(n);
-    case 55:
-      return new ArrayTpl<55>(n);
-    case 56:
-      return new ArrayTpl<56>(n);
-    case 57:
-      return new ArrayTpl<57>(n);
-    case 58:
-      return new ArrayTpl<58>(n);
-  }
-  return NULL;
-}
-
-template <cds_word bpe> ArrayTpl<bpe>::ArrayTpl(ifstream &input) {
+template <cds_word bpe> ArrayTpl<bpe>::ArrayTpl(istream &input) {
   length_ = LoadValue<cds_word>(input);
   max_value_ = LoadValue<cds_word>(input);
   uint_length_ = LoadValue<cds_word>(input);
   data_ = LoadValue<cds_word>(input, uint_length_);
-  // Use();
+}
+
+template <cds_word bpe> ArrayTpl<bpe>* ArrayTpl<bpe>::Load(istream &input) {
+  cds_word id = LoadValue<cds_word>(input);
+  if (id != bpe)
+    return NULL;
+  return new ArrayTpl<bpe>(input);
 }
 
 template <cds_word bpe> ArrayTpl<bpe>::ArrayTpl(cds_word n) {
   length_ = n;
   max_value_ = ((cds_word)1 << bpe) - 1;
   InitData();
-  // Use();
 }
 
 template <cds_word bpe> ArrayTpl<bpe>::ArrayTpl(cds_word *A, cds_word i, cds_word j) {
@@ -220,7 +93,6 @@ template <cds_word bpe> ArrayTpl<bpe>::ArrayTpl(cds_word *A, cds_word i, cds_wor
     assert(A[k] <= max_value_);
     SetField(k - i, A[k]);
   }
-  // Use();
 }
 
 template <cds_word bpe> cds_word ArrayTpl<bpe>::GetSize() const {
@@ -238,7 +110,7 @@ template <cds_word bpe> ArrayTpl<bpe>::~ArrayTpl() {
   delete [] data_;
 }
 
-template <cds_word bpe> void ArrayTpl<bpe>::Save(ofstream &out) const {
+template <cds_word bpe> void ArrayTpl<bpe>::Save(ostream &out) const {
   SaveValue(out, bpe);
   SaveValue(out, length_);
   SaveValue(out, max_value_);
@@ -384,6 +256,197 @@ template <cds_word bpe> cds_word ArrayTpl<bpe>::SetField(const cds_word position
   assert(v <= max_value_);
   cds::basic::SetField(data_, bpe, position, v);
   return v;
+}
+
+Array *Array::Load(istream &input) {
+  cds_word id = LoadValue<cds_word>(input);
+  size_t pos = input.tellg();
+  input.seekg(pos - sizeof(cds_word));
+  switch(id) {
+    case 0: return ArrayTpl<0>::Load(input);
+    case 1: return ArrayTpl<1>::Load(input);
+    case 2: return ArrayTpl<2>::Load(input);
+    case 3: return ArrayTpl<3>::Load(input);
+    case 4: return ArrayTpl<4>::Load(input);
+    case 5: return ArrayTpl<5>::Load(input);
+    case 6: return ArrayTpl<6>::Load(input);
+    case 7: return ArrayTpl<7>::Load(input);
+    case 8: return ArrayTpl<8>::Load(input);
+    case 9: return ArrayTpl<9>::Load(input);
+    case 10: return ArrayTpl<10>::Load(input);
+    case 11: return ArrayTpl<11>::Load(input);
+    case 12: return ArrayTpl<12>::Load(input);
+    case 13: return ArrayTpl<13>::Load(input);
+    case 14: return ArrayTpl<14>::Load(input);
+    case 15: return ArrayTpl<15>::Load(input);
+    case 16: return ArrayTpl<16>::Load(input);
+    case 17: return ArrayTpl<17>::Load(input);
+    case 18: return ArrayTpl<18>::Load(input);
+    case 19: return ArrayTpl<19>::Load(input);
+    case 20: return ArrayTpl<20>::Load(input);
+    case 21: return ArrayTpl<21>::Load(input);
+    case 22: return ArrayTpl<22>::Load(input);
+    case 23: return ArrayTpl<23>::Load(input);
+    case 24: return ArrayTpl<24>::Load(input);
+    case 25: return ArrayTpl<25>::Load(input);
+    case 26: return ArrayTpl<26>::Load(input);
+    case 27: return ArrayTpl<27>::Load(input);
+    case 28: return ArrayTpl<28>::Load(input);
+    case 29: return ArrayTpl<29>::Load(input);
+    case 30: return ArrayTpl<30>::Load(input);
+    case 31: return ArrayTpl<31>::Load(input);
+    case 32: return ArrayTpl<32>::Load(input);
+    case 33: return ArrayTpl<33>::Load(input);
+    case 34: return ArrayTpl<34>::Load(input);
+    case 35: return ArrayTpl<35>::Load(input);
+    case 36: return ArrayTpl<36>::Load(input);
+    case 37: return ArrayTpl<37>::Load(input);
+    case 38: return ArrayTpl<38>::Load(input);
+    case 39: return ArrayTpl<39>::Load(input);
+    case 40: return ArrayTpl<40>::Load(input);
+    case 41: return ArrayTpl<41>::Load(input);
+    case 42: return ArrayTpl<42>::Load(input);
+    case 43: return ArrayTpl<43>::Load(input);
+    case 44: return ArrayTpl<44>::Load(input);
+    case 45: return ArrayTpl<45>::Load(input);
+    case 46: return ArrayTpl<46>::Load(input);
+    case 47: return ArrayTpl<47>::Load(input);
+    case 48: return ArrayTpl<48>::Load(input);
+    case 49: return ArrayTpl<49>::Load(input);
+    case 50: return ArrayTpl<50>::Load(input);
+    case 51: return ArrayTpl<51>::Load(input);
+    case 52: return ArrayTpl<52>::Load(input);
+    case 53: return ArrayTpl<53>::Load(input);
+    case 54: return ArrayTpl<54>::Load(input);
+    case 55: return ArrayTpl<55>::Load(input);
+    case 56: return ArrayTpl<56>::Load(input);
+    case 57: return ArrayTpl<57>::Load(input);
+  }
+  return NULL;
+}
+
+Array *Array::Create(cds_word n, cds_word bpe) {
+  switch (bpe) {
+    case 0:
+      return new ArrayTpl<0>(n);
+    case 1:
+      return new ArrayTpl<1>(n);
+    case 2:
+      return new ArrayTpl<2>(n);
+    case 3:
+      return new ArrayTpl<3>(n);
+    case 4:
+      return new ArrayTpl<4>(n);
+    case 5:
+      return new ArrayTpl<5>(n);
+    case 6:
+      return new ArrayTpl<6>(n);
+    case 7:
+      return new ArrayTpl<7>(n);
+    case 8:
+      return new ArrayTpl<8>(n);
+    case 9:
+      return new ArrayTpl<9>(n);
+    case 10:
+      return new ArrayTpl<10>(n);
+    case 11:
+      return new ArrayTpl<11>(n);
+    case 12:
+      return new ArrayTpl<12>(n);
+    case 13:
+      return new ArrayTpl<13>(n);
+    case 14:
+      return new ArrayTpl<14>(n);
+    case 15:
+      return new ArrayTpl<15>(n);
+    case 16:
+      return new ArrayTpl<16>(n);
+    case 17:
+      return new ArrayTpl<17>(n);
+    case 18:
+      return new ArrayTpl<18>(n);
+    case 19:
+      return new ArrayTpl<19>(n);
+    case 20:
+      return new ArrayTpl<20>(n);
+    case 21:
+      return new ArrayTpl<21>(n);
+    case 22:
+      return new ArrayTpl<22>(n);
+    case 23:
+      return new ArrayTpl<23>(n);
+    case 24:
+      return new ArrayTpl<24>(n);
+    case 25:
+      return new ArrayTpl<25>(n);
+    case 26:
+      return new ArrayTpl<26>(n);
+    case 27:
+      return new ArrayTpl<27>(n);
+    case 28:
+      return new ArrayTpl<28>(n);
+    case 29:
+      return new ArrayTpl<29>(n);
+    case 30:
+      return new ArrayTpl<30>(n);
+    case 31:
+      return new ArrayTpl<31>(n);
+    case 32:
+      return new ArrayTpl<32>(n);
+    case 33:
+      return new ArrayTpl<33>(n);
+    case 34:
+      return new ArrayTpl<34>(n);
+    case 35:
+      return new ArrayTpl<35>(n);
+    case 36:
+      return new ArrayTpl<36>(n);
+    case 37:
+      return new ArrayTpl<37>(n);
+    case 38:
+      return new ArrayTpl<38>(n);
+    case 39:
+      return new ArrayTpl<39>(n);
+    case 40:
+      return new ArrayTpl<40>(n);
+    case 41:
+      return new ArrayTpl<41>(n);
+    case 42:
+      return new ArrayTpl<42>(n);
+    case 43:
+      return new ArrayTpl<43>(n);
+    case 44:
+      return new ArrayTpl<44>(n);
+    case 45:
+      return new ArrayTpl<45>(n);
+    case 46:
+      return new ArrayTpl<46>(n);
+    case 47:
+      return new ArrayTpl<47>(n);
+    case 48:
+      return new ArrayTpl<48>(n);
+    case 49:
+      return new ArrayTpl<49>(n);
+    case 50:
+      return new ArrayTpl<50>(n);
+    case 51:
+      return new ArrayTpl<51>(n);
+    case 52:
+      return new ArrayTpl<52>(n);
+    case 53:
+      return new ArrayTpl<53>(n);
+    case 54:
+      return new ArrayTpl<54>(n);
+    case 55:
+      return new ArrayTpl<55>(n);
+    case 56:
+      return new ArrayTpl<56>(n);
+    case 57:
+      return new ArrayTpl<57>(n);
+    case 58:
+      return new ArrayTpl<58>(n);
+  }
+  return NULL;
 }
 };
 };

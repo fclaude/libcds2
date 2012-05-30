@@ -41,7 +41,7 @@ using cds::immutable::BitSequenceOneLevelRank;
 using cds::immutable::BitSequenceSeq;
 using cds::basic::Array;
 using cds::basic::cds_word;
-using std::ofstream;
+using std::ostream;
 
 void testBitSequenceOneLevelRank(cds_word sample) {
   const cds_word kBitmapLength = 10000;

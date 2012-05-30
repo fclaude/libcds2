@@ -44,8 +44,10 @@ namespace cds {
 namespace immutable {
 
 using cds::basic::cds_word;
-using std::ifstream;
-using std::ofstream;
+using std::istream;
+using std::ostream;
+
+const cds_word kBitSequenceOneLevelRankID = 1;
 
 /** Base class for static bitsequences, contains many abstract functions,
  *  so this can't be instantiated. It includes base implementations for
@@ -119,10 +121,10 @@ class BitSequence : public cds::basic::ReferenceCounted {
     virtual cds_word GetSize() const = 0;
 
     /** Stores the bitmap given a file pointer. */
-    virtual void Save(ofstream &fp) const = 0;
+    virtual void Save(ostream &fp) const = 0;
 
     /** Reads a bitmap determining the type. */
-    static BitSequence *Load(ifstream &fp);
+    static BitSequence *Load(istream &fp);
 };
 };
 };

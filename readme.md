@@ -2,7 +2,7 @@ LIBCDS 2 - A Compressed Data Structure Library
 ==============================================
 
 Rationale
----------  
+---------
 LIBCDS 2 is the re-coding of [LIBCDS][libcds1] with these goals:
 
  - 64-Bit support to allow for larger, single structures.
@@ -20,7 +20,7 @@ Further long-term goals include:
 
 
 Links
------  
+-----
 Some useful project links are below:
 
  - [LIBCDS 2 GitHub project][gitproject]
@@ -31,11 +31,7 @@ Some useful project links are below:
 
 
 Guidelines
-----------  
- - In order to keep the repository clean, please do your development in the `develop` or `feature` branch.
-   This way `master` should always be at a usable state. It may help to use [Git Flow][gitflow] for this
-   (although it is unnecessary if you are familiar with [Git branching][gitbranch] - [Git Flow][gitflow]
-   is just a helpful wrapper).
+----------
 
  - When you commit, it is useful to give a good message, please read this (short) guide on [Git commit messages][commitmsg].
 
@@ -55,5 +51,3 @@ Guidelines
 [wiki]: https://github.com/fclaude/libcds2/wiki
 [issues]: https://github.com/fclaude/libcds2/issues
 [commitmsg]: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
-[gitflow]: jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/
-[gitbranch]: http://progit.org/book/ch3-0.html

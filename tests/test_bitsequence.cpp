@@ -29,14 +29,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ********************************************************************************/
 
+
 #include <gtest/gtest.h>
 #include <libcds/array.h>
 #include <libcds/immutable/bitsequence.h>
 #include <libcds/immutable/bitsequenceseq.h>
 #include <libcds/immutable/bitsequenceonelevelrank.h>
-#include "./test_bitsequence_utils.h"
 
 #include <sstream>
+
+#include "./test_bitsequence_utils.h"
 
 using cds::immutable::BitSequence;
 using cds::immutable::BitSequenceOneLevelRank;
@@ -64,7 +66,7 @@ void testBitSequenceOneLevelRank(cds_word sample) {
   BitSequence *bs = new BitSequenceOneLevelRank(a, sample);
   bs->Use();
   bs->Save(io);
-  //io.seekg(0);
+  io.seekg(0);
   TestBitSequence(seq_bitseq, bs);
   bs->Unuse();
 

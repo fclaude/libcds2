@@ -92,9 +92,10 @@ bool BitSequenceOneLevelRank::Access(const cds_word i, cds_word *r) const {
 
   cds_word pos_in_word = i - starting_pos;
   *r = popcount(data[first_word] << (kWordSize - 1 - pos_in_word))
-         + count_so_far;
-  if (1 & (data[first_word] >> pos_in_word))
+       + count_so_far;
+  if (1 & (data[first_word] >> pos_in_word)) {
     return true;
+  }
 
   *r = i - *r + 1;
   return false;
@@ -294,7 +295,7 @@ BitSequenceOneLevelRank *BitSequenceOneLevelRank::Load(istream &fp) {
     assert(false);
     return NULL;
   }
-  BitSequenceOneLevelRank * ret = new BitSequenceOneLevelRank();
+  BitSequenceOneLevelRank *ret = new BitSequenceOneLevelRank();
   ret->bitmap_ = ArrayTpl<1>::Load(fp);
   ret->sampling_ = Array::Load(fp);
   ret->length_ = LoadValue<cds_word>(fp);

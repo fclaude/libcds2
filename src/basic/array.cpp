@@ -71,7 +71,7 @@ template <cds_word bpe> ArrayTpl<bpe>::ArrayTpl(istream &input) {
   data_ = LoadValue<cds_word>(input, uint_length);
 }
 
-template <cds_word bpe> ArrayTpl<bpe>* ArrayTpl<bpe>::Load(istream &input) {
+template <cds_word bpe> ArrayTpl<bpe> *ArrayTpl<bpe>::Load(istream &input) {
   cds_word id = LoadValue<cds_word>(input);
   if (id != bpe) {
     std::cout << "Returning null: " << bpe << " - " << id << std::endl;
@@ -251,65 +251,123 @@ Array *Array::Load(istream &input) {
   cds_word id = LoadValue<cds_word>(input);
   size_t pos = input.tellg();
   input.seekg(pos - sizeof(cds_word));
-  switch(id) {
-    case 0: return ArrayTpl<0>::Load(input);
-    case 1: return ArrayTpl<1>::Load(input);
-    case 2: return ArrayTpl<2>::Load(input);
-    case 3: return ArrayTpl<3>::Load(input);
-    case 4: return ArrayTpl<4>::Load(input);
-    case 5: return ArrayTpl<5>::Load(input);
-    case 6: return ArrayTpl<6>::Load(input);
-    case 7: return ArrayTpl<7>::Load(input);
-    case 8: return ArrayTpl<8>::Load(input);
-    case 9: return ArrayTpl<9>::Load(input);
-    case 10: return ArrayTpl<10>::Load(input);
-    case 11: return ArrayTpl<11>::Load(input);
-    case 12: return ArrayTpl<12>::Load(input);
-    case 13: return ArrayTpl<13>::Load(input);
-    case 14: return ArrayTpl<14>::Load(input);
-    case 15: return ArrayTpl<15>::Load(input);
-    case 16: return ArrayTpl<16>::Load(input);
-    case 17: return ArrayTpl<17>::Load(input);
-    case 18: return ArrayTpl<18>::Load(input);
-    case 19: return ArrayTpl<19>::Load(input);
-    case 20: return ArrayTpl<20>::Load(input);
-    case 21: return ArrayTpl<21>::Load(input);
-    case 22: return ArrayTpl<22>::Load(input);
-    case 23: return ArrayTpl<23>::Load(input);
-    case 24: return ArrayTpl<24>::Load(input);
-    case 25: return ArrayTpl<25>::Load(input);
-    case 26: return ArrayTpl<26>::Load(input);
-    case 27: return ArrayTpl<27>::Load(input);
-    case 28: return ArrayTpl<28>::Load(input);
-    case 29: return ArrayTpl<29>::Load(input);
-    case 30: return ArrayTpl<30>::Load(input);
-    case 31: return ArrayTpl<31>::Load(input);
-    case 32: return ArrayTpl<32>::Load(input);
-    case 33: return ArrayTpl<33>::Load(input);
-    case 34: return ArrayTpl<34>::Load(input);
-    case 35: return ArrayTpl<35>::Load(input);
-    case 36: return ArrayTpl<36>::Load(input);
-    case 37: return ArrayTpl<37>::Load(input);
-    case 38: return ArrayTpl<38>::Load(input);
-    case 39: return ArrayTpl<39>::Load(input);
-    case 40: return ArrayTpl<40>::Load(input);
-    case 41: return ArrayTpl<41>::Load(input);
-    case 42: return ArrayTpl<42>::Load(input);
-    case 43: return ArrayTpl<43>::Load(input);
-    case 44: return ArrayTpl<44>::Load(input);
-    case 45: return ArrayTpl<45>::Load(input);
-    case 46: return ArrayTpl<46>::Load(input);
-    case 47: return ArrayTpl<47>::Load(input);
-    case 48: return ArrayTpl<48>::Load(input);
-    case 49: return ArrayTpl<49>::Load(input);
-    case 50: return ArrayTpl<50>::Load(input);
-    case 51: return ArrayTpl<51>::Load(input);
-    case 52: return ArrayTpl<52>::Load(input);
-    case 53: return ArrayTpl<53>::Load(input);
-    case 54: return ArrayTpl<54>::Load(input);
-    case 55: return ArrayTpl<55>::Load(input);
-    case 56: return ArrayTpl<56>::Load(input);
-    case 57: return ArrayTpl<57>::Load(input);
+  switch (id) {
+    case 0:
+      return ArrayTpl<0>::Load(input);
+    case 1:
+      return ArrayTpl<1>::Load(input);
+    case 2:
+      return ArrayTpl<2>::Load(input);
+    case 3:
+      return ArrayTpl<3>::Load(input);
+    case 4:
+      return ArrayTpl<4>::Load(input);
+    case 5:
+      return ArrayTpl<5>::Load(input);
+    case 6:
+      return ArrayTpl<6>::Load(input);
+    case 7:
+      return ArrayTpl<7>::Load(input);
+    case 8:
+      return ArrayTpl<8>::Load(input);
+    case 9:
+      return ArrayTpl<9>::Load(input);
+    case 10:
+      return ArrayTpl<10>::Load(input);
+    case 11:
+      return ArrayTpl<11>::Load(input);
+    case 12:
+      return ArrayTpl<12>::Load(input);
+    case 13:
+      return ArrayTpl<13>::Load(input);
+    case 14:
+      return ArrayTpl<14>::Load(input);
+    case 15:
+      return ArrayTpl<15>::Load(input);
+    case 16:
+      return ArrayTpl<16>::Load(input);
+    case 17:
+      return ArrayTpl<17>::Load(input);
+    case 18:
+      return ArrayTpl<18>::Load(input);
+    case 19:
+      return ArrayTpl<19>::Load(input);
+    case 20:
+      return ArrayTpl<20>::Load(input);
+    case 21:
+      return ArrayTpl<21>::Load(input);
+    case 22:
+      return ArrayTpl<22>::Load(input);
+    case 23:
+      return ArrayTpl<23>::Load(input);
+    case 24:
+      return ArrayTpl<24>::Load(input);
+    case 25:
+      return ArrayTpl<25>::Load(input);
+    case 26:
+      return ArrayTpl<26>::Load(input);
+    case 27:
+      return ArrayTpl<27>::Load(input);
+    case 28:
+      return ArrayTpl<28>::Load(input);
+    case 29:
+      return ArrayTpl<29>::Load(input);
+    case 30:
+      return ArrayTpl<30>::Load(input);
+    case 31:
+      return ArrayTpl<31>::Load(input);
+    case 32:
+      return ArrayTpl<32>::Load(input);
+    case 33:
+      return ArrayTpl<33>::Load(input);
+    case 34:
+      return ArrayTpl<34>::Load(input);
+    case 35:
+      return ArrayTpl<35>::Load(input);
+    case 36:
+      return ArrayTpl<36>::Load(input);
+    case 37:
+      return ArrayTpl<37>::Load(input);
+    case 38:
+      return ArrayTpl<38>::Load(input);
+    case 39:
+      return ArrayTpl<39>::Load(input);
+    case 40:
+      return ArrayTpl<40>::Load(input);
+    case 41:
+      return ArrayTpl<41>::Load(input);
+    case 42:
+      return ArrayTpl<42>::Load(input);
+    case 43:
+      return ArrayTpl<43>::Load(input);
+    case 44:
+      return ArrayTpl<44>::Load(input);
+    case 45:
+      return ArrayTpl<45>::Load(input);
+    case 46:
+      return ArrayTpl<46>::Load(input);
+    case 47:
+      return ArrayTpl<47>::Load(input);
+    case 48:
+      return ArrayTpl<48>::Load(input);
+    case 49:
+      return ArrayTpl<49>::Load(input);
+    case 50:
+      return ArrayTpl<50>::Load(input);
+    case 51:
+      return ArrayTpl<51>::Load(input);
+    case 52:
+      return ArrayTpl<52>::Load(input);
+    case 53:
+      return ArrayTpl<53>::Load(input);
+    case 54:
+      return ArrayTpl<54>::Load(input);
+    case 55:
+      return ArrayTpl<55>::Load(input);
+    case 56:
+      return ArrayTpl<56>::Load(input);
+    case 57:
+      return ArrayTpl<57>::Load(input);
   }
   return NULL;
 }

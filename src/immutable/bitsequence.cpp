@@ -183,8 +183,9 @@ bool BitSequence::Access(const cds_word i) const {
 bool BitSequence::Access(const cds_word i, cds_word *r) const {
   *r = Rank1(i);
   bool ret = (*r - (i != 0 ? Rank1(i - 1) : 0)) > 0;
-  if (!ret)
+  if (!ret) {
     *r = i - *r + 1;
+  }
   return ret;
 }
 
@@ -201,8 +202,8 @@ BitSequence *BitSequence::Load(istream &fp) {
   size_t pos = fp.tellg();
   fp.seekg(pos - sizeof(cds_word));
   switch (r) {
-      case kBitSequenceOneLevelRankID:
-        return BitSequenceOneLevelRank::Load(fp);
+    case kBitSequenceOneLevelRankID:
+      return BitSequenceOneLevelRank::Load(fp);
       // case DARRAY_HDR: return BitSequenceDArray::load(fp);
     default:
       assert(false);

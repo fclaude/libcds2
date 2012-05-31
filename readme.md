@@ -33,13 +33,11 @@ Some useful project links are below:
 Guidelines
 ----------
 
- - When you commit, it is useful to give a good message, please read this (short) guide on [Git commit messages][commitmsg].
+ - When you commit, it is useful to give a good message.
 
  - The code tries to follow this style guide [C++ Style Guide][cppstyle].
 
- - Reviews are posted [here][reviews].
-
- - Before commiting or sending any code for review, please make sure you run all tests and 'make cpplint' to check for style errors.
+ - Before commiting, please make sure you run all tests and 'make cpplint/indent' to check for style errors.
 
 
 [libcds1]: http://libcds.recoded.cl/
@@ -47,7 +45,5 @@ Guidelines
 [googtest]: http://code.google.com/p/googletest/
 [gitproject]: https://github.com/fclaude/libcds2
 [cppstyle]: http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml
-[reviews]: http://reviews.recoded.cl/
 [wiki]: https://github.com/fclaude/libcds2/wiki
 [issues]: https://github.com/fclaude/libcds2/issues
-[commitmsg]: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html

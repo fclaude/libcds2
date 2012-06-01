@@ -69,6 +69,11 @@ class BitSequence : public cds::basic::ReferenceCounted {
      */
     virtual cds_word Select0(const cds_word i) const;
 
+    /** Returns the position of the i-th zero, assuming it lies in the range [ini,fin]
+     * If i==0, it returns (cds_word)-1, and fin+1 if Rank1(fin) < i.
+     */
+    virtual cds_word Select0(const cds_word i, cds_word ini, cds_word fin) const;
+
     /** Returns the number of ones until position i. */
     virtual cds_word Rank1(const cds_word i) const;
     virtual cds_word Rank1(const cds_word i, bool *access) const;
@@ -78,6 +83,7 @@ class BitSequence : public cds::basic::ReferenceCounted {
      * position otherwise.
      */
     virtual cds_word Select1(const cds_word i) const;
+    virtual cds_word Select1(const cds_word i, cds_word ini, cds_word fin) const;
 
     /** Return the first position starting at i that contains a 1.
      * In case there are no more ones in the bitsequence, the function

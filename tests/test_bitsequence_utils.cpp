@@ -32,7 +32,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <gtest/gtest.h>
 #include <libcds/array.h>
 #include <libcds/immutable/bitsequence.h>
-#include <libcds/immutable/bitsequenceseq.h>
 
 using cds::immutable::BitSequence;
 using cds::basic::Array;
@@ -97,10 +96,22 @@ void TestBitSequence(BitSequence *model, BitSequence *tested) {
     cds_word exp = model->SelectNext1(i);
     cds_word rec = tested->SelectNext1(i);
     ASSERT_EQ(exp, rec);
+    if (exp < model->GetLength()) {
+      exp = tested->Select1(tested->Rank1(exp), i, exp);
+    } else {
+      exp = tested->Select1(tested->Rank1(exp - 1) + 1, i, exp - 1);
+    }
+    ASSERT_EQ(exp, rec);
   }
   for (cds_word i = 0; i < kBitmapLength; i++) {
     cds_word exp = model->SelectNext0(i);
     cds_word rec = tested->SelectNext0(i);
+    ASSERT_EQ(exp, rec);
+    if (exp < model->GetLength()) {
+      exp = tested->Select0(tested->Rank0(exp), i, exp);
+    } else {
+      exp = tested->Select0(tested->Rank0(exp - 1) + 1, i, exp - 1);
+    }
     ASSERT_EQ(exp, rec);
   }
   for (cds_word i = 0; i < kBitmapLength; i++) {

@@ -25,7 +25,8 @@ OBJ=	src/basic/array.o \
 		src/basic/io.o \
 		src/immutable/bitsequence.o \
 		src/immutable/bitsequenceseq.o \
-		src/immutable/bitsequenceonelevelrank.o
+		src/immutable/bitsequenceonelevelrank.o \
+		src/immutable/sequence.o
 
 TESTOBJ= tests/test_main.o \
 		tests/test_array.o \
@@ -33,9 +34,12 @@ TESTOBJ= tests/test_main.o \
 		tests/test_libcdsh.o \
 		tests/test_timeh.o \
 		tests/test_bitsequence.o \
-		tests/test_bitsequence1.o \
-		tests/test_bitsequence2.o \
-		tests/test_bitsequence_utils.o
+		tests/test_bitsequence_utils.o \
+		tests/test_bitsequenceonelevelrank.o \
+		tests/test_sequence_utils.o \
+		tests/test_sequence.o
+		# \
+		# tests/test_sequence_waveletmatrix.o
 
 GTEST_DIR=./dep/gtest-1.6.0/
 
@@ -81,10 +85,10 @@ test: libcds $(TESTOBJ)
 	@$(CPP) $(CPPFLAGS) -o tests/test_timeh tests/test_timeh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_bitsequence"
 	@$(CPP) $(CPPFLAGS) -o tests/test_bitsequence tests/test_bitsequence.o tests/test_bitsequence_utils.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
-	@echo " [LNK] Linking test_bitsequence1"
-	@$(CPP) $(CPPFLAGS) -o tests/test_bitsequence1 tests/test_bitsequence1.o tests/test_bitsequence_utils.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
-	@echo " [LNK] Linking test_bitsequence2"
-	@$(CPP) $(CPPFLAGS) -o tests/test_bitsequence2 tests/test_bitsequence2.o tests/test_bitsequence_utils.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@echo " [LNK] Linking test_bitsequenceonelevelrank"
+	@$(CPP) $(CPPFLAGS) -o tests/test_bitsequenceonelevelrank tests/test_bitsequenceonelevelrank.o tests/test_bitsequence_utils.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@echo " [LNK] Linking test_sequence"
+	@$(CPP) $(CPPFLAGS) -o tests/test_sequence tests/test_sequence.o tests/test_sequence_utils.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
 
 autotest: test
 	@echo "Not implemented"
@@ -105,6 +109,6 @@ clean:
 	@rm -f tests/test_libcdsh
 	@rm -f tests/test_ioh
 	@rm -f tests/test_bitsequence
-	@rm -f tests/test_bitsequence1
-	@rm -f tests/test_bitsequence2
+	@rm -f tests/test_bitsequenceonelevelrank
+	@rm -f tests/test_sequence
 

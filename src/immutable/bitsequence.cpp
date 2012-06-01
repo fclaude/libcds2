@@ -94,7 +94,6 @@ cds_word BitSequence::Select0(const cds_word i) const {
   cds_word ones = CountOnes();
   if (i > GetLength() - ones) {
     return GetLength();
-    // throw CDSException("Out of bounds");
   }
   if (i == 0) {
     return (cds_word) - 1;
@@ -116,11 +115,25 @@ cds_word BitSequence::Select0(const cds_word i) const {
   return ini;
 }
 
+cds_word BitSequence::Select0(const cds_word i, cds_word ini, cds_word fin) const {
+  assert(ini <= fin);
+  assert(fin < GetLength());
+  if (ini > fin || fin >= GetLength()) {
+    throw CDSException("Invalid bounds for Select0");
+  }
+
+  cds_word pos = Select0(i);
+  if (pos > fin) pos = fin + 1;
+  if (pos < ini) {
+    throw CDSException("Invalid bounds for Select1");
+  }
+  return pos;
+}
+
 cds_word BitSequence::Select1(const cds_word i) const {
   cds_word ones = CountOnes();
   if (i > ones) {
     return GetLength();
-    // throw CDSException("Out of bounds");
   }
   if (i == 0) {
     return (cds_word) - 1;
@@ -140,6 +153,21 @@ cds_word BitSequence::Select1(const cds_word i) const {
     }
   }
   return ini;
+}
+
+cds_word BitSequence::Select1(const cds_word i, cds_word ini, cds_word fin) const {
+  assert(ini <= fin);
+  assert(fin < GetLength());
+  if (ini > fin || fin >= GetLength()) {
+    throw CDSException("Invalid bounds for Select1");
+  }
+
+  cds_word pos = Select1(i);
+  if (pos > fin) pos = fin + 1;
+  if (pos < ini) {
+    throw CDSException("Invalid bounds for Select1");
+  }
+  return pos;
 }
 
 cds_word BitSequence::SelectNext1(const cds_word i) const {
@@ -204,7 +232,6 @@ BitSequence *BitSequence::Load(istream &fp) {
   switch (r) {
     case kBitSequenceOneLevelRankID:
       return BitSequenceOneLevelRank::Load(fp);
-      // case DARRAY_HDR: return BitSequenceDArray::load(fp);
     default:
       assert(false);
       throw CDSException("Unknown type");

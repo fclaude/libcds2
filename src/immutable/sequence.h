@@ -29,79 +29,66 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ********************************************************************************/
 
-#include <gtest/gtest.h>
-#include <libcds/array.h>
-#include <libcds/immutable/bitsequence.h>
-#include <libcds/immutable/bitsequenceseq.h>
-#include "./test_bitsequence_utils.h"
 
-using cds::immutable::BitSequence;
-using cds::immutable::BitSequenceSeq;
-using cds::basic::Array;
+#ifndef SRC_IMMUTABLE_SEQUENCE_H_
+#define SRC_IMMUTABLE_SEQUENCE_H_
+
+
+#include <libcds/libcds.h>
+#include <libcds/io.h>
+
+
+#include <fstream>
+
+namespace cds {
+namespace immutable {
+
 using cds::basic::cds_word;
+using std::istream;
 using std::ostream;
 
-class BitSequenceRank0: public BitSequence {
+/** Base class for static sequences, contains many abstract functions,
+ *  so this can't be instantiated.
+ *
+ *  @author Francisco Claude
+ */
+class Sequence : public cds::basic::ReferenceCounted {
   public:
-    explicit BitSequenceRank0(Array *_a) {
-      bs_ = new BitSequenceSeq(_a);
-      bs_->Use();
-    }
+    virtual ~Sequence() {}
 
-    virtual ~BitSequenceRank0() {
-      bs_->Unuse();
-    }
+    /** Retrieves the element at position i. */
+    virtual cds_word Access(const cds_word i) const;
 
-    virtual cds_word GetLength() const {
-      return bs_->GetLength();
-    }
+    /** Retrieves the symbol at position i, and the number of occurrences
+     * of the symbol in S[1..i].
+     */
+    virtual cds_word Access(const cds_word i, cds_word *rank) const;
 
-    virtual cds_word Rank0(const cds_word i) const {
-      return bs_->Rank0(i);
-    }
+    /** Counts the number of occurrences of symbol s in S[1..i]. */
+    virtual cds_word Rank(const cds_word s, const cds_word i) const;
 
-    virtual cds_word Rank0(const cds_word i, bool *access) const {
-      *access = Access(i);
-      return Rank0(i);
-    }
+    /** Computes the position of the j-th occurrence of symbol s. */
+    virtual cds_word Select(const cds_word s, const cds_word j) const;
 
-    virtual cds_word Rank1(const cds_word i) const {
-      return i - Rank0(i) + 1;
-    }
+    /** Returns the length in bits of the sequence. */
+    virtual cds_word GetLength() const = 0;
 
-    virtual cds_word Rank1(const cds_word i, bool *access) const {
-      *access = Access(i);
-      return Rank1(i);
-    }
+    /** Returns the number of occurrences of a given symbol s. */
+    virtual cds_word Count(const cds_word s) const;
 
-    virtual void Save(ostream &fp) const {
-    }
+    /** Returns the maximum value for a symbol (size of the alphabet). */
+    virtual cds_word GetSigma() const;
 
-    virtual cds_word GetSize() const {
-      return bs_->GetSize() + sizeof(*this);
-    }
+    /** Returns the size of the structure in bytes. */
+    virtual cds_word GetSize() const = 0;
 
-    virtual cds_word CountZeros() const {
-      return bs_->CountZeros();
-    }
+    /** Stores the sequence given an output stream. */
+    virtual void Save(ostream &fp) const = 0;
 
-  protected:
-    BitSequence *bs_;
+    /** Reads a sequence determining the type. */
+    static Sequence *Load(istream &fp);
+};
+};
 };
 
-
-
-TEST(BitSequence, SupportingRank0) {
-  const cds_word kBitmapLength = 10000;
-  const cds_word kOnes = kBitmapLength / 4;
-  unsigned int seed = 101;
-  Array *a = CreateRandomBitmap(kBitmapLength, kOnes, seed);
-  BitSequenceSeq *seq_bitseq = new BitSequenceSeq(a);
-  seq_bitseq->Use();
-  BitSequenceRank0 *bs = new BitSequenceRank0(a);
-  bs->Use();
-  TestBitSequence(seq_bitseq, bs);
-  a->Unuse();
-  bs->Unuse();
-  seq_bitseq->Unuse();
-}
+#endif  // SRC_IMMUTABLE_BITSEQUENCE_H_

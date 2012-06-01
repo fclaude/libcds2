@@ -65,10 +65,11 @@ void TestSequence(Sequence *model, Sequence *tested) {
   for (cds_word i = 0; i < length; i++) {
     cds_word rec = tested->Access(i);
     cds_word exp = model->Access(i);
-    if (occ.count(exp) > 0)
+    if (occ.count(exp) > 0) {
       occ[exp]++;
-    else
+    } else {
       occ[exp] = 1;
+    }
     ASSERT_EQ(exp, rec) << "Error in Access";
     rec = tested->Rank(rec, i);
     exp = model->Rank(exp, i);

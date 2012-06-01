@@ -47,80 +47,88 @@ const cds_word sigmas = 2;
 uint seed_test_sequence = 20;
 
 class SimpleSeq : public Sequence {
-public:
-	SimpleSeq(Array *array) {
-		array_ = array;
-		array_->Use();
-	}
-	~SimpleSeq() {
-		array_->Unuse();
-	}
-	cds_word GetLength() const {
-		return array_->GetLength();
-	}
-	cds_word GetSigma() const {
-		return array_->GetMax();
-	}
-	cds_word Access(const cds_word i) const {
-		return array_->GetField(i);
-	}
-	cds_word Rank(const cds_word s, const cds_word i) const {
-		cds_word count = 0;
-		for (cds_word pos = 0; pos <= i; pos++)
-			if (array_->GetField(pos) == s) count++;
-		return count;
-	}
-	cds_word Select(const cds_word s, const cds_word j) const {
-		cds_word count = 0;
-		for (cds_word pos = 0; pos < array_->GetLength(); pos++) {
-			if (array_->GetField(pos) == s) count++;
-			if (count == j) return pos;
-		}
-		return array_->GetLength();
-	}
-	cds_word Access(const cds_word i, cds_word *rank) {
-		cds_word s = array_->GetField(i);
-		*rank = Rank(s, i);
-		return s;
-	}
-	cds_word GetSize() const {
-		return static_cast<cds_word>(-1);
-	}
-	void Save(ostream &fp) const {
-		assert(false);
-	}
-protected:
-	Array *array_;
+  public:
+    explicit SimpleSeq(Array *array) {
+      array_ = array;
+      array_->Use();
+    }
+    ~SimpleSeq() {
+      array_->Unuse();
+    }
+    cds_word GetLength() const {
+      return array_->GetLength();
+    }
+    cds_word GetSigma() const {
+      return array_->GetMax();
+    }
+    cds_word Access(const cds_word i) const {
+      return array_->GetField(i);
+    }
+    cds_word Rank(const cds_word s, const cds_word i) const {
+      cds_word count = 0;
+      for (cds_word pos = 0; pos <= i; pos++)
+        if (array_->GetField(pos) == s) {
+          count++;
+        }
+      return count;
+    }
+    cds_word Select(const cds_word s, const cds_word j) const {
+      cds_word count = 0;
+      for (cds_word pos = 0; pos < array_->GetLength(); pos++) {
+        if (array_->GetField(pos) == s) {
+          count++;
+        }
+        if (count == j) {
+          return pos;
+        }
+      }
+      return array_->GetLength();
+    }
+    cds_word Access(const cds_word i, cds_word *rank) {
+      cds_word s = array_->GetField(i);
+      *rank = Rank(s, i);
+      return s;
+    }
+    cds_word GetSize() const {
+      return static_cast<cds_word>(-1);
+    }
+    void Save(ostream &fp) const {
+      assert(false);
+    }
+
+  protected:
+    Array *array_;
 };
 
 class SimpleSeqAccess : public Sequence {
-public:
-	SimpleSeqAccess(Array *array) {
-		array_ = array;
-	}
+  public:
+    explicit SimpleSeqAccess(Array *array) {
+      array_ = array;
+    }
 
-	cds_word GetLength() const {
-		return array_->GetLength();
-	}
+    cds_word GetLength() const {
+      return array_->GetLength();
+    }
 
-	cds_word Access(const cds_word i) const {
-		return array_->GetField(i);
-	}
-	cds_word GetSize() const {
-		return static_cast<cds_word>(-1);
-	}
-	void Save(ostream &fp) const {
-		assert(false);
-	}
-protected:
-	Array *array_;
+    cds_word Access(const cds_word i) const {
+      return array_->GetField(i);
+    }
+    cds_word GetSize() const {
+      return static_cast<cds_word>(-1);
+    }
+    void Save(ostream &fp) const {
+      assert(false);
+    }
+
+  protected:
+    Array *array_;
 };
 
 TEST(Sequence, SimpleSeqAccess) {
-	for (cds_word ind = 0; ind < sigmas; ind++) {
-		Array *array = CreateRandomSequence(kLength, sigma[ind], seed_test_sequence);
-		SimpleSeq *seq1 = new SimpleSeq(array);
-		SimpleSeqAccess *seq2 = new SimpleSeqAccess(array);
-		TestSequence(seq1, seq2);
-	}
+  for (cds_word ind = 0; ind < sigmas; ind++) {
+    Array *array = CreateRandomSequence(kLength, sigma[ind], seed_test_sequence);
+    SimpleSeq *seq1 = new SimpleSeq(array);
+    SimpleSeqAccess *seq2 = new SimpleSeqAccess(array);
+    TestSequence(seq1, seq2);
+  }
 }

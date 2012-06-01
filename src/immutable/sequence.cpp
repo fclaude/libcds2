@@ -34,6 +34,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <libcds/cdsexception.h>
 #include <libcds/io.h>
 
+#include <algorithm>
+
 namespace cds {
 namespace immutable {
 
@@ -43,8 +45,9 @@ using cds::basic::SaveValue;
 
 cds_word Sequence::Access(const cds_word i) const {
   for (cds_word s = 0; s < GetSigma(); s++) {
-    if (Rank(s, i - 1) - Rank(s, i) == 1)
+    if (Rank(s, i - 1) - Rank(s, i) == 1) {
       return s;
+    }
   }
   assert(false);
   throw CDSException("Unknown symbol, cannot access");
@@ -59,16 +62,24 @@ cds_word Sequence::Access(const cds_word i, cds_word *rank) const {
 cds_word Sequence::Rank(const cds_word s, const cds_word i) const {
   cds_word count = 0;
   for (cds_word pos = 0; pos <= i; pos++)
-    if (Access(pos) == s) count++;
+    if (Access(pos) == s) {
+      count++;
+    }
   return count;
 }
 
 cds_word Sequence::Select(const cds_word s, const cds_word j) const {
-  if (j == 0) return static_cast<cds_word>(-1);
+  if (j == 0) {
+    return static_cast<cds_word>(-1);
+  }
   cds_word count = 0;
   for (cds_word pos = 0; pos <= GetLength(); pos++) {
-    if (Access(pos) == s) count++;
-    if (count == j) return pos;
+    if (Access(pos) == s) {
+      count++;
+    }
+    if (count == j) {
+      return pos;
+    }
   }
   return GetLength();
 }
@@ -79,8 +90,9 @@ cds_word Sequence::Count(const cds_word s) const {
 
 cds_word Sequence::GetSigma() const {
   cds_word max = 0;
-  for (cds_word i = 0; i < GetLength(); i++)
+  for (cds_word i = 0; i < GetLength(); i++) {
     max = std::max(Access(i), max);
+  }
   return max;
 }
 };

@@ -123,7 +123,9 @@ cds_word BitSequence::Select0(const cds_word i, cds_word ini, cds_word fin) cons
   }
 
   cds_word pos = Select0(i);
-  if (pos > fin) pos = fin + 1;
+  if (pos > fin) {
+    pos = fin + 1;
+  }
   if (pos < ini) {
     throw CDSException("Invalid bounds for Select1");
   }
@@ -163,7 +165,9 @@ cds_word BitSequence::Select1(const cds_word i, cds_word ini, cds_word fin) cons
   }
 
   cds_word pos = Select1(i);
-  if (pos > fin) pos = fin + 1;
+  if (pos > fin) {
+    pos = fin + 1;
+  }
   if (pos < ini) {
     throw CDSException("Invalid bounds for Select1");
   }

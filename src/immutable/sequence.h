@@ -91,4 +91,4 @@ class Sequence : public cds::basic::ReferenceCounted {
 };
 };
 
-#endif  // SRC_IMMUTABLE_BITSEQUENCE_H_
+#endif  // SRC_IMMUTABLE_SEQUENCE_H_

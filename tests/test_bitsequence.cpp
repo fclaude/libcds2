@@ -29,78 +29,142 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ********************************************************************************/
 
-
 #include <gtest/gtest.h>
 #include <libcds/array.h>
 #include <libcds/immutable/bitsequence.h>
 #include <libcds/immutable/bitsequenceseq.h>
-#include <libcds/immutable/bitsequenceonelevelrank.h>
-
-#include <sstream>
-
 #include "./test_bitsequence_utils.h"
 
 using cds::immutable::BitSequence;
-using cds::immutable::BitSequenceOneLevelRank;
 using cds::immutable::BitSequenceSeq;
 using cds::basic::Array;
 using cds::basic::cds_word;
+using std::ostream;
 
-using std::stringbuf;
-using std::ios_base;
-using std::iostream;
+class BitSequenceRank0: public BitSequence {
+  public:
+    explicit BitSequenceRank0(Array *_a) {
+      bs_ = new BitSequenceSeq(_a);
+      bs_->Use();
+    }
 
-void testBitSequenceOneLevelRank(cds_word sample) {
+    virtual ~BitSequenceRank0() {
+      bs_->Unuse();
+    }
+
+    virtual cds_word GetLength() const {
+      return bs_->GetLength();
+    }
+
+    virtual cds_word Rank0(const cds_word i) const {
+      return bs_->Rank0(i);
+    }
+
+    virtual cds_word Rank0(const cds_word i, bool *access) const {
+      *access = Access(i);
+      return Rank0(i);
+    }
+
+    virtual cds_word Rank1(const cds_word i) const {
+      return i - Rank0(i) + 1;
+    }
+
+    virtual cds_word Rank1(const cds_word i, bool *access) const {
+      *access = Access(i);
+      return Rank1(i);
+    }
+
+    virtual void Save(ostream &fp) const {
+    }
+
+    virtual cds_word GetSize() const {
+      return bs_->GetSize() + sizeof(*this);
+    }
+
+    virtual cds_word CountZeros() const {
+      return bs_->CountZeros();
+    }
+
+  protected:
+    BitSequence *bs_;
+};
+
+
+
+TEST(BitSequence, SupportingRank0) {
   const cds_word kBitmapLength = 10000;
   const cds_word kOnes = kBitmapLength / 4;
   unsigned int seed = 101;
-  char *buffer = new char[kBitmapLength];
-  stringbuf *sbuf = new stringbuf(ios_base::in | ios_base::out);
-  sbuf->pubsetbuf(buffer, kBitmapLength);
-  iostream io(sbuf);
-
   Array *a = CreateRandomBitmap(kBitmapLength, kOnes, seed);
-  a->Use();
   BitSequenceSeq *seq_bitseq = new BitSequenceSeq(a);
   seq_bitseq->Use();
-  BitSequence *bs = new BitSequenceOneLevelRank(a, sample);
-  bs->Use();
-  bs->Save(io);
-  io.seekg(0);
-  TestBitSequence(seq_bitseq, bs);
-  bs->Unuse();
-
-  bs = BitSequenceOneLevelRank::Load(io);
+  BitSequenceRank0 *bs = new BitSequenceRank0(a);
   bs->Use();
   TestBitSequence(seq_bitseq, bs);
-  bs->Unuse();
-
   a->Unuse();
+  bs->Unuse();
   seq_bitseq->Unuse();
-  delete sbuf;
-  delete [] buffer;
 }
 
-TEST(BitSequence, BitSequenceOneLevelRank1) {
-  testBitSequenceOneLevelRank(1);
-}
+class BitSequenceRank1: public BitSequence {
+  public:
+    explicit BitSequenceRank1(Array *_a) {
+      bs_ = new BitSequenceSeq(_a);
+      bs_->Use();
+    }
 
-TEST(BitSequence, BitSequenceOneLevelRank7) {
-  testBitSequenceOneLevelRank(7);
-}
+    virtual ~BitSequenceRank1() {
+      bs_->Unuse();
+    }
 
-TEST(BitSequence, BitSequenceOneLevelRank20) {
-  testBitSequenceOneLevelRank(20);
-}
+    virtual cds_word GetLength() const {
+      return bs_->GetLength();
+    }
 
-TEST(BitSequence, BitSequenceOneLevelRank32) {
-  testBitSequenceOneLevelRank(32);
-}
+    virtual cds_word Rank0(const cds_word i) const {
+      return i - Rank1(i) + 1;
+    }
 
-TEST(BitSequence, BitSequenceOneLevelRank33) {
-  testBitSequenceOneLevelRank(33);
-}
+    virtual cds_word Rank0(const cds_word i, bool *access) const {
+      *access = Access(i);
+      return Rank0(i);
+    }
 
-TEST(BitSequence, BitSequenceOneLevelRank40) {
-  testBitSequenceOneLevelRank(40);
+    virtual cds_word Rank1(const cds_word i) const {
+      return bs_->Rank1(i);
+    }
+
+    virtual cds_word Rank1(const cds_word i, bool *access) const {
+      *access = Access(i);
+      return Rank1(i);
+    }
+
+    virtual void Save(ostream &fp) const {
+    }
+
+    virtual cds_word GetSize() const {
+      return bs_->GetSize() + sizeof(*this);
+    }
+
+    virtual cds_word CountZeros() const {
+      return bs_->CountZeros();
+    }
+
+  protected:
+    BitSequence *bs_;
+};
+
+TEST(BitSequence, SupportingRank1) {
+  const cds_word kBitmapLength = 10000;
+  const cds_word kOnes = kBitmapLength / 4;
+  unsigned int seed = 101;
+  Array *a = CreateRandomBitmap(kBitmapLength, kOnes, seed);
+  BitSequenceSeq *seq_bitseq = new BitSequenceSeq(a);
+  seq_bitseq->Use();
+  BitSequenceRank1 *bs = new BitSequenceRank1(a);
+  bs->Use();
+  TestBitSequence(seq_bitseq, bs);
+  a->Unuse();
+  bs->Unuse();
+  seq_bitseq->Unuse();
 }

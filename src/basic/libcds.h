@@ -310,6 +310,7 @@ inline cds_word select(cds_word x, cds_word pos) {
   }
   cds_word i = 0;
   while (true) {
+    assert(i < kWordSize);
     if (BitGet(&x, i)) {
       pos--;
       if (pos == 0) {

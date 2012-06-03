@@ -74,7 +74,6 @@ template <cds_word bpe> ArrayTpl<bpe>::ArrayTpl(istream &input) {
 template <cds_word bpe> ArrayTpl<bpe> *ArrayTpl<bpe>::Load(istream &input) {
   cds_word id = LoadValue<cds_word>(input);
   if (id != bpe) {
-    std::cout << "Returning null: " << bpe << " - " << id << std::endl;
     return NULL;
   }
   return new ArrayTpl<bpe>(input);

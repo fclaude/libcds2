@@ -34,6 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <libcds/cdsexception.h>
 #include <libcds/io.h>
 
+#include <iostream>
 #include <algorithm>
 
 namespace cds {
@@ -181,7 +182,7 @@ cds_word BitSequenceOneLevelRank::Select0(const cds_word i) const {
     }
   }
 
-  cds_word last_word = cds::basic::SafeCeil(GetLength(), kWordSize);
+  cds_word last_word = cds::basic::WordsLength(GetLength(), 1);
   cds_word sampling_pos = ini - 1;
   cds_word count_so_far = sampling_->GetField(sampling_pos);
   cds_word *data = bitmap_->data_;
@@ -195,7 +196,7 @@ cds_word BitSequenceOneLevelRank::Select0(const cds_word i) const {
     zeroes = popcount(~data[first_word]);
   }
 
-  if (i - count_so_far > popcount(~data[first_word])) {
+  if (first_word == last_word || i - count_so_far > popcount(~data[first_word])) {
     return GetLength();
   }
 
@@ -208,7 +209,7 @@ cds_word BitSequenceOneLevelRank::Select1(const cds_word i) const {
   }
 
   // We find the word that contains the answer
-  cds_word last_word = cds::basic::SafeCeil(GetLength(), kWordSize);
+  cds_word last_word = cds::basic::WordsLength(GetLength(), 1);
   cds_word sampling_pos = sampling_->LowerBound(i) - 1;
   cds_word count_so_far = sampling_->GetField(sampling_pos);
   cds_word *data = bitmap_->data_;
@@ -222,7 +223,7 @@ cds_word BitSequenceOneLevelRank::Select1(const cds_word i) const {
     ones = popcount(data[first_word]);
   }
 
-  if (i - count_so_far > popcount(data[first_word])) {
+  if (first_word == last_word || i - count_so_far > popcount(data[first_word])) {
     return GetLength();
   }
 
@@ -236,10 +237,10 @@ cds_word BitSequenceOneLevelRank::SelectNext1(const cds_word i) const {
     return i + cds::basic::select(tmp_word, 1);
   }
 
-  cds_word last_word = cds::basic::SafeCeil(GetLength(), kWordSize);
+  cds_word last_word = cds::basic::WordsLength(GetLength(), 1);
   cds_word first_word = i / kWordSize + 1;
   cds_word sampling_pos = i / sampling_rate_ + 1;
-  cds_word seq_search_limit = std::min(sampling_pos * sampling_rate_ / kWordSize, last_word + 1);
+  cds_word seq_search_limit = std::min(sampling_pos * sampling_rate_ / kWordSize, last_word);
 
   while (first_word < seq_search_limit) {
     if (data[first_word]) {
@@ -263,11 +264,11 @@ cds_word BitSequenceOneLevelRank::SelectNext1(const cds_word i) const {
     ones = popcount(data[first_word]);
   }
 
-  if (new_i - count_so_far > popcount(data[first_word])) {
+  if (first_word >= last_word || new_i - count_so_far > popcount(data[first_word])) {
     return GetLength();
   }
 
-  return first_word * kWordSize + cds::basic::select(data[first_word], new_i - count_so_far);
+  return first_word * kWordSize + cds::basic::select(data[first_word], 1);
 }
 
 bool BitSequenceOneLevelRank::Access(const cds_word i) const {

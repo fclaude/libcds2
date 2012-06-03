@@ -74,8 +74,9 @@ bool BitSequenceOneLevelRank::Access(const cds_word i, cds_word *r) const {
   }
 
   if (i == 0) {
-    *r = bitmap_->GetField(i);
-    return *r;
+    bool ret = bitmap_->GetField(i);
+    *r = 1;
+    return ret;
   }
 
   cds_word sampling_pos = i / sampling_rate_;

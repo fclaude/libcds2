@@ -3,7 +3,7 @@
 ./test_array
 ./test_libcdsh
 ./test_timeh
-./test_bitsequence
-./test_bitsequence1
-./test_bitsequence2
 ./test_ioh
+./test_bitsequence
+./test_bitsequenceonelevelrank
+./test_sequence

@@ -216,7 +216,7 @@ cds_word BitSequenceOneLevelRank::Select1(const cds_word i) const {
   cds_word first_word = pos_so_far / kWordSize;
   cds_word ones = popcount(data[first_word]);
 
-  while ((count_so_far + ones) < i && first_word < last_word + 1) {
+  while ((count_so_far + ones) < i && first_word < last_word) {
     count_so_far += ones;
     first_word++;
     ones = popcount(data[first_word]);
@@ -257,7 +257,7 @@ cds_word BitSequenceOneLevelRank::SelectNext1(const cds_word i) const {
   cds_word count_so_far = new_i - 1;
   cds_word ones = popcount(data[first_word]);
 
-  while ((count_so_far + ones) < new_i && first_word < last_word + 1) {
+  while ((count_so_far + ones) < new_i && first_word < last_word) {
     count_so_far += ones;
     first_word++;
     ones = popcount(data[first_word]);

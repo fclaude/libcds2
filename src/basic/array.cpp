@@ -183,7 +183,7 @@ template <cds_word bpe> cds_word ArrayTpl<bpe>::BinarySearch(cds_word value, cds
   assert(ini <= fin);
   assert(fin <= length_);
   cds_word pos = LowerBound(value, ini, fin);
-  if (pos != length_ && !(value < GetField(pos))) {
+  if (pos != fin && !(value < GetField(pos))) {
     return pos;
   } else {
     return fin;

@@ -186,7 +186,7 @@ template <cds_word bpe> cds_word ArrayTpl<bpe>::BinarySearch(cds_word value, cds
   if (pos != length_ && !(value < GetField(pos))) {
     return pos;
   } else {
-    return length_;
+    return fin;
   }
 }
 

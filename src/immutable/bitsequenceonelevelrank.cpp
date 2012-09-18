@@ -68,6 +68,11 @@ BitSequenceOneLevelRank::BitSequenceOneLevelRank(Array *bitmap, cds_word samplin
   }
 }
 
+BitSequenceOneLevelRank::~BitSequenceOneLevelRank() {
+  bitmap_->Unuse();
+  sampling_->Unuse();
+}
+
 bool BitSequenceOneLevelRank::Access(const cds_word i, cds_word *r) const {
   assert(i < GetLength());
   if (i >= bitmap_->GetLength()) {

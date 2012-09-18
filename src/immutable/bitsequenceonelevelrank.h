@@ -62,7 +62,7 @@ class BitSequenceOneLevelRank : public BitSequence {
   public:
     BitSequenceOneLevelRank(Array *bitmap, cds_word sampling_rate);
 
-    virtual ~BitSequenceOneLevelRank() {}
+    virtual ~BitSequenceOneLevelRank();
     virtual cds_word Rank0(const cds_word i, bool *a) const;
     virtual cds_word Select0(const cds_word i) const;
     // virtual cds_word Select0(const cds_word i, cds_word ini, cds_word fin) const;

@@ -1,13 +1,13 @@
 
-# CPPFLAGS=	-O0 \
-#  			-g3 \
-#  			$(INC) \
-#  			-Wall \
-#  			-fPIC
-CPPFLAGS=	-O3 \
-			$(INC) \
-			-Wall \
-			-fPIC
+CPPFLAGS=	-O0 \
+ 			-g3 \
+ 			$(INC) \
+ 			-Wall \
+ 			-fPIC
+# CPPFLAGS=	-O3 \
+# 			$(INC) \
+# 			-Wall \
+# 			-fPIC
 #CPPFLAGS=	-O3 \
 #			$(INC) \
 #			-Wall \
@@ -86,7 +86,7 @@ test: libcds $(TESTOBJ)
 	@echo " [DEP] Compiling gtest library"
 	@cd $(GTEST_DIR); ./configure > /dev/null; cd ../..
 	@make -s -C $(GTEST_DIR) > /dev/null
-	@echo " [LNK] Compiling and linking test_array"
+	@echo " [LNK] Linking test_array"
 	@$(CPP) $(CPPFLAGS) -o tests/test_array tests/test_array.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_ioh"
 	@$(CPP) $(CPPFLAGS) -o tests/test_ioh tests/test_ioh.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
@@ -104,8 +104,8 @@ test: libcds $(TESTOBJ)
 	@$(CPP) $(CPPFLAGS) -o tests/test_mappernone tests/test_mappernone.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_codernone"
 	@$(CPP) $(CPPFLAGS) -o tests/test_codernone tests/test_codernone.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
-	@echo " [LNK] Linking speed_go"
-	$(CPP) $(CPPFLAGS) -o tests/speed_go tests/speed_go.cpp $(LIB)
+	@echo " [LNK] Compiling and Linking speed_go"
+	@$(CPP) $(CPPFLAGS) -o tests/speed_go tests/speed_go.cpp $(LIB)
 
 autotest: test
 	cd tests; ../config/run_test.py -a fclaude@gmail.com -s localhost -t ./test_libcdsh,./test_array,./test_ioh,./test_timeh,./test_bitsequence,./test_sequence,./test_bitsequenceonelevelrank,./test_mappernone
@@ -113,7 +113,7 @@ autotest: test
 shared_lib: libcds
 	@mkdir -p tmp
 	@echo " [MSG] Running SWIG"
-	@swig -wall -c++ -go -gccgo -outdir gocode/src/libcds2/ -o tmp/libcds2_wrap.cxx gocode/libcds.i
+	@swig -wall -c++ -go -outdir gocode/src/libcds2/ -o tmp/libcds2_wrap.cxx gocode/libcds.i
 	@echo " [C++] Compiling shared library"
 	@g++ -shared $(CPPFLAGS) -w -o lib/libcds2.so tmp/libcds2_wrap.cxx ./lib/libcds.a
 	@rm -rf tmp

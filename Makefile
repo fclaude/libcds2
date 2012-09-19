@@ -28,7 +28,9 @@ OBJ=	src/basic/array.o \
 		src/immutable/bitsequenceonelevelrank.o \
 		src/immutable/sequence.o \
 		src/immutable/mapper.o \
-		src/immutable/mappernone.o
+		src/immutable/mappernone.o \
+		src/immutable/coder.o \
+		src/immutable/codernone.o
 
 TESTOBJ= tests/test_main.o \
 		tests/test_array.o \
@@ -40,7 +42,8 @@ TESTOBJ= tests/test_main.o \
 		tests/test_bitsequenceonelevelrank.o \
 		tests/test_sequence_utils.o \
 		tests/test_sequence.o \
-		tests/test_mappernone.o
+		tests/test_mappernone.o \
+		tests/test_codernone.o
 
 GTEST_DIR=./dep/gtest-1.6.0/
 
@@ -92,6 +95,9 @@ test: libcds $(TESTOBJ)
 	@$(CPP) $(CPPFLAGS) -o tests/test_sequence tests/test_sequence.o tests/test_sequence_utils.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_mappernone"
 	@$(CPP) $(CPPFLAGS) -o tests/test_mappernone tests/test_mappernone.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@echo " [LNK] Linking test_codernone"
+	@$(CPP) $(CPPFLAGS) -o tests/test_codernone tests/test_codernone.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+
 
 
 autotest: test
@@ -115,4 +121,5 @@ clean:
 	@rm -f tests/test_bitsequence
 	@rm -f tests/test_bitsequenceonelevelrank
 	@rm -f tests/test_sequence
-
+	@rm -f tests/test_mappernone
+	@rm -f tests/test_codernone

@@ -304,7 +304,9 @@ BitSequenceOneLevelRank *BitSequenceOneLevelRank::Load(istream &fp) {
   }
   BitSequenceOneLevelRank *ret = new BitSequenceOneLevelRank();
   ret->bitmap_ = ArrayTpl<1>::Load(fp);
+  ret->bitmap_->Use();
   ret->sampling_ = Array::Load(fp);
+  ret->sampling_->Use();
   ret->length_ = LoadValue<cds_word>(fp);
   ret->sampling_rate_ = LoadValue<cds_word>(fp);
   return ret;

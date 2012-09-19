@@ -59,7 +59,9 @@ using std::ostream;
 class BitSequenceSeq : public BitSequence {
   public:
     explicit BitSequenceSeq(Array *array);
-    virtual ~BitSequenceSeq() {}
+    virtual ~BitSequenceSeq() {
+      array_->Unuse();
+    }
     virtual cds_word Rank0(const cds_word i) const;
     virtual cds_word Rank0(const cds_word i, bool *access) const;
     virtual cds_word Select0(const cds_word i) const;

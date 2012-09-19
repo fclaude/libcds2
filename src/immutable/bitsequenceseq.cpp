@@ -39,6 +39,7 @@ using cds::basic::Array;
 
 BitSequenceSeq::BitSequenceSeq(Array *array) {
   array_ = array;
+  array_->Use();
 }
 
 cds_word BitSequenceSeq::Rank1(const cds_word i) const {

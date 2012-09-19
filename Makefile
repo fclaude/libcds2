@@ -26,7 +26,9 @@ OBJ=	src/basic/array.o \
 		src/immutable/bitsequence.o \
 		src/immutable/bitsequenceseq.o \
 		src/immutable/bitsequenceonelevelrank.o \
-		src/immutable/sequence.o
+		src/immutable/sequence.o \
+		src/immutable/mapper.o \
+		src/immutable/mappernone.o
 
 TESTOBJ= tests/test_main.o \
 		tests/test_array.o \
@@ -37,7 +39,8 @@ TESTOBJ= tests/test_main.o \
 		tests/test_bitsequence_utils.o \
 		tests/test_bitsequenceonelevelrank.o \
 		tests/test_sequence_utils.o \
-		tests/test_sequence.o
+		tests/test_sequence.o \
+		tests/test_mappernone.o
 
 GTEST_DIR=./dep/gtest-1.6.0/
 
@@ -87,9 +90,12 @@ test: libcds $(TESTOBJ)
 	@$(CPP) $(CPPFLAGS) -o tests/test_bitsequenceonelevelrank tests/test_bitsequenceonelevelrank.o tests/test_bitsequence_utils.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_sequence"
 	@$(CPP) $(CPPFLAGS) -o tests/test_sequence tests/test_sequence.o tests/test_sequence_utils.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@echo " [LNK] Linking test_mappernone"
+	@$(CPP) $(CPPFLAGS) -o tests/test_mappernone tests/test_mappernone.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+
 
 autotest: test
-	cd tests; ../config/run_test.py -a fclaude@gmail.com -s localhost -t ./test_libcdsh,./test_array,./test_ioh,./test_timeh,./test_bitsequence,./test_sequence,./test_bitsequenceonelevelrank
+	cd tests; ../config/run_test.py -a fclaude@gmail.com -s localhost -t ./test_libcdsh,./test_array,./test_ioh,./test_timeh,./test_bitsequence,./test_sequence,./test_bitsequenceonelevelrank,./test_mappernone
 
 clean:
 	@echo " [CLN] Cleaning source tree"

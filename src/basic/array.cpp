@@ -81,10 +81,12 @@ template <cds_word bpe> ArrayTpl<bpe> *ArrayTpl<bpe>::Load(istream &input) {
 
 template <cds_word bpe> ArrayTpl<bpe>::ArrayTpl(cds_word n) {
   length_ = n;
+  std::cout << "I'm an array with " << bpe << " bits per field" << std::endl;
   InitData();
 }
 
 template <cds_word bpe> ArrayTpl<bpe>::ArrayTpl(cds_word *A, cds_word i, cds_word j) {
+  std::cout << "I'm an array with " << bpe << " bits per field" << std::endl;
   length_ = j - i + 1;
   InitData();
   for (cds_word k = i; k <= j; k++) {
@@ -94,8 +96,7 @@ template <cds_word bpe> ArrayTpl<bpe>::ArrayTpl(cds_word *A, cds_word i, cds_wor
 
 template <cds_word bpe> cds_word ArrayTpl<bpe>::GetSize() const {
   return sizeof(cds_word) * WordsLength(length_, bpe)
-         + sizeof(cds_word) * 4
-         + sizeof(cds_word *);
+         + sizeof(*this);
 }
 
 template <cds_word bpe> cds_word ArrayTpl<bpe>::GetLength() const {

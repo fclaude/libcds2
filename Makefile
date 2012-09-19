@@ -1,25 +1,30 @@
 
-CPPFLAGS=	-O0 \
-			-g3 \
-			$(INC) \
-			-Wall
-# CPPFLAGS=	-O3 \
+# CPPFLAGS=	-O0 \
+# 			-g3 \
 # 			$(INC) \
-# 			-Wall
+# 			-Wall \
+# 			-fPIC
 # CPPFLAGS=	-O3 \
 # 			$(INC) \
 # 			-Wall \
-# 			-DNDEBUG \
-# 			-msse4 \
-# 			-funsafe-loop-optimizations \
-# 			-funsafe-math-optimizations \
-# 			-funswitch-loops \
-# 			-fvariable-expansion-in-unroller \
-# 			-funroll-loops
+#			-fPIC
+CPPFLAGS=	-O3 \
+			$(INC) \
+			-Wall \
+			-DNDEBUG \
+			-msse4 \
+			-funsafe-loop-optimizations \
+			-funsafe-math-optimizations \
+			-funswitch-loops \
+			-fvariable-expansion-in-unroller \
+			-funroll-loops \
+			-fPIC
 
 CPP=g++
-INC=-I./includes/ -I./dep/gtest-1.6.0/include/
+INC=-I./includes/
+TEST_INC=-I./dep/gtest-1.6.0/include/
 LIB=lib/libcds.a
+LIB_SHARED=-lcds2
 
 OBJ=	src/basic/array.o \
 		src/basic/io.o \
@@ -82,28 +87,43 @@ test: libcds $(TESTOBJ)
 	@cd $(GTEST_DIR); ./configure > /dev/null; cd ../..
 	@make -s -C $(GTEST_DIR) > /dev/null
 	@echo " [LNK] Compiling and linking test_array"
-	@$(CPP) $(CPPFLAGS) -o tests/test_array tests/test_array.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@$(CPP) $(CPPFLAGS) -o tests/test_array tests/test_array.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_ioh"
-	@$(CPP) $(CPPFLAGS) -o tests/test_ioh tests/test_ioh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@$(CPP) $(CPPFLAGS) -o tests/test_ioh tests/test_ioh.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_libcdsh"
-	@$(CPP) $(CPPFLAGS) -o tests/test_libcdsh tests/test_libcdsh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@$(CPP) $(CPPFLAGS) -o tests/test_libcdsh tests/test_libcdsh.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_timeh"
-	@$(CPP) $(CPPFLAGS) -o tests/test_timeh tests/test_timeh.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@$(CPP) $(CPPFLAGS) -o tests/test_timeh tests/test_timeh.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_bitsequence"
-	@$(CPP) $(CPPFLAGS) -o tests/test_bitsequence tests/test_bitsequence.o tests/test_bitsequence_utils.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@$(CPP) $(CPPFLAGS) -o tests/test_bitsequence tests/test_bitsequence.o tests/test_bitsequence_utils.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_bitsequenceonelevelrank"
-	@$(CPP) $(CPPFLAGS) -o tests/test_bitsequenceonelevelrank tests/test_bitsequenceonelevelrank.o tests/test_bitsequence_utils.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@$(CPP) $(CPPFLAGS) -o tests/test_bitsequenceonelevelrank tests/test_bitsequenceonelevelrank.o tests/test_bitsequence_utils.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_sequence"
-	@$(CPP) $(CPPFLAGS) -o tests/test_sequence tests/test_sequence.o tests/test_sequence_utils.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@$(CPP) $(CPPFLAGS) -o tests/test_sequence tests/test_sequence.o tests/test_sequence_utils.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_mappernone"
-	@$(CPP) $(CPPFLAGS) -o tests/test_mappernone tests/test_mappernone.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@$(CPP) $(CPPFLAGS) -o tests/test_mappernone tests/test_mappernone.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_codernone"
-	@$(CPP) $(CPPFLAGS) -o tests/test_codernone tests/test_codernone.o tests/test_main.o -lpthread $(LIB) $(INC) $(GTEST_DIR)/src/gtest-all.o
-
-
+	@$(CPP) $(CPPFLAGS) -o tests/test_codernone tests/test_codernone.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@echo " [LNK] Linking speed_go"
+	$(CPP) $(CPPFLAGS) -o tests/speed_go tests/speed_go.cpp $(LIB_SHARED)
 
 autotest: test
 	cd tests; ../config/run_test.py -a fclaude@gmail.com -s localhost -t ./test_libcdsh,./test_array,./test_ioh,./test_timeh,./test_bitsequence,./test_sequence,./test_bitsequenceonelevelrank,./test_mappernone
+
+shared_lib: libcds
+	@mkdir -p tmp
+	@echo " [MSG] Running SWIG"
+	@swig -wall -c++ -go -outdir gocode/src/libcds2/ -o tmp/libcds2_wrap.cxx gocode/libcds.i
+	@echo " [C++] Compiling shared library"
+	@g++ -shared $(CPPFLAGS) -w -o lib/libcds2.so tmp/libcds2_wrap.cxx ./lib/libcds.a
+	@rm -rf tmp
+
+shared_lib_install:
+	@cp ./lib/libcds2.so /usr/lib
+	@echo " [MSG] Library copied to /usr/lib"
+
+gotest:
+	@make -C gocode
 
 clean:
 	@echo " [CLN] Cleaning source tree"
@@ -125,3 +145,5 @@ clean:
 	@rm -f tests/test_sequence
 	@rm -f tests/test_mappernone
 	@rm -f tests/test_codernone
+	@rm -f tests/speed_go
+	@make -s -C gocode clean

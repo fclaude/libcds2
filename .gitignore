@@ -12,3 +12,6 @@ dep/gtest-1.6.0/scripts/gtest-config
 dep/gtest-1.6.0/src/.deps/
 dep/gtest-1.6.0/src/.dirstamp
 dep/gtest-1.6.0/test/.deps/
+.DS_Store
+*.dSYM
+lib/

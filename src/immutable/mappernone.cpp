@@ -37,11 +37,11 @@ namespace immutable {
 
 MapperNone::MapperNone() {}
 
-cds_word MapperNone::Map(const cds_word s) const {
+cds_word MapperNone::Map(cds_word s) const {
   return s;
 }
 
-cds_word MapperNone::Unmap(const cds_word s) const {
+cds_word MapperNone::Unmap(cds_word s) const {
   return s;
 }
 

@@ -220,6 +220,9 @@ cds_word BitSequenceOneLevelRank::Select1(const cds_word i) const {
   cds_word *data = bitmap_->data_;
   cds_word pos_so_far = sampling_pos * sampling_rate_;
   cds_word first_word = pos_so_far / kWordSize;
+  if (first_word == last_word) {
+    return GetLength();
+  }
   cds_word ones = popcount(data[first_word]);
 
   while ((count_so_far + ones) < i && first_word < last_word) {

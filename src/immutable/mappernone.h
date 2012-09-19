@@ -50,8 +50,8 @@ class MapperNone : public Mapper {
   public:
     MapperNone();
     virtual ~MapperNone() {}
-    virtual cds_word Map(const cds_word s) const;
-    virtual cds_word Unmap(const cds_word s) const;
+    virtual cds_word Map(cds_word s) const;
+    virtual cds_word Unmap(cds_word s) const;
     virtual cds_word GetSize() const;
     virtual void Save(ostream &out) const;
     static MapperNone *Load(istream &input);

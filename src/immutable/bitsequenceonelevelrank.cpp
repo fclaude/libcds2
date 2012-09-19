@@ -193,15 +193,17 @@ cds_word BitSequenceOneLevelRank::Select0(const cds_word i) const {
   cds_word *data = bitmap_->data_;
   cds_word pos_so_far = sampling_pos * sampling_rate_;
   cds_word first_word = pos_so_far / kWordSize;
-  cds_word zeroes = popcount(~data[first_word]);
 
-  while ((count_so_far + zeroes) < i && first_word < last_word) {
+  cds_word zeroes = 0;
+  while (count_so_far < i && first_word < last_word) {
+    zeroes = popcount(~data[first_word]);
     count_so_far += zeroes;
     first_word++;
-    zeroes = popcount(~data[first_word]);
   }
-
-  if (first_word == last_word || i - count_so_far > popcount(~data[first_word])) {
+  if (count_so_far >= i) {
+    first_word--;
+    count_so_far -= zeroes;
+  } else {
     return GetLength();
   }
 
@@ -220,21 +222,20 @@ cds_word BitSequenceOneLevelRank::Select1(const cds_word i) const {
   cds_word *data = bitmap_->data_;
   cds_word pos_so_far = sampling_pos * sampling_rate_;
   cds_word first_word = pos_so_far / kWordSize;
-  if (first_word == last_word) {
-    return GetLength();
-  }
-  cds_word ones = popcount(data[first_word]);
-
-  while ((count_so_far + ones) < i && first_word < last_word) {
+  
+  cds_word ones = 0;
+  while (count_so_far < i && first_word < last_word) {
+    ones = popcount(data[first_word]);
     count_so_far += ones;
     first_word++;
-    ones = popcount(data[first_word]);
   }
-
-  if (first_word == last_word || i - count_so_far > popcount(data[first_word])) {
+  if (count_so_far >= i) {
+    first_word--;
+    count_so_far -= ones;
+  } else {
     return GetLength();
   }
-
+    
   return first_word * kWordSize + cds::basic::select(data[first_word], i - count_so_far);
 }
 
@@ -262,17 +263,19 @@ cds_word BitSequenceOneLevelRank::SelectNext1(const cds_word i) const {
   sampling_pos = sampling_->LowerBoundExp(new_i, sampling_pos, sampling_->GetLength());
   cds_word pos_so_far = sampling_pos * sampling_rate_;
   first_word = pos_so_far / kWordSize;
-
   cds_word count_so_far = new_i - 1;
-  cds_word ones = popcount(data[first_word]);
 
-  while ((count_so_far + ones) < new_i && first_word < last_word) {
+  cds_word ones = 0;
+  while (count_so_far < new_i && first_word < last_word) {
+    cds_word ones = popcount(data[first_word]);
     count_so_far += ones;
     first_word++;
-    ones = popcount(data[first_word]);
   }
 
-  if (first_word >= last_word || new_i - count_so_far > popcount(data[first_word])) {
+  if (count_so_far >= new_i) {
+    first_word--;
+    count_so_far -= ones;
+  } else {
     return GetLength();
   }
 

@@ -113,7 +113,7 @@ autotest: test
 shared_lib: libcds
 	@mkdir -p tmp
 	@echo " [MSG] Running SWIG"
-	@swig -wall -c++ -go -outdir gocode/src/libcds2/ -o tmp/libcds2_wrap.cxx gocode/libcds.i
+	@swig -wall -c++ -go -gccgo -outdir gocode/src/libcds2/ -o tmp/libcds2_wrap.cxx gocode/libcds.i
 	@echo " [C++] Compiling shared library"
 	@g++ -shared $(CPPFLAGS) -w -o lib/libcds2.so tmp/libcds2_wrap.cxx ./lib/libcds.a
 	@rm -rf tmp

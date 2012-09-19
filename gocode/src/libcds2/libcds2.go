@@ -12,8 +12,10 @@ package libcds2
 
 
 
-import _ "runtime/cgo"
+import "syscall"
 import "unsafe"
+
+type _ syscall.Sockaddr
 
 type _ unsafe.Pointer
 
@@ -31,36 +33,120 @@ func SwigCgocallBack()
 //extern libcds2SwigCgocallBackDone
 func SwigCgocallBackDone()
 
-func GetKWordSize() int
-func GetKDoubleWordSize() int
-func GetKBytesPerWord() int
-func GetKMaxCDSUchar() int
-func GetKMaxCDSUint() int
-func GetKMaxCDSUshort() int
-func GetKMaxCDSUlong() int
-func GetKMaxCDSWord() int
-func BitGet(*int, int) bool
+//extern go__wrap_kWordSize_get
+func _swig_wrap_kWordSize_get() int
+
+func GetKWordSize() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_kWordSize_get()
+}
+
+//extern go__wrap_kDoubleWordSize_get
+func _swig_wrap_kDoubleWordSize_get() int
+
+func GetKDoubleWordSize() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_kDoubleWordSize_get()
+}
+
+//extern go__wrap_kBytesPerWord_get
+func _swig_wrap_kBytesPerWord_get() int
+
+func GetKBytesPerWord() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_kBytesPerWord_get()
+}
+
+//extern go__wrap_kMaxCDSUchar_get
+func _swig_wrap_kMaxCDSUchar_get() int
+
+func GetKMaxCDSUchar() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_kMaxCDSUchar_get()
+}
+
+//extern go__wrap_kMaxCDSUint_get
+func _swig_wrap_kMaxCDSUint_get() int
+
+func GetKMaxCDSUint() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_kMaxCDSUint_get()
+}
+
+//extern go__wrap_kMaxCDSUshort_get
+func _swig_wrap_kMaxCDSUshort_get() int
+
+func GetKMaxCDSUshort() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_kMaxCDSUshort_get()
+}
+
+//extern go__wrap_kMaxCDSUlong_get
+func _swig_wrap_kMaxCDSUlong_get() int
+
+func GetKMaxCDSUlong() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_kMaxCDSUlong_get()
+}
+
+//extern go__wrap_kMaxCDSWord_get
+func _swig_wrap_kMaxCDSWord_get() int
+
+func GetKMaxCDSWord() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_kMaxCDSWord_get()
+}
+
+//extern go__wrap_BitGet
+func _swig_wrap_BitGet(*int, int) bool
+
+func BitGet(arg1 *int, arg2 int) bool {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_BitGet(arg1, arg2)
+}
+
+//extern go__wrap_BitOne
 func _swig_wrap_BitOne(*int, int)
 
 func BitOne(arg1 *int, arg2 int) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_BitOne(arg1, arg2)
 }
 
+//extern go__wrap_BitZero
 func _swig_wrap_BitZero(*int, int)
 
 func BitZero(arg1 *int, arg2 int) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_BitZero(arg1, arg2)
 }
 
+//extern go__wrap_BitSet__SWIG_0
 func _swig_wrap_BitSet__SWIG_0(*int, int, bool)
 
 func BitSet__SWIG_0(arg1 *int, arg2 int, arg3 bool) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_BitSet__SWIG_0(arg1, arg2, arg3)
 }
 
+//extern go__wrap_BitSet__SWIG_1
 func _swig_wrap_BitSet__SWIG_1(*int, int)
 
 func BitSet__SWIG_1(arg1 *int, arg2 int) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_BitSet__SWIG_1(arg1, arg2)
 }
 
@@ -77,34 +163,147 @@ func BitSet(a ...interface{}) {
 	panic("No match for overloaded function call")
 }
 
-func WordsLength(int, int) int
-func SafeCeil(int, int) int
-func GetVarField(*int, int, int) int
+//extern go__wrap_WordsLength
+func _swig_wrap_WordsLength(int, int) int
+
+func WordsLength(arg1 int, arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_WordsLength(arg1, arg2)
+}
+
+//extern go__wrap_SafeCeil
+func _swig_wrap_SafeCeil(int, int) int
+
+func SafeCeil(arg1 int, arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_SafeCeil(arg1, arg2)
+}
+
+//extern go__wrap_GetVarField
+func _swig_wrap_GetVarField(*int, int, int) int
+
+func GetVarField(arg1 *int, arg2 int, arg3 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_GetVarField(arg1, arg2, arg3)
+}
+
+//extern go__wrap_SetVarField
 func _swig_wrap_SetVarField(*int, int, int, int)
 
 func SetVarField(arg1 *int, arg2 int, arg3 int, arg4 int) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_SetVarField(arg1, arg2, arg3, arg4)
 }
 
-func GetField(*int, int, int) int
+//extern go__wrap_GetField
+func _swig_wrap_GetField(*int, int, int) int
+
+func GetField(arg1 *int, arg2 int, arg3 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_GetField(arg1, arg2, arg3)
+}
+
+//extern go__wrap_SetField
 func _swig_wrap_SetField(*int, int, int, int)
 
 func SetField(arg1 *int, arg2 int, arg3 int, arg4 int) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_SetField(arg1, arg2, arg3, arg4)
 }
 
-func GetField8(*int, int) int
-func GetField16(*int, int) int
-func GetField32(*int, int) int
-func GetField2(*int, int) int
-func GetField4(*int, int) int
-func Msb(int) int
-func Popcount(int) int
-func Lsb(int) int
-func Xselect(int, int) int
+//extern go__wrap_GetField8
+func _swig_wrap_GetField8(*int, int) int
+
+func GetField8(arg1 *int, arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_GetField8(arg1, arg2)
+}
+
+//extern go__wrap_GetField16
+func _swig_wrap_GetField16(*int, int) int
+
+func GetField16(arg1 *int, arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_GetField16(arg1, arg2)
+}
+
+//extern go__wrap_GetField32
+func _swig_wrap_GetField32(*int, int) int
+
+func GetField32(arg1 *int, arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_GetField32(arg1, arg2)
+}
+
+//extern go__wrap_GetField2
+func _swig_wrap_GetField2(*int, int) int
+
+func GetField2(arg1 *int, arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_GetField2(arg1, arg2)
+}
+
+//extern go__wrap_GetField4
+func _swig_wrap_GetField4(*int, int) int
+
+func GetField4(arg1 *int, arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_GetField4(arg1, arg2)
+}
+
+//extern go__wrap_msb
+func _swig_wrap_msb(int) int
+
+func Msb(arg1 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_msb(arg1)
+}
+
+//extern go__wrap_popcount
+func _swig_wrap_popcount(int) int
+
+func Popcount(arg1 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_popcount(arg1)
+}
+
+//extern go__wrap_lsb
+func _swig_wrap_lsb(int) int
+
+func Lsb(arg1 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_lsb(arg1)
+}
+
+//extern go__wrap_Xselect
+func _swig_wrap_Xselect(int, int) int
+
+func Xselect(arg1 int, arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_Xselect(arg1, arg2)
+}
+
+//extern go__wrap_PrintBinary
 func _swig_wrap_PrintBinary(int)
 
 func PrintBinary(arg1 int) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_PrintBinary(arg1)
 }
 
@@ -117,27 +316,47 @@ func (p SwigcptrReferenceCounted) Swigcptr() uintptr {
 func (p SwigcptrReferenceCounted) SwigIsReferenceCounted() {
 }
 
+//extern go__wrap_new_ReferenceCounted
 func _swig_wrap_new_ReferenceCounted() SwigcptrReferenceCounted
 
 func NewReferenceCounted() ReferenceCounted {
-	return _swig_wrap_new_ReferenceCounted()
+	var done bool
+	defer func() {
+		if !done {
+			SwigCgocallDone()
+		}
+	}()
+	SwigCgocall()
+	swig_r := _swig_wrap_new_ReferenceCounted()
+	SwigCgocallDone()
+	done = true
+	return swig_r
 }
 
+//extern go__wrap_delete_ReferenceCounted
 func _swig_wrap_delete_ReferenceCounted(uintptr)
 
 func DeleteReferenceCounted(arg1 ReferenceCounted) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_delete_ReferenceCounted(arg1.Swigcptr())
 }
 
+//extern go__wrap_ReferenceCounted_Unuse
 func _swig_wrap_ReferenceCounted_Unuse(SwigcptrReferenceCounted)
 
 func (arg1 SwigcptrReferenceCounted) Unuse() {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_ReferenceCounted_Unuse(arg1)
 }
 
+//extern go__wrap_ReferenceCounted_Use
 func _swig_wrap_ReferenceCounted_Use(SwigcptrReferenceCounted)
 
 func (arg1 SwigcptrReferenceCounted) Use() {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_ReferenceCounted_Use(arg1)
 }
 
@@ -148,7 +367,15 @@ type ReferenceCounted interface {
 	Use()
 }
 
-func GetKBitSequenceOneLevelRankID() int
+//extern go__wrap_kBitSequenceOneLevelRankID_get
+func _swig_wrap_kBitSequenceOneLevelRankID_get() int
+
+func GetKBitSequenceOneLevelRankID() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
+	return _swig_wrap_kBitSequenceOneLevelRankID_get()
+}
+
 type SwigcptrBitSequence uintptr
 
 func (p SwigcptrBitSequence) Swigcptr() uintptr {
@@ -158,21 +385,30 @@ func (p SwigcptrBitSequence) Swigcptr() uintptr {
 func (p SwigcptrBitSequence) SwigIsBitSequence() {
 }
 
+//extern go__wrap_delete_BitSequence
 func _swig_wrap_delete_BitSequence(uintptr)
 
 func DeleteBitSequence(arg1 BitSequence) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_delete_BitSequence(arg1.Swigcptr())
 }
 
+//extern go__wrap_BitSequence_Rank0__SWIG_0
 func _swig_wrap_BitSequence_Rank0__SWIG_0(SwigcptrBitSequence, int) int
 
 func (arg1 SwigcptrBitSequence) Rank0__SWIG_0(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequence_Rank0__SWIG_0(arg1, arg2)
 }
 
+//extern go__wrap_BitSequence_Rank0__SWIG_1
 func _swig_wrap_BitSequence_Rank0__SWIG_1(SwigcptrBitSequence, int, *bool) int
 
 func (arg1 SwigcptrBitSequence) Rank0__SWIG_1(arg2 int, arg3 *bool) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequence_Rank0__SWIG_1(arg1, arg2, arg3)
 }
 
@@ -187,15 +423,21 @@ func (p SwigcptrBitSequence) Rank0(a ...interface{}) int {
 	panic("No match for overloaded function call")
 }
 
+//extern go__wrap_BitSequence_Select0__SWIG_0
 func _swig_wrap_BitSequence_Select0__SWIG_0(SwigcptrBitSequence, int) int
 
 func (arg1 SwigcptrBitSequence) Select0__SWIG_0(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequence_Select0__SWIG_0(arg1, arg2)
 }
 
+//extern go__wrap_BitSequence_Select0__SWIG_1
 func _swig_wrap_BitSequence_Select0__SWIG_1(SwigcptrBitSequence, int, int, int) int
 
 func (arg1 SwigcptrBitSequence) Select0__SWIG_1(arg2 int, arg3 int, arg4 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequence_Select0__SWIG_1(arg1, arg2, arg3, arg4)
 }
 
@@ -210,15 +452,21 @@ func (p SwigcptrBitSequence) Select0(a ...interface{}) int {
 	panic("No match for overloaded function call")
 }
 
+//extern go__wrap_BitSequence_Rank1__SWIG_0
 func _swig_wrap_BitSequence_Rank1__SWIG_0(SwigcptrBitSequence, int) int
 
 func (arg1 SwigcptrBitSequence) Rank1__SWIG_0(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequence_Rank1__SWIG_0(arg1, arg2)
 }
 
+//extern go__wrap_BitSequence_Rank1__SWIG_1
 func _swig_wrap_BitSequence_Rank1__SWIG_1(SwigcptrBitSequence, int, *bool) int
 
 func (arg1 SwigcptrBitSequence) Rank1__SWIG_1(arg2 int, arg3 *bool) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequence_Rank1__SWIG_1(arg1, arg2, arg3)
 }
 
@@ -233,15 +481,21 @@ func (p SwigcptrBitSequence) Rank1(a ...interface{}) int {
 	panic("No match for overloaded function call")
 }
 
+//extern go__wrap_BitSequence_Select1__SWIG_0
 func _swig_wrap_BitSequence_Select1__SWIG_0(SwigcptrBitSequence, int) int
 
 func (arg1 SwigcptrBitSequence) Select1__SWIG_0(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequence_Select1__SWIG_0(arg1, arg2)
 }
 
+//extern go__wrap_BitSequence_Select1__SWIG_1
 func _swig_wrap_BitSequence_Select1__SWIG_1(SwigcptrBitSequence, int, int, int) int
 
 func (arg1 SwigcptrBitSequence) Select1__SWIG_1(arg2 int, arg3 int, arg4 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequence_Select1__SWIG_1(arg1, arg2, arg3, arg4)
 }
 
@@ -256,39 +510,57 @@ func (p SwigcptrBitSequence) Select1(a ...interface{}) int {
 	panic("No match for overloaded function call")
 }
 
+//extern go__wrap_BitSequence_SelectNext1
 func _swig_wrap_BitSequence_SelectNext1(SwigcptrBitSequence, int) int
 
 func (arg1 SwigcptrBitSequence) SelectNext1(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequence_SelectNext1(arg1, arg2)
 }
 
+//extern go__wrap_BitSequence_SelectNext0
 func _swig_wrap_BitSequence_SelectNext0(SwigcptrBitSequence, int) int
 
 func (arg1 SwigcptrBitSequence) SelectNext0(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequence_SelectNext0(arg1, arg2)
 }
 
+//extern go__wrap_BitSequence_SelectPrev1
 func _swig_wrap_BitSequence_SelectPrev1(SwigcptrBitSequence, int) int
 
 func (arg1 SwigcptrBitSequence) SelectPrev1(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequence_SelectPrev1(arg1, arg2)
 }
 
+//extern go__wrap_BitSequence_SelectPrev0
 func _swig_wrap_BitSequence_SelectPrev0(SwigcptrBitSequence, int) int
 
 func (arg1 SwigcptrBitSequence) SelectPrev0(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequence_SelectPrev0(arg1, arg2)
 }
 
+//extern go__wrap_BitSequence_Access__SWIG_0
 func _swig_wrap_BitSequence_Access__SWIG_0(SwigcptrBitSequence, int) bool
 
 func (arg1 SwigcptrBitSequence) Access__SWIG_0(arg2 int) bool {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequence_Access__SWIG_0(arg1, arg2)
 }
 
+//extern go__wrap_BitSequence_Access__SWIG_1
 func _swig_wrap_BitSequence_Access__SWIG_1(SwigcptrBitSequence, int, *int) bool
 
 func (arg1 SwigcptrBitSequence) Access__SWIG_1(arg2 int, arg3 *int) bool {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequence_Access__SWIG_1(arg1, arg2, arg3)
 }
 
@@ -303,51 +575,75 @@ func (p SwigcptrBitSequence) Access(a ...interface{}) bool {
 	panic("No match for overloaded function call")
 }
 
+//extern go__wrap_BitSequence_GetLength
 func _swig_wrap_BitSequence_GetLength(SwigcptrBitSequence) int
 
 func (arg1 SwigcptrBitSequence) GetLength() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequence_GetLength(arg1)
 }
 
+//extern go__wrap_BitSequence_CountOnes
 func _swig_wrap_BitSequence_CountOnes(SwigcptrBitSequence) int
 
 func (arg1 SwigcptrBitSequence) CountOnes() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequence_CountOnes(arg1)
 }
 
+//extern go__wrap_BitSequence_CountZeros
 func _swig_wrap_BitSequence_CountZeros(SwigcptrBitSequence) int
 
 func (arg1 SwigcptrBitSequence) CountZeros() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequence_CountZeros(arg1)
 }
 
+//extern go__wrap_BitSequence_GetSize
 func _swig_wrap_BitSequence_GetSize(SwigcptrBitSequence) int
 
 func (arg1 SwigcptrBitSequence) GetSize() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequence_GetSize(arg1)
 }
 
+//extern go__wrap_BitSequence_Save
 func _swig_wrap_BitSequence_Save(SwigcptrBitSequence, uintptr)
 
 func (arg1 SwigcptrBitSequence) Save(arg2 Ostream) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_BitSequence_Save(arg1, arg2.Swigcptr())
 }
 
+//extern go__wrap_BitSequence_Load
 func _swig_wrap_BitSequence_Load(uintptr) SwigcptrBitSequence
 
 func BitSequenceLoad(arg1 Istream) BitSequence {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequence_Load(arg1.Swigcptr())
 }
 
+//extern go__wrap_BitSequence_Unuse
 func _swig_wrap_BitSequence_Unuse(SwigcptrBitSequence)
 
 func (_swig_base SwigcptrBitSequence) Unuse() {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_BitSequence_Unuse(_swig_base)
 }
 
+//extern go__wrap_BitSequence_Use
 func _swig_wrap_BitSequence_Use(SwigcptrBitSequence)
 
 func (_swig_base SwigcptrBitSequence) Use() {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_BitSequence_Use(_swig_base)
 }
 
@@ -390,39 +686,65 @@ func (p SwigcptrBitSequenceOneLevelRank) Swigcptr() uintptr {
 func (p SwigcptrBitSequenceOneLevelRank) SwigIsBitSequenceOneLevelRank() {
 }
 
+//extern go__wrap_new_BitSequenceOneLevelRank
 func _swig_wrap_new_BitSequenceOneLevelRank(uintptr, int) SwigcptrBitSequenceOneLevelRank
 
 func NewBitSequenceOneLevelRank(arg1 Array, arg2 int) BitSequenceOneLevelRank {
-	return _swig_wrap_new_BitSequenceOneLevelRank(arg1.Swigcptr(), arg2)
+	var done bool
+	defer func() {
+		if !done {
+			SwigCgocallDone()
+		}
+	}()
+	SwigCgocall()
+	swig_r := _swig_wrap_new_BitSequenceOneLevelRank(arg1.Swigcptr(), arg2)
+	SwigCgocallDone()
+	done = true
+	return swig_r
 }
 
+//extern go__wrap_delete_BitSequenceOneLevelRank
 func _swig_wrap_delete_BitSequenceOneLevelRank(uintptr)
 
 func DeleteBitSequenceOneLevelRank(arg1 BitSequenceOneLevelRank) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_delete_BitSequenceOneLevelRank(arg1.Swigcptr())
 }
 
+//extern go__wrap_BitSequenceOneLevelRank_Rank0
 func _swig_wrap_BitSequenceOneLevelRank_Rank0(SwigcptrBitSequenceOneLevelRank, int, *bool) int
 
 func (arg1 SwigcptrBitSequenceOneLevelRank) Rank0(arg2 int, arg3 *bool) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequenceOneLevelRank_Rank0(arg1, arg2, arg3)
 }
 
+//extern go__wrap_BitSequenceOneLevelRank_Select0
 func _swig_wrap_BitSequenceOneLevelRank_Select0(SwigcptrBitSequenceOneLevelRank, int) int
 
 func (arg1 SwigcptrBitSequenceOneLevelRank) Select0(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequenceOneLevelRank_Select0(arg1, arg2)
 }
 
+//extern go__wrap_BitSequenceOneLevelRank_Rank1__SWIG_0
 func _swig_wrap_BitSequenceOneLevelRank_Rank1__SWIG_0(SwigcptrBitSequenceOneLevelRank, int) int
 
 func (arg1 SwigcptrBitSequenceOneLevelRank) Rank1__SWIG_0(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequenceOneLevelRank_Rank1__SWIG_0(arg1, arg2)
 }
 
+//extern go__wrap_BitSequenceOneLevelRank_Rank1__SWIG_1
 func _swig_wrap_BitSequenceOneLevelRank_Rank1__SWIG_1(SwigcptrBitSequenceOneLevelRank, int, *bool) int
 
 func (arg1 SwigcptrBitSequenceOneLevelRank) Rank1__SWIG_1(arg2 int, arg3 *bool) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequenceOneLevelRank_Rank1__SWIG_1(arg1, arg2, arg3)
 }
 
@@ -437,27 +759,39 @@ func (p SwigcptrBitSequenceOneLevelRank) Rank1(a ...interface{}) int {
 	panic("No match for overloaded function call")
 }
 
+//extern go__wrap_BitSequenceOneLevelRank_Select1
 func _swig_wrap_BitSequenceOneLevelRank_Select1(SwigcptrBitSequenceOneLevelRank, int) int
 
 func (arg1 SwigcptrBitSequenceOneLevelRank) Select1(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequenceOneLevelRank_Select1(arg1, arg2)
 }
 
+//extern go__wrap_BitSequenceOneLevelRank_SelectNext1
 func _swig_wrap_BitSequenceOneLevelRank_SelectNext1(SwigcptrBitSequenceOneLevelRank, int) int
 
 func (arg1 SwigcptrBitSequenceOneLevelRank) SelectNext1(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequenceOneLevelRank_SelectNext1(arg1, arg2)
 }
 
+//extern go__wrap_BitSequenceOneLevelRank_Access__SWIG_0
 func _swig_wrap_BitSequenceOneLevelRank_Access__SWIG_0(SwigcptrBitSequenceOneLevelRank, int) bool
 
 func (arg1 SwigcptrBitSequenceOneLevelRank) Access__SWIG_0(arg2 int) bool {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequenceOneLevelRank_Access__SWIG_0(arg1, arg2)
 }
 
+//extern go__wrap_BitSequenceOneLevelRank_Access__SWIG_1
 func _swig_wrap_BitSequenceOneLevelRank_Access__SWIG_1(SwigcptrBitSequenceOneLevelRank, int, *int) bool
 
 func (arg1 SwigcptrBitSequenceOneLevelRank) Access__SWIG_1(arg2 int, arg3 *int) bool {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequenceOneLevelRank_Access__SWIG_1(arg1, arg2, arg3)
 }
 
@@ -472,69 +806,102 @@ func (p SwigcptrBitSequenceOneLevelRank) Access(a ...interface{}) bool {
 	panic("No match for overloaded function call")
 }
 
+//extern go__wrap_BitSequenceOneLevelRank_GetLength
 func _swig_wrap_BitSequenceOneLevelRank_GetLength(SwigcptrBitSequenceOneLevelRank) int
 
 func (arg1 SwigcptrBitSequenceOneLevelRank) GetLength() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequenceOneLevelRank_GetLength(arg1)
 }
 
+//extern go__wrap_BitSequenceOneLevelRank_GetSize
 func _swig_wrap_BitSequenceOneLevelRank_GetSize(SwigcptrBitSequenceOneLevelRank) int
 
 func (arg1 SwigcptrBitSequenceOneLevelRank) GetSize() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequenceOneLevelRank_GetSize(arg1)
 }
 
+//extern go__wrap_BitSequenceOneLevelRank_Save
 func _swig_wrap_BitSequenceOneLevelRank_Save(SwigcptrBitSequenceOneLevelRank, uintptr)
 
 func (arg1 SwigcptrBitSequenceOneLevelRank) Save(arg2 Ostream) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_BitSequenceOneLevelRank_Save(arg1, arg2.Swigcptr())
 }
 
+//extern go__wrap_BitSequenceOneLevelRank_Load
 func _swig_wrap_BitSequenceOneLevelRank_Load(uintptr) SwigcptrBitSequenceOneLevelRank
 
 func BitSequenceOneLevelRankLoad(arg1 Istream) BitSequenceOneLevelRank {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequenceOneLevelRank_Load(arg1.Swigcptr())
 }
 
+//extern go__wrap_BitSequenceOneLevelRank_SelectNext0
 func _swig_wrap_BitSequenceOneLevelRank_SelectNext0(SwigcptrBitSequenceOneLevelRank, int) int
 
 func (_swig_base SwigcptrBitSequenceOneLevelRank) SelectNext0(arg1 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequenceOneLevelRank_SelectNext0(_swig_base, arg1)
 }
 
+//extern go__wrap_BitSequenceOneLevelRank_SelectPrev1
 func _swig_wrap_BitSequenceOneLevelRank_SelectPrev1(SwigcptrBitSequenceOneLevelRank, int) int
 
 func (_swig_base SwigcptrBitSequenceOneLevelRank) SelectPrev1(arg1 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequenceOneLevelRank_SelectPrev1(_swig_base, arg1)
 }
 
+//extern go__wrap_BitSequenceOneLevelRank_SelectPrev0
 func _swig_wrap_BitSequenceOneLevelRank_SelectPrev0(SwigcptrBitSequenceOneLevelRank, int) int
 
 func (_swig_base SwigcptrBitSequenceOneLevelRank) SelectPrev0(arg1 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequenceOneLevelRank_SelectPrev0(_swig_base, arg1)
 }
 
+//extern go__wrap_BitSequenceOneLevelRank_CountOnes
 func _swig_wrap_BitSequenceOneLevelRank_CountOnes(SwigcptrBitSequenceOneLevelRank) int
 
 func (_swig_base SwigcptrBitSequenceOneLevelRank) CountOnes() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequenceOneLevelRank_CountOnes(_swig_base)
 }
 
+//extern go__wrap_BitSequenceOneLevelRank_CountZeros
 func _swig_wrap_BitSequenceOneLevelRank_CountZeros(SwigcptrBitSequenceOneLevelRank) int
 
 func (_swig_base SwigcptrBitSequenceOneLevelRank) CountZeros() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_BitSequenceOneLevelRank_CountZeros(_swig_base)
 }
 
+//extern go__wrap_BitSequenceOneLevelRank_Unuse
 func _swig_wrap_BitSequenceOneLevelRank_Unuse(SwigcptrBitSequenceOneLevelRank)
 
 func (_swig_base SwigcptrBitSequenceOneLevelRank) Unuse() {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_BitSequenceOneLevelRank_Unuse(_swig_base)
 }
 
+//extern go__wrap_BitSequenceOneLevelRank_Use
 func _swig_wrap_BitSequenceOneLevelRank_Use(SwigcptrBitSequenceOneLevelRank)
 
 func (_swig_base SwigcptrBitSequenceOneLevelRank) Use() {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_BitSequenceOneLevelRank_Use(_swig_base)
 }
 
@@ -586,57 +953,84 @@ func (p SwigcptrArray) Swigcptr() uintptr {
 func (p SwigcptrArray) SwigIsArray() {
 }
 
+//extern go__wrap_delete_Array
 func _swig_wrap_delete_Array(uintptr)
 
 func DeleteArray(arg1 Array) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_delete_Array(arg1.Swigcptr())
 }
 
+//extern go__wrap_Array_GetField
 func _swig_wrap_Array_GetField(SwigcptrArray, int) int
 
 func (arg1 SwigcptrArray) GetField(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Array_GetField(arg1, arg2)
 }
 
+//extern go__wrap_Array_SetField
 func _swig_wrap_Array_SetField(SwigcptrArray, int, int) int
 
 func (arg1 SwigcptrArray) SetField(arg2 int, arg3 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Array_SetField(arg1, arg2, arg3)
 }
 
+//extern go__wrap_Array_Save
 func _swig_wrap_Array_Save(SwigcptrArray, uintptr)
 
 func (arg1 SwigcptrArray) Save(arg2 Ostream) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_Array_Save(arg1, arg2.Swigcptr())
 }
 
+//extern go__wrap_Array_GetSize
 func _swig_wrap_Array_GetSize(SwigcptrArray) int
 
 func (arg1 SwigcptrArray) GetSize() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Array_GetSize(arg1)
 }
 
+//extern go__wrap_Array_GetLength
 func _swig_wrap_Array_GetLength(SwigcptrArray) int
 
 func (arg1 SwigcptrArray) GetLength() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Array_GetLength(arg1)
 }
 
+//extern go__wrap_Array_GetMax
 func _swig_wrap_Array_GetMax(SwigcptrArray) int
 
 func (arg1 SwigcptrArray) GetMax() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Array_GetMax(arg1)
 }
 
+//extern go__wrap_Array_LowerBound__SWIG_0
 func _swig_wrap_Array_LowerBound__SWIG_0(SwigcptrArray, int, int, int) int
 
 func (arg1 SwigcptrArray) LowerBound__SWIG_0(arg2 int, arg3 int, arg4 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Array_LowerBound__SWIG_0(arg1, arg2, arg3, arg4)
 }
 
+//extern go__wrap_Array_LowerBound__SWIG_1
 func _swig_wrap_Array_LowerBound__SWIG_1(SwigcptrArray, int) int
 
 func (arg1 SwigcptrArray) LowerBound__SWIG_1(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Array_LowerBound__SWIG_1(arg1, arg2)
 }
 
@@ -651,15 +1045,21 @@ func (p SwigcptrArray) LowerBound(a ...interface{}) int {
 	panic("No match for overloaded function call")
 }
 
+//extern go__wrap_Array_LowerBoundExp__SWIG_0
 func _swig_wrap_Array_LowerBoundExp__SWIG_0(SwigcptrArray, int, int, int) int
 
 func (arg1 SwigcptrArray) LowerBoundExp__SWIG_0(arg2 int, arg3 int, arg4 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Array_LowerBoundExp__SWIG_0(arg1, arg2, arg3, arg4)
 }
 
+//extern go__wrap_Array_LowerBoundExp__SWIG_1
 func _swig_wrap_Array_LowerBoundExp__SWIG_1(SwigcptrArray, int) int
 
 func (arg1 SwigcptrArray) LowerBoundExp__SWIG_1(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Array_LowerBoundExp__SWIG_1(arg1, arg2)
 }
 
@@ -674,15 +1074,21 @@ func (p SwigcptrArray) LowerBoundExp(a ...interface{}) int {
 	panic("No match for overloaded function call")
 }
 
+//extern go__wrap_Array_UpperBound__SWIG_0
 func _swig_wrap_Array_UpperBound__SWIG_0(SwigcptrArray, int, int, int) int
 
 func (arg1 SwigcptrArray) UpperBound__SWIG_0(arg2 int, arg3 int, arg4 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Array_UpperBound__SWIG_0(arg1, arg2, arg3, arg4)
 }
 
+//extern go__wrap_Array_UpperBound__SWIG_1
 func _swig_wrap_Array_UpperBound__SWIG_1(SwigcptrArray, int) int
 
 func (arg1 SwigcptrArray) UpperBound__SWIG_1(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Array_UpperBound__SWIG_1(arg1, arg2)
 }
 
@@ -697,15 +1103,21 @@ func (p SwigcptrArray) UpperBound(a ...interface{}) int {
 	panic("No match for overloaded function call")
 }
 
+//extern go__wrap_Array_BinarySearch__SWIG_0
 func _swig_wrap_Array_BinarySearch__SWIG_0(SwigcptrArray, int, int, int) int
 
 func (arg1 SwigcptrArray) BinarySearch__SWIG_0(arg2 int, arg3 int, arg4 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Array_BinarySearch__SWIG_0(arg1, arg2, arg3, arg4)
 }
 
+//extern go__wrap_Array_BinarySearch__SWIG_1
 func _swig_wrap_Array_BinarySearch__SWIG_1(SwigcptrArray, int) int
 
 func (arg1 SwigcptrArray) BinarySearch__SWIG_1(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Array_BinarySearch__SWIG_1(arg1, arg2)
 }
 
@@ -720,27 +1132,39 @@ func (p SwigcptrArray) BinarySearch(a ...interface{}) int {
 	panic("No match for overloaded function call")
 }
 
+//extern go__wrap_Array_Load
 func _swig_wrap_Array_Load(uintptr) SwigcptrArray
 
 func ArrayLoad(arg1 Istream) Array {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Array_Load(arg1.Swigcptr())
 }
 
+//extern go__wrap_Array_Create__SWIG_0
 func _swig_wrap_Array_Create__SWIG_0(*int, int, int, int) SwigcptrArray
 
 func ArrayCreate__SWIG_0(arg1 *int, arg2 int, arg3 int, arg4 int) Array {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Array_Create__SWIG_0(arg1, arg2, arg3, arg4)
 }
 
+//extern go__wrap_Array_Create__SWIG_1
 func _swig_wrap_Array_Create__SWIG_1(*int, int, int) SwigcptrArray
 
 func ArrayCreate__SWIG_1(arg1 *int, arg2 int, arg3 int) Array {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Array_Create__SWIG_1(arg1, arg2, arg3)
 }
 
+//extern go__wrap_Array_Create__SWIG_2
 func _swig_wrap_Array_Create__SWIG_2(int, int) SwigcptrArray
 
 func ArrayCreate__SWIG_2(arg1 int, arg2 int) Array {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Array_Create__SWIG_2(arg1, arg2)
 }
 
@@ -758,15 +1182,21 @@ func ArrayCreate(a ...interface{}) Array {
 	panic("No match for overloaded function call")
 }
 
+//extern go__wrap_Array_Unuse
 func _swig_wrap_Array_Unuse(SwigcptrArray)
 
 func (_swig_base SwigcptrArray) Unuse() {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_Array_Unuse(_swig_base)
 }
 
+//extern go__wrap_Array_Use
 func _swig_wrap_Array_Use(SwigcptrArray)
 
 func (_swig_base SwigcptrArray) Use() {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_Array_Use(_swig_base)
 }
 
@@ -807,51 +1237,75 @@ func (p SwigcptrMapper) Swigcptr() uintptr {
 func (p SwigcptrMapper) SwigIsMapper() {
 }
 
+//extern go__wrap_delete_Mapper
 func _swig_wrap_delete_Mapper(uintptr)
 
 func DeleteMapper(arg1 Mapper) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_delete_Mapper(arg1.Swigcptr())
 }
 
+//extern go__wrap_Mapper_Map
 func _swig_wrap_Mapper_Map(SwigcptrMapper, int) int
 
 func (arg1 SwigcptrMapper) Map(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Mapper_Map(arg1, arg2)
 }
 
+//extern go__wrap_Mapper_Unmap
 func _swig_wrap_Mapper_Unmap(SwigcptrMapper, int) int
 
 func (arg1 SwigcptrMapper) Unmap(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Mapper_Unmap(arg1, arg2)
 }
 
+//extern go__wrap_Mapper_GetSize
 func _swig_wrap_Mapper_GetSize(SwigcptrMapper) int
 
 func (arg1 SwigcptrMapper) GetSize() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Mapper_GetSize(arg1)
 }
 
+//extern go__wrap_Mapper_Save
 func _swig_wrap_Mapper_Save(SwigcptrMapper, uintptr)
 
 func (arg1 SwigcptrMapper) Save(arg2 Ostream) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_Mapper_Save(arg1, arg2.Swigcptr())
 }
 
+//extern go__wrap_Mapper_Load
 func _swig_wrap_Mapper_Load(uintptr) SwigcptrMapper
 
 func MapperLoad(arg1 Istream) Mapper {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Mapper_Load(arg1.Swigcptr())
 }
 
+//extern go__wrap_Mapper_Unuse
 func _swig_wrap_Mapper_Unuse(SwigcptrMapper)
 
 func (_swig_base SwigcptrMapper) Unuse() {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_Mapper_Unuse(_swig_base)
 }
 
+//extern go__wrap_Mapper_Use
 func _swig_wrap_Mapper_Use(SwigcptrMapper)
 
 func (_swig_base SwigcptrMapper) Use() {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_Mapper_Use(_swig_base)
 }
 
@@ -884,57 +1338,92 @@ func (p SwigcptrMapperNone) Swigcptr() uintptr {
 func (p SwigcptrMapperNone) SwigIsMapperNone() {
 }
 
+//extern go__wrap_new_MapperNone
 func _swig_wrap_new_MapperNone() SwigcptrMapperNone
 
 func NewMapperNone() MapperNone {
-	return _swig_wrap_new_MapperNone()
+	var done bool
+	defer func() {
+		if !done {
+			SwigCgocallDone()
+		}
+	}()
+	SwigCgocall()
+	swig_r := _swig_wrap_new_MapperNone()
+	SwigCgocallDone()
+	done = true
+	return swig_r
 }
 
+//extern go__wrap_delete_MapperNone
 func _swig_wrap_delete_MapperNone(uintptr)
 
 func DeleteMapperNone(arg1 MapperNone) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_delete_MapperNone(arg1.Swigcptr())
 }
 
+//extern go__wrap_MapperNone_Map
 func _swig_wrap_MapperNone_Map(SwigcptrMapperNone, int) int
 
 func (arg1 SwigcptrMapperNone) Map(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_MapperNone_Map(arg1, arg2)
 }
 
+//extern go__wrap_MapperNone_Unmap
 func _swig_wrap_MapperNone_Unmap(SwigcptrMapperNone, int) int
 
 func (arg1 SwigcptrMapperNone) Unmap(arg2 int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_MapperNone_Unmap(arg1, arg2)
 }
 
+//extern go__wrap_MapperNone_GetSize
 func _swig_wrap_MapperNone_GetSize(SwigcptrMapperNone) int
 
 func (arg1 SwigcptrMapperNone) GetSize() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_MapperNone_GetSize(arg1)
 }
 
+//extern go__wrap_MapperNone_Save
 func _swig_wrap_MapperNone_Save(SwigcptrMapperNone, uintptr)
 
 func (arg1 SwigcptrMapperNone) Save(arg2 Ostream) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_MapperNone_Save(arg1, arg2.Swigcptr())
 }
 
+//extern go__wrap_MapperNone_Load
 func _swig_wrap_MapperNone_Load(uintptr) SwigcptrMapperNone
 
 func MapperNoneLoad(arg1 Istream) MapperNone {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_MapperNone_Load(arg1.Swigcptr())
 }
 
+//extern go__wrap_MapperNone_Unuse
 func _swig_wrap_MapperNone_Unuse(SwigcptrMapperNone)
 
 func (_swig_base SwigcptrMapperNone) Unuse() {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_MapperNone_Unuse(_swig_base)
 }
 
+//extern go__wrap_MapperNone_Use
 func _swig_wrap_MapperNone_Use(SwigcptrMapperNone)
 
 func (_swig_base SwigcptrMapperNone) Use() {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_MapperNone_Use(_swig_base)
 }
 
@@ -977,57 +1466,84 @@ func (p SwigcptrCoder) Swigcptr() uintptr {
 func (p SwigcptrCoder) SwigIsCoder() {
 }
 
+//extern go__wrap_delete_Coder
 func _swig_wrap_delete_Coder(uintptr)
 
 func DeleteCoder(arg1 Coder) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_delete_Coder(arg1.Swigcptr())
 }
 
+//extern go__wrap_Coder_Encode
 func _swig_wrap_Coder_Encode(SwigcptrCoder, int, *int, *int)
 
 func (arg1 SwigcptrCoder) Encode(arg2 int, arg3 *int, arg4 *int) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_Coder_Encode(arg1, arg2, arg3, arg4)
 }
 
+//extern go__wrap_Coder_Decode
 func _swig_wrap_Coder_Decode(SwigcptrCoder, *int, *int) int
 
 func (arg1 SwigcptrCoder) Decode(arg2 *int, arg3 *int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Coder_Decode(arg1, arg2, arg3)
 }
 
+//extern go__wrap_Coder_MaxLength
 func _swig_wrap_Coder_MaxLength(SwigcptrCoder) int
 
 func (arg1 SwigcptrCoder) MaxLength() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Coder_MaxLength(arg1)
 }
 
+//extern go__wrap_Coder_GetSize
 func _swig_wrap_Coder_GetSize(SwigcptrCoder) int
 
 func (arg1 SwigcptrCoder) GetSize() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Coder_GetSize(arg1)
 }
 
+//extern go__wrap_Coder_Save
 func _swig_wrap_Coder_Save(SwigcptrCoder, uintptr)
 
 func (arg1 SwigcptrCoder) Save(arg2 Ostream) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_Coder_Save(arg1, arg2.Swigcptr())
 }
 
+//extern go__wrap_Coder_Load
 func _swig_wrap_Coder_Load(uintptr) SwigcptrCoder
 
 func CoderLoad(arg1 Istream) Coder {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_Coder_Load(arg1.Swigcptr())
 }
 
+//extern go__wrap_Coder_Unuse
 func _swig_wrap_Coder_Unuse(SwigcptrCoder)
 
 func (_swig_base SwigcptrCoder) Unuse() {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_Coder_Unuse(_swig_base)
 }
 
+//extern go__wrap_Coder_Use
 func _swig_wrap_Coder_Use(SwigcptrCoder)
 
 func (_swig_base SwigcptrCoder) Use() {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_Coder_Use(_swig_base)
 }
 
@@ -1061,63 +1577,101 @@ func (p SwigcptrCoderNone) Swigcptr() uintptr {
 func (p SwigcptrCoderNone) SwigIsCoderNone() {
 }
 
+//extern go__wrap_new_CoderNone
 func _swig_wrap_new_CoderNone() SwigcptrCoderNone
 
 func NewCoderNone() CoderNone {
-	return _swig_wrap_new_CoderNone()
+	var done bool
+	defer func() {
+		if !done {
+			SwigCgocallDone()
+		}
+	}()
+	SwigCgocall()
+	swig_r := _swig_wrap_new_CoderNone()
+	SwigCgocallDone()
+	done = true
+	return swig_r
 }
 
+//extern go__wrap_delete_CoderNone
 func _swig_wrap_delete_CoderNone(uintptr)
 
 func DeleteCoderNone(arg1 CoderNone) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_delete_CoderNone(arg1.Swigcptr())
 }
 
+//extern go__wrap_CoderNone_Encode
 func _swig_wrap_CoderNone_Encode(SwigcptrCoderNone, int, *int, *int)
 
 func (arg1 SwigcptrCoderNone) Encode(arg2 int, arg3 *int, arg4 *int) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_CoderNone_Encode(arg1, arg2, arg3, arg4)
 }
 
+//extern go__wrap_CoderNone_Decode
 func _swig_wrap_CoderNone_Decode(SwigcptrCoderNone, *int, *int) int
 
 func (arg1 SwigcptrCoderNone) Decode(arg2 *int, arg3 *int) int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_CoderNone_Decode(arg1, arg2, arg3)
 }
 
+//extern go__wrap_CoderNone_MaxLength
 func _swig_wrap_CoderNone_MaxLength(SwigcptrCoderNone) int
 
 func (arg1 SwigcptrCoderNone) MaxLength() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_CoderNone_MaxLength(arg1)
 }
 
+//extern go__wrap_CoderNone_GetSize
 func _swig_wrap_CoderNone_GetSize(SwigcptrCoderNone) int
 
 func (arg1 SwigcptrCoderNone) GetSize() int {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_CoderNone_GetSize(arg1)
 }
 
+//extern go__wrap_CoderNone_Save
 func _swig_wrap_CoderNone_Save(SwigcptrCoderNone, uintptr)
 
 func (arg1 SwigcptrCoderNone) Save(arg2 Ostream) {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_CoderNone_Save(arg1, arg2.Swigcptr())
 }
 
+//extern go__wrap_CoderNone_Load
 func _swig_wrap_CoderNone_Load(uintptr) SwigcptrCoderNone
 
 func CoderNoneLoad(arg1 Istream) CoderNone {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	return _swig_wrap_CoderNone_Load(arg1.Swigcptr())
 }
 
+//extern go__wrap_CoderNone_Unuse
 func _swig_wrap_CoderNone_Unuse(SwigcptrCoderNone)
 
 func (_swig_base SwigcptrCoderNone) Unuse() {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_CoderNone_Unuse(_swig_base)
 }
 
+//extern go__wrap_CoderNone_Use
 func _swig_wrap_CoderNone_Use(SwigcptrCoderNone)
 
 func (_swig_base SwigcptrCoderNone) Use() {
+	defer SwigCgocallDone()
+	SwigCgocall()
 	_swig_wrap_CoderNone_Use(_swig_base)
 }
 

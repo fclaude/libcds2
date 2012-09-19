@@ -1,28 +1,28 @@
 
 # CPPFLAGS=	-O0 \
-# 			-g3 \
-# 			$(INC) \
-# 			-Wall \
-# 			-fPIC
-# CPPFLAGS=	-O3 \
-# 			$(INC) \
-# 			-Wall \
-#			-fPIC
+#  			-g3 \
+#  			$(INC) \
+#  			-Wall \
+#  			-fPIC
 CPPFLAGS=	-O3 \
 			$(INC) \
 			-Wall \
-			-DNDEBUG \
-			-msse4 \
-			-funsafe-loop-optimizations \
-			-funsafe-math-optimizations \
-			-funswitch-loops \
-			-fvariable-expansion-in-unroller \
-			-funroll-loops \
 			-fPIC
+#CPPFLAGS=	-O3 \
+#			$(INC) \
+#			-Wall \
+#			-DNDEBUG \
+#			-msse4 \
+#			-funsafe-loop-optimizations \
+#			-funsafe-math-optimizations \
+#			-funswitch-loops \
+#			-fvariable-expansion-in-unroller \
+#			-funroll-loops \
+#			-fPIC
 
 CPP=g++
-INC=-I./includes/
-TEST_INC=-I./dep/gtest-1.6.0/include/
+INC=-I./includes/ -I./dep/gtest-1.6.0/include/
+TEST_INC=
 LIB=lib/libcds.a
 LIB_SHARED=-lcds2
 
@@ -105,7 +105,7 @@ test: libcds $(TESTOBJ)
 	@echo " [LNK] Linking test_codernone"
 	@$(CPP) $(CPPFLAGS) -o tests/test_codernone tests/test_codernone.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking speed_go"
-	$(CPP) $(CPPFLAGS) -o tests/speed_go tests/speed_go.cpp $(LIB_SHARED)
+	$(CPP) $(CPPFLAGS) -o tests/speed_go tests/speed_go.cpp $(LIB)
 
 autotest: test
 	cd tests; ../config/run_test.py -a fclaude@gmail.com -s localhost -t ./test_libcdsh,./test_array,./test_ioh,./test_timeh,./test_bitsequence,./test_sequence,./test_bitsequenceonelevelrank,./test_mappernone

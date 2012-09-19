@@ -29,21 +29,21 @@ int main() {
 	cout << "Size for a: " << a->GetSize();
 	a->Unuse();
 	
-	Array *a2 = Array::Create(N, 1);
-	a2->Use();
-	for (cds_word i = 0; i < N; i++) {
-		if (i%2) {
-			a2->SetField(i, 1);
-		}
-	}
-	cout << "Bitmap of length " << N << " requires " << a2->GetSize() << " bytes" << endl;
-	BitSequenceOneLevelRank *b = new BitSequenceOneLevelRank(a2, 20);
-	for (cds_word i = 0; i < N; i++) {
-		if (b->Access(i) != (a2->GetField(i)>0)) {
-			cout << "Error, values do not match (" << b->Access(i) << ", " << a2->GetField(i) << ")" << endl;
-		}
-	}
-	a2->Unuse();
-	b->Unuse();
-	cout << "We are done!" << endl;
+	// Array *a2 = Array::Create(N, 1);
+	// a2->Use();
+	// for (cds_word i = 0; i < N; i++) {
+	// 	if (i%2) {
+	// 		a2->SetField(i, 1);
+	// 	}
+	// }
+	// cout << "Bitmap of length " << N << " requires " << a2->GetSize() << " bytes" << endl;
+	// BitSequenceOneLevelRank *b = new BitSequenceOneLevelRank(a2, 20);
+	// for (cds_word i = 0; i < N; i++) {
+	// 	if (b->Access(i) != (a2->GetField(i)>0)) {
+	// 		cout << "Error, values do not match (" << b->Access(i) << ", " << a2->GetField(i) << ")" << endl;
+	// 	}
+	// }
+	// a2->Unuse();
+	// b->Unuse();
+	// cout << "We are done!" << endl;
 }    

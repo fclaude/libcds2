@@ -47,12 +47,12 @@ class Coder : public cds::basic::ReferenceCounted {
   public:
     Coder();
     virtual ~Coder() { }
-    virtual void Encode(cds_word symb, cds_word * stream, cds_word *pos) const = 0;
+    virtual void Encode(cds_word symb, cds_word *stream, cds_word *pos) const = 0;
     virtual cds_word Decode(cds_word *stream, cds_word *pos) const = 0;
     virtual cds_word MaxLength() const = 0;
     virtual cds_word GetSize() const = 0;
     virtual void Save(ostream &output) const = 0;
-    static Coder * Load(istream &input);
+    static Coder *Load(istream &input);
 };
 
 };

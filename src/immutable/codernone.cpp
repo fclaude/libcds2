@@ -39,20 +39,20 @@ namespace immutable {
 
 CoderNone::CoderNone() { }
 
-void CoderNone::Encode(cds_word symb, cds_word * stream, cds_word *pos) const {
-    stream[*pos/kWordSize] = symb;
-    *pos+=kWordSize;
+void CoderNone::Encode(cds_word symb, cds_word *stream, cds_word *pos) const {
+  stream[*pos / kWordSize] = symb;
+  *pos += kWordSize;
 }
 cds_word CoderNone::Decode(cds_word *stream, cds_word *pos) const {
-    cds_word ret = stream[*pos/kWordSize];
-    *pos+=kWordSize;
-    return ret;
+  cds_word ret = stream[*pos / kWordSize];
+  *pos += kWordSize;
+  return ret;
 }
 cds_word CoderNone::MaxLength() const {
-    return kWordSize;
+  return kWordSize;
 }
 cds_word CoderNone::GetSize() const {
-    return sizeof(this);
+  return sizeof(this);
 }
 void CoderNone::Save(ostream &output) const {
   cds_word wr = CODER_NONE_HDR;

@@ -47,12 +47,12 @@ class CoderNone : public Coder {
   public:
     CoderNone();
     virtual ~CoderNone() { }
-    virtual void Encode(cds_word symb, cds_word * stream, cds_word *pos) const;
+    virtual void Encode(cds_word symb, cds_word *stream, cds_word *pos) const;
     virtual cds_word Decode(cds_word *stream, cds_word *pos)  const;
     virtual cds_word MaxLength() const;
     virtual cds_word GetSize() const;
     virtual void Save(ostream &output) const;
-    static CoderNone * Load(istream &input);
+    static CoderNone *Load(istream &input);
 };
 };
 };

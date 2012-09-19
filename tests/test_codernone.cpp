@@ -40,7 +40,7 @@ uint seed_test_array = 20;
 void testCoder(cds_word n) {
   CoderNone *cod = new CoderNone();
   cod->Use();
-  cds_word *stream = new cds_word[n*64];
+  cds_word *stream = new cds_word[n * 64];
   cds_word pos = 0;
   cds_word *symbols = new cds_word[n];
   for (cds_word i = 0 ; i < n ; i++) {

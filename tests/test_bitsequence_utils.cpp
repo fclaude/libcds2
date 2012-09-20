@@ -40,7 +40,7 @@ using cds::basic::cds_word;
 
 Array *CreateRandomBitmap(const cds_word kBitmapLength, const cds_word kOnes, unsigned int seed) {
   Array *ret = Array::Create(kBitmapLength, 1);
-  ret->Use();
+  // ret->Use();
   for (cds_word i = 0; i < kOnes;) {
     cds_word pos = rand_r(&seed) % kBitmapLength;
     if (ret->GetField(pos) == 0) {

@@ -82,9 +82,6 @@ include_files:
 	@find ./src/ -name *.h -exec python ./config/copy_header.py {} \;
 
 test: libcds $(TESTOBJ)
-	@echo " [DEP] Compiling gtest library"
-	@cd $(GTEST_DIR); ./configure > /dev/null; cd ../..
-	@make -s -C $(GTEST_DIR) > /dev/null
 	@echo " [LNK] Linking test_array"
 	@$(CPP) $(CPPFLAGS) -o tests/test_array tests/test_array.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_ioh"
@@ -124,6 +121,14 @@ shared_lib_install:
 gotest:
 	@make -C gocode
 
+deps: 
+	@echo " [DEP] Compiling gtest library"
+	@cd $(GTEST_DIR); ./configure > /dev/null; cd ../..
+	@make -s -C $(GTEST_DIR) > /dev/null
+	
+cleandeps:
+	@make -s -C $(GTEST_DIR) clean > /dev/null
+
 clean:
 	@echo " [CLN] Cleaning source tree"
 	@find ./ -name *.orig -exec rm -f {} \;
@@ -133,7 +138,6 @@ clean:
 	@rm -rf includes/*
 	@mkdir includes/libcds
 	@touch includes/libcds/delete_me
-	@make -s -C $(GTEST_DIR) clean > /dev/null
 	@rm -f $(TESTOBJ)
 	@rm -f tests/test_array
 	@rm -f tests/test_timeh
@@ -146,3 +150,7 @@ clean:
 	@rm -f tests/test_codernone
 	@rm -f tests/speed_go
 	@make -s -C gocode clean
+
+cleanall: clean cleandeps
+
+all: cleanall deps test

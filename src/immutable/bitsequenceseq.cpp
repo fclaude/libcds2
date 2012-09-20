@@ -42,6 +42,10 @@ BitSequenceSeq::BitSequenceSeq(Array *array) {
   array_->Use();
 }
 
+BitSequenceSeq::~BitSequenceSeq() {
+  array_->Unuse();
+}
+
 cds_word BitSequenceSeq::Rank1(const cds_word i) const {
   cds_word cnt = 0;
   for (cds_word k = 0; k <= i; k++) {

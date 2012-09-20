@@ -51,7 +51,7 @@ using std::ios_base;
 using std::iostream;
 
 void testBitSequenceOneLevelRank(cds_word sample) {
-  const cds_word kBitmapLength = 10000;
+  const cds_word kBitmapLength = 100;
   const cds_word kOnes = kBitmapLength / 4;
   unsigned int seed = 101;
   char *buffer = new char[kBitmapLength];

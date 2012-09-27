@@ -32,36 +32,92 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef SRC_IMMUTABLE_WAVELETTREE_H_
 #define SRC_IMMUTABLE_WAVELETTREE_H_
 
-
-#include <libcds/libcds.h>
 #include <libcds/io.h>
+#include <libcds/libcds.h>
+#include <libcds/array.h>
+#include <libcds/immutable/coder.h>
+#include <libcds/immutable/mapper.h>
 #include <libcds/immutable/sequence.h>
+#include <libcds/immutable/bitsequence.h>
 
 namespace cds {
 namespace immutable {
 
 class WaveletTree : public Sequence {
-    public:
-        WaveletTree(cds_word *symbols, cds_word n, Coder *coder, BitSequence * bmb, Mapper * am, bool free = false);
-        WaveletTree(const Array &a, Coder *coder, BitSequence *bmb, Mapper *am);
-        virtual ~WaveletTree();
-        virtual uint Access(cds_word pos) const;
-        virtual uint Access(cds_word pos, cds_word &rank) const;
-        virtual size_t Rank(cds_word symbol, cds_word pos) const;
-        virtual size_t Select(cds_word symbol, cds_word j) const;
-        virtual size_t Count(const cds_word s) const;
-        virtual cds_word GetSigma() const;
-        virtual size_t getSize() const;
+  public:
+    WaveletTree(const cds::basic::Array *a, const Coder *coder, const BitSequence *bmb, const Mapper *am);
+    virtual ~WaveletTree();
+    virtual cds_word Access(cds_word pos) const;
+    virtual cds_word Access(cds_word pos, cds_word *rank) const;
+    virtual cds_word Rank(cds_word symbol, cds_word pos) const;
+    virtual cds_word Select(cds_word symbol, cds_word j) const;
+    virtual cds_word Count(const cds_word s) const;
+    virtual cds_word GetSigma() const;
+    virtual cds_word getSize() const;
+    virtual void save(ostream &fp) const;
+    static WaveletTree *load(istream &fp);
+
+  protected:
+    WaveletTree();
+#define kWTNodeNullHdr 0;
+#define kWTNodeInternalHdr 2;
+#define kWTNodeLeafHdr  3;
+
+    class WtNode {
+      public:
+        virtual ~WtNode() {}
+        virtual cds_word Rank(cds_word symbol, cds_word pos, cds_word l, Coder *c) const = 0;
+        virtual cds_word Select(cds_word symbol, cds_word pos, cds_word l, Coder *c) const = 0;
+        virtual cds_word Access(cds_word pos) const = 0;
+        virtual cds_word Access(cds_word pos, cds_word *rankp) const = 0;
+        virtual cds_word GetSize() const = 0;
+        virtual void Save(ostream &fp) const = 0;
+        static WtNode *Load(istream &fp);
+    };
+
+    class WtNodeInternal: public WtNode {
+      public:
+        WtNodeInternal(const cds::basic::Array *seq, cds_word l, const Coder *c, BitSequence *bmb);
+        virtual ~WtNodeInternal();
+        virtual cds_word Rank(cds_word symbol, cds_word pos, cds_word level, Coder *c) const;
+        virtual cds_word Select(cds_word symbol, cds_word pos, cds_word level, Coder *c) const;
+        virtual cds_word Access(cds_word pos) const;
+        virtual cds_word Access(cds_word pos, cds_word *rankp) const;
+        virtual cds_word GetSize() const;
+        virtual void Save(ostream &fp) const;
+        static WtNodeInternal *load(istream &fp);
+
+      protected:
+        WtNodeInternal();
+        WtNode *leftchild_;
+        WtNode *right_child_;
+        BitSequence *bitmap_;
+    };
+
+    class WtNodeLeaf: public WtNode {
+      public:
+        WtNodeLeaf(cds_word symbol, cds_word count);
+        virtual ~WtNodeLeaf();
+        virtual cds_word rank(cds_word symbol, cds_word pos, cds_word l, Coder *c) const;
+        virtual cds_word select(cds_word symbol, cds_word pos, cds_word l, Coder *c) const;
+        virtual cds_word access(cds_word pos) const;
+        virtual cds_word access(cds_word pos, cds_word *rank) const;
+        virtual cds_word getSize() const;
         virtual void save(ostream &fp) const;
-        static WaveletTree * load(istream &fp);
-    protected:
-        WaveletTree();
-        WaveletTreeNode *root_;
-        WaveletTreeCoder *coder_;
-        Mapper *am_;
-        cds_word n_;
-        cds_word max_v_;
-        bool test_;
+        static WtNodeLeaf *load(istream &fp);
+
+      protected:
+        WtNodeLeaf();
+        cds_word symbol_;
+        cds_word count_;
+    };
+
+    WtNode *root_;
+    Coder *coder_;
+    Mapper *am_;
+    cds_word n_;
+    cds_word max_v_;
+    bool test_;
 };
 };
 };

@@ -54,7 +54,6 @@ class Coder : public cds::basic::ReferenceCounted {
     virtual void Save(ostream &output) const = 0;
     static Coder *Load(istream &input);
 };
-
 };
 };
 #endif  // SRC_IMMUTABLE_CODER_H_

@@ -39,7 +39,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace cds {
 namespace basic {
-  
+
 using std::string;
 
 class CDSException {

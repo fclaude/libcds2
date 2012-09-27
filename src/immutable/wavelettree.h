@@ -42,10 +42,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace cds {
 namespace immutable {
-
+const cds_word kWTNodeNullHdr = 0;
+const cds_word  kWTNodeInternalHdr = 2;
+const cds_word  kWTNodeLeafHdr = 3;
 class WaveletTree : public Sequence {
   public:
-    WaveletTree(const cds::basic::Array *a, const Coder *coder, const BitSequence *bmb, const Mapper *am);
+    WaveletTree(const cds::basic::Array *a,  Coder *coder,  BitSequence *bmb,  Mapper *am);
     virtual ~WaveletTree();
     virtual cds_word Access(cds_word pos) const;
     virtual cds_word Access(cds_word pos, cds_word *rank) const;
@@ -53,17 +55,16 @@ class WaveletTree : public Sequence {
     virtual cds_word Select(cds_word symbol, cds_word j) const;
     virtual cds_word Count(const cds_word s) const;
     virtual cds_word GetSigma() const;
-    virtual cds_word getSize() const;
-    virtual void save(ostream &fp) const;
-    static WaveletTree *load(istream &fp);
+    virtual cds_word GetLength() const;
+    virtual cds_word GetSize() const;
+    virtual void Save(ostream &fp) const;
+    static WaveletTree *Load(istream &fp);
 
   protected:
     WaveletTree();
-#define kWTNodeNullHdr 0;
-#define kWTNodeInternalHdr 2;
-#define kWTNodeLeafHdr  3;
 
-    class WtNode {
+
+    class WtNode : public cds::basic::ReferenceCounted {
       public:
         virtual ~WtNode() {}
         virtual cds_word Rank(cds_word symbol, cds_word pos, cds_word l, Coder *c) const = 0;
@@ -77,7 +78,7 @@ class WaveletTree : public Sequence {
 
     class WtNodeInternal: public WtNode {
       public:
-        WtNodeInternal(const cds::basic::Array *seq, cds_word l, const Coder *c, BitSequence *bmb);
+        WtNodeInternal(const cds::basic::Array *seq, cds_word l,  Coder *c, BitSequence *bmb);
         virtual ~WtNodeInternal();
         virtual cds_word Rank(cds_word symbol, cds_word pos, cds_word level, Coder *c) const;
         virtual cds_word Select(cds_word symbol, cds_word pos, cds_word level, Coder *c) const;
@@ -85,7 +86,7 @@ class WaveletTree : public Sequence {
         virtual cds_word Access(cds_word pos, cds_word *rankp) const;
         virtual cds_word GetSize() const;
         virtual void Save(ostream &fp) const;
-        static WtNodeInternal *load(istream &fp);
+        static WtNodeInternal *Load(istream &fp);
 
       protected:
         WtNodeInternal();
@@ -103,8 +104,8 @@ class WaveletTree : public Sequence {
         virtual cds_word access(cds_word pos) const;
         virtual cds_word access(cds_word pos, cds_word *rank) const;
         virtual cds_word getSize() const;
-        virtual void save(ostream &fp) const;
-        static WtNodeLeaf *load(istream &fp);
+        virtual void Save(ostream &fp) const;
+        static WtNodeLeaf *Load(istream &fp);
 
       protected:
         WtNodeLeaf();

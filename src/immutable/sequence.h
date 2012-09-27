@@ -40,12 +40,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <fstream>
 
+
+
 namespace cds {
 namespace immutable {
+
 
 using cds::basic::cds_word;
 using std::istream;
 using std::ostream;
+
+const cds_word WVTREE_HDR = 2;
 
 /** Base class for static sequences, contains many abstract functions,
  *  so this can't be instantiated.

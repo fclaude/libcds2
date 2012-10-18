@@ -38,7 +38,8 @@ OBJ=	src/basic/array.o \
 		src/immutable/codernone.o \
 		src/immutable/wavelettree.o \
 		src/immutable/permutation.o \
-		src/immutable/permutationmrrr.o 
+		src/immutable/permutationmrrr.o \
+		src/immutable/treelouds.o
 
 TESTOBJ= tests/test_main.o \
 		tests/test_array.o \
@@ -52,7 +53,8 @@ TESTOBJ= tests/test_main.o \
 		tests/test_sequence.o \
 		tests/test_mappernone.o \
 		tests/test_codernone.o \
-		tests/test_permutationmrrr.o
+		tests/test_permutationmrrr.o \
+		tests/test_treelouds.o
 
 GTEST_DIR=./dep/gtest-1.6.0/
 
@@ -107,6 +109,8 @@ test: libcds $(TESTOBJ)
 	@$(CPP) $(CPPFLAGS) -o tests/test_codernone tests/test_codernone.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_permutationmrrr"
 	@$(CPP) $(CPPFLAGS) -o tests/test_permutationmrrr tests/test_permutationmrrr.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@echo " [LNK] Linking test_treelouds"
+	@$(CPP) $(CPPFLAGS) -o tests/test_treelouds tests/test_treelouds.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	# @echo " [LNK] Compiling and Linking speed_go"
 	# @$(CPP) $(CPPFLAGS) -o tests/speed_go tests/speed_go.cpp $(LIB)
 

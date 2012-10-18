@@ -30,54 +30,88 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************************/
 
 
-#ifndef SRC_IMMUTABLE_PERMUTATION_H_
-#define SRC_IMMUTABLE_PERMUTATIOM_H_
-
-
-#include <libcds/libcds.h>
+#include <libcds/immutable/tree.h>
+#include <libcds/immutable/treelouds.h>
+#include <libcds/cdsexception.h>
 #include <libcds/io.h>
 
-#include <fstream>
+#include <algorithm>
+#include <vector>
 
 namespace cds {
 namespace immutable {
 
+using cds::basic::CDSException;
+using cds::basic::LoadValue;
+using cds::basic::SaveValue;
 using cds::basic::cds_word;
-using std::istream;
-using std::ostream;
 
-const cds_word kPermutationMRRRHdr = 2;
+TreeLouds::TreeLouds(BitSequence *bitmap) {
+	bitmap_ = bitmap;
+	bitmap_->Use();
+}
 
-/** Base class for static permutations, contains many abstract functions,
- *  so this can't be instantiated.
- *
- *  @author Francisco Claude
- */
-class Permutation : public cds::basic::ReferenceCounted {
-  public:
-    virtual ~Permutation() {}
+TreeLouds::~TreeLouds() {
+	bitmap_->Unuse();
+}
 
-    /** Retrieves the element at position i. */
-    virtual cds_word Access(cds_word i) const = 0;
+cds_word TreeLouds::Parent(cds_word i) const {
+	cds_word sel = bitmap_->Rank0(i) - 1;
+	if (sel == 0) {
+		return (cds_word)-1;
+	}
+	cds_word range = bitmap_->Select1(sel);
+	return bitmap_->SelectNext0(range);
+}
 
-    /** Retrieves the inverse for position i. */
-    virtual cds_word Reverse(cds_word i) const = 0;
+cds_word TreeLouds::Child(cds_word i, cds_word j) const {
+	cds_word prev = bitmap_->SelectPrev0(i-1);
+	cds_word fst = prev + j + 1;
+	cds_word sel = bitmap_->Rank1(fst);
+	return bitmap_->Select0(sel + 1);
+}
 
-    /** Returns the length of the permutation */
-    virtual cds_word GetLength() const = 0;
+cds_word TreeLouds::Degree(cds_word i) const {
+	cds_word prev = bitmap_->SelectPrev0(i-1);
+	return i - prev - 1;
+}
 
-    /** Returns the size of the structure in bytes */
-    virtual cds_word GetSize() const = 0;
+cds_word TreeLouds::NextSibling(cds_word i) const {
+	cds_word sel = bitmap_->Rank0(i) - 1;
+	if (sel == 0) {
+		return (cds_word)-1;
+	}
+	cds_word range = bitmap_->Select1(sel);
+	if (bitmap_->Access(range+1) == 0)
+		return (cds_word)-1;
+	return bitmap_->Select0(sel + 2);
+}
 
-    /** Stores the sequence given an output stream. */
-    virtual void Save(ostream &fp) const = 0;
+cds_word TreeLouds::PrevSibling(cds_word i) const {
+	cds_word sel = bitmap_->Rank0(i) - 1;
+	if (sel == 0) {
+		return (cds_word)-1;
+	}
+	cds_word range = bitmap_->Select1(sel);
+	if (range == 0 || bitmap_->Access(range - 1) == 0)
+		return (cds_word)-1;
+	return bitmap_->Select0(sel);
+}
 
-    /** Reads a sequence determining the type. */
-    static Permutation *Load(istream &fp);
+cds_word TreeLouds::GetNodes() const {
+	return bitmap_->CountZeros();
+}
+
+cds_word TreeLouds::GetSize() const {
+	return bitmap_->GetSize();
+}
+
+void TreeLouds::Save(ostream &out) const {
+	return;
+}
+
+TreeLouds *Load(istream &fp) {
+	return NULL;
+}
 };
 };
-};
-
-#include <libcds/immutable/permutationmrrr.h>
-
-#endif  // SRC_IMMUTABLE_PERMUTATION_H_

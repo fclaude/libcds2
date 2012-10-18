@@ -30,8 +30,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************************/
 
 
-#ifndef SRC_IMMUTABLE_PERMUTATION_H_
-#define SRC_IMMUTABLE_PERMUTATIOM_H_
+#ifndef SRC_IMMUTABLE_PERMUTATIONMRRR_H_
+#define SRC_IMMUTABLE_PERMUTATIOMMRRR_H_
 
 
 #include <libcds/libcds.h>
@@ -56,7 +56,7 @@ using std::ostream;
 class PermutationMRRR : public Permutation {
   public:
     PermutationMRRR(Array *perm, cds_word samp);
-    virtual ~PermutationMRRR() {}
+    virtual ~PermutationMRRR();
     virtual cds_word Access(cds_word i) const;
     virtual cds_word Reverse(cds_word i) const;
     virtual void Save(ostream &fp) const;
@@ -73,4 +73,4 @@ class PermutationMRRR : public Permutation {
 };
 };
 
-#endif  // SRC_IMMUTABLE_SEQUENCE_H_
+#endif  // SRC_IMMUTABLE_PERMUTATIONMRRR_H_

@@ -30,8 +30,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************************/
 
 
-#ifndef SRC_IMMUTABLE_PERMUTATION_H_
-#define SRC_IMMUTABLE_PERMUTATIOM_H_
+#ifndef SRC_IMMUTABLE_TREE_H_
+#define SRC_IMMUTABLE_TREE_H_
 
 
 #include <libcds/libcds.h>
@@ -46,25 +46,34 @@ using cds::basic::cds_word;
 using std::istream;
 using std::ostream;
 
-const cds_word kPermutationMRRRHdr = 2;
+const cds_word kTreeLOUDSHdr = 2;
 
-/** Base class for static permutations, contains many abstract functions,
+/** Base class for static trees, contains many abstract functions,
  *  so this can't be instantiated.
  *
  *  @author Francisco Claude
  */
-class Permutation : public cds::basic::ReferenceCounted {
+class Tree : public cds::basic::ReferenceCounted {
   public:
-    virtual ~Permutation() {}
+    virtual ~Tree() {}
 
-    /** Retrieves the element at position i. */
-    virtual cds_word Access(cds_word i) const = 0;
+    /** Retrieves the j-th child of node id i. */
+    virtual cds_word Child(cds_word i, cds_word j) const = 0;
 
-    /** Retrieves the inverse for position i. */
-    virtual cds_word Reverse(cds_word i) const = 0;
+    /** Retrieves the id of i's parent. */
+    virtual cds_word Parent(cds_word i) const = 0;
 
-    /** Returns the length of the permutation */
-    virtual cds_word GetLength() const = 0;
+    /** Computes the degree of a node */
+    virtual cds_word Degree(cds_word i) const = 0;
+
+    /** Retrieves the id of the next sibling (or (cds_word)-1 if such node does not exist */
+    virtual cds_word NextSibling(cds_word i) const = 0;
+
+    /** Retrieves the id of the previous sibling (or (cds_word)-1 if such node does not exist */
+    virtual cds_word PrevSibling(cds_word i) const = 0;
+
+    /** Returns the number of nodes */
+    virtual cds_word GetNodes() const = 0;
 
     /** Returns the size of the structure in bytes */
     virtual cds_word GetSize() const = 0;
@@ -73,11 +82,11 @@ class Permutation : public cds::basic::ReferenceCounted {
     virtual void Save(ostream &fp) const = 0;
 
     /** Reads a sequence determining the type. */
-    static Permutation *Load(istream &fp);
+    static Tree *Load(istream &fp);
 };
 };
 };
 
-#include <libcds/immutable/permutationmrrr.h>
+#include <libcds/immutable/treelouds.h>
 
-#endif  // SRC_IMMUTABLE_PERMUTATION_H_
+#endif  // SRC_IMMUTABLE_TREE_H_

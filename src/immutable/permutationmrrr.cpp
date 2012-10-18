@@ -90,6 +90,12 @@ PermutationMRRR::PermutationMRRR(Array *perm, cds_word rate) {
 	sampled->Unuse();
 }
 
+PermutationMRRR::~PermutationMRRR() {
+	rev_links_->Unuse();
+	sampled_->Unuse();
+	permutation_->Unuse();
+}
+
 cds_word PermutationMRRR::Access(cds_word i) const {
 	return permutation_->GetField(i);
 }

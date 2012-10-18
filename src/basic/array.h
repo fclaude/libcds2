@@ -147,6 +147,8 @@ class Array : public ReferenceCounted {
      * @param bpe size per field (in bits)
      */
     static Array *Create(cds_word n, cds_word bpe);
+
+    static Array *Create(const vector<cds_word> &values);
 };
 
 template <cds_word bpe> class ArrayTpl : public Array {

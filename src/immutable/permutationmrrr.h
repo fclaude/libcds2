@@ -30,12 +30,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************************/
 
 
-#ifndef SRC_IMMUTABLE_SEQUENCE_H_
-#define SRC_IMMUTABLE_SEQUENCE_H_
+#ifndef SRC_IMMUTABLE_PERMUTATION_H_
+#define SRC_IMMUTABLE_PERMUTATIOM_H_
 
 
 #include <libcds/libcds.h>
+#include <libcds/array.h>
 #include <libcds/io.h>
+#include <libcds/immutable/bitsequence.h>
 
 #include <fstream>
 
@@ -43,51 +45,30 @@ namespace cds {
 namespace immutable {
 
 using cds::basic::cds_word;
+using cds::basic::Array;
 using std::istream;
 using std::ostream;
 
-const cds_word WVTREE_HDR = 2;
-
-/** Base class for static sequences, contains many abstract functions,
- *  so this can't be instantiated.
+/** Permutations based on Munro, Raman, Raman and Rao's proposal.
  *
  *  @author Francisco Claude
  */
-class Sequence : public cds::basic::ReferenceCounted {
+class PermutationMRRR : public Permutation {
   public:
-    virtual ~Sequence() {}
-
-    /** Retrieves the element at position i. */
-    virtual cds_word Access(const cds_word i) const;
-
-    /** Retrieves the symbol at position i, and the number of occurrences
-     * of the symbol in S[1..i].
-     */
-    virtual cds_word Access(const cds_word i, cds_word *rank) const;
-
-    /** Counts the number of occurrences of symbol s in S[1..i]. */
-    virtual cds_word Rank(const cds_word s, const cds_word i) const;
-
-    /** Computes the position of the j-th occurrence of symbol s. */
-    virtual cds_word Select(const cds_word s, const cds_word j) const;
-
-    /** Returns the length in bits of the sequence. */
-    virtual cds_word GetLength() const = 0;
-
-    /** Returns the number of occurrences of a given symbol s. */
-    virtual cds_word Count(const cds_word s) const;
-
-    /** Returns the maximum value for a symbol (size of the alphabet). */
-    virtual cds_word GetSigma() const;
-
-    /** Returns the size of the structure in bytes. */
-    virtual cds_word GetSize() const = 0;
-
-    /** Stores the sequence given an output stream. */
-    virtual void Save(ostream &fp) const = 0;
+    PermutationMRRR(Array *perm, cds_word samp);
+    virtual ~PermutationMRRR() {}
+    virtual cds_word Access(cds_word i) const;
+    virtual cds_word Reverse(cds_word i) const;
+    virtual void Save(ostream &fp) const;
+    virtual cds_word GetLength() const;
+    virtual cds_word GetSize() const;
 
     /** Reads a sequence determining the type. */
-    static Sequence *Load(istream &fp);
+    static PermutationMRRR *Load(istream &fp);
+  protected:
+    Array *permutation_;
+    Array *rev_links_;
+    BitSequence *sampled_;
 };
 };
 };

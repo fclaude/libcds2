@@ -36,7 +36,9 @@ OBJ=	src/basic/array.o \
 		src/immutable/mappernone.o \
 		src/immutable/coder.o \
 		src/immutable/codernone.o \
-		src/immutable/wavelettree.o
+		src/immutable/wavelettree.o \
+		src/immutable/permutation.o \
+		src/immutable/permutationmrrr.o 
 
 TESTOBJ= tests/test_main.o \
 		tests/test_array.o \
@@ -49,7 +51,8 @@ TESTOBJ= tests/test_main.o \
 		tests/test_sequence_utils.o \
 		tests/test_sequence.o \
 		tests/test_mappernone.o \
-		tests/test_codernone.o
+		tests/test_codernone.o \
+		tests/test_permutationmrrr.o
 
 GTEST_DIR=./dep/gtest-1.6.0/
 
@@ -102,8 +105,10 @@ test: libcds $(TESTOBJ)
 	@$(CPP) $(CPPFLAGS) -o tests/test_mappernone tests/test_mappernone.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_codernone"
 	@$(CPP) $(CPPFLAGS) -o tests/test_codernone tests/test_codernone.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
-	@echo " [LNK] Compiling and Linking speed_go"
-	@$(CPP) $(CPPFLAGS) -o tests/speed_go tests/speed_go.cpp $(LIB)
+	@echo " [LNK] Linking test_permutationmrrr"
+	@$(CPP) $(CPPFLAGS) -o tests/test_permutationmrrr tests/test_permutationmrrr.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	# @echo " [LNK] Compiling and Linking speed_go"
+	# @$(CPP) $(CPPFLAGS) -o tests/speed_go tests/speed_go.cpp $(LIB)
 
 autotest: test
 	cd tests; ../config/run_test.py -a fclaude@gmail.com -s localhost -t ./test_libcdsh,./test_array,./test_ioh,./test_timeh,./test_bitsequence,./test_sequence,./test_bitsequenceonelevelrank,./test_mappernone

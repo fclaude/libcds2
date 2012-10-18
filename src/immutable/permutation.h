@@ -1,5 +1,5 @@
 /********************************************************************************
-Copyright (c) 2012, Francisco Claude
+Copyright (c) 2012, Francisco Claude.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -28,52 +28,56 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ********************************************************************************/
-#include <libcds/immutable/mapper.h>
-#include <libcds/immutable/mappernone.h>
-#include <libcds/immutable/coder.h>
-#include <libcds/immutable/codernone.h>
-#include <libcds/immutable/bitsequence.h>
-#include <libcds/immutable/bitsequenceonelevelrank.h>
+
+
+#ifndef SRC_IMMUTABLE_PERMUTATION_H_
+#define SRC_IMMUTABLE_PERMUTATIOM_H_
+
+
 #include <libcds/libcds.h>
-#include <libcds/array.h>
-#include <iostream>
+#include <libcds/io.h>
 
-using std;
-using cds::basic;
-using cds::immutable;
+#include <fstream>
 
-int main() {
-  // cds::basic::PrintBinary(35);
-  cds_word N = 10000000;
-  Array *a = Array::Create(N, cds::basic::msb(N + 1));
-  a->Use();
+namespace cds {
+namespace immutable {
 
-  for (cds_word i = 0; i < N; i++) {
-    a->SetField(i, i + 1);
-  }
-  for (cds_word i = 0; i < N; i++) {
-    if (a->GetField(i) != i + 1) {
-      cout << "Error, values do not match" << endl;
-    }
-  }
-  cout << "Size for a: " << a->GetSize();
-  a->Unuse();
+using cds::basic::cds_word;
+using std::istream;
+using std::ostream;
 
-  // Array *a2 = Array::Create(N, 1);
-  // a2->Use();
-  // for (cds_word i = 0; i < N; i++) {
-  //  if (i%2) {
-  //    a2->SetField(i, 1);
-  //  }
-  // }
-  // cout << "Bitmap of length " << N << " requires " << a2->GetSize() << " bytes" << endl;
-  // BitSequenceOneLevelRank *b = new BitSequenceOneLevelRank(a2, 20);
-  // for (cds_word i = 0; i < N; i++) {
-  //  if (b->Access(i) != (a2->GetField(i)>0)) {
-  //    cout << "Error, values do not match (" << b->Access(i) << ", " << a2->GetField(i) << ")" << endl;
-  //  }
-  // }
-  // a2->Unuse();
-  // b->Unuse();
-  // cout << "We are done!" << endl;
-}
+const cds_word kPermutationMRRRHdr = 2;
+
+/** Base class for static permutations, contains many abstract functions,
+ *  so this can't be instantiated.
+ *
+ *  @author Francisco Claude
+ */
+class Permutation : public cds::basic::ReferenceCounted {
+  public:
+    virtual ~Permutation() {}
+
+    /** Retrieves the element at position i. */
+    virtual cds_word Access(cds_word i) const = 0;
+
+    /** Retrieves the inverse for position i. */
+    virtual cds_word Reverse(cds_word i) const = 0;
+
+    /** Returns the length of the permutation */
+    virtual cds_word GetLength() const = 0;
+
+    /** Returns the size of the structure in bytes */
+    virtual cds_word GetSize() const = 0;
+
+    /** Stores the sequence given an output stream. */
+    virtual void Save(ostream &fp) const = 0;
+
+    /** Reads a sequence determining the type. */
+    static Permutation *Load(istream &fp);
+};
+};
+};
+
+#include <libcds/immutable/permutationmrrr.h>
+
+#endif  // SRC_IMMUTABLE_SEQUENCE_H_

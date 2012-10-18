@@ -58,6 +58,19 @@ Array *Array::Create(cds_word *A, cds_word i, cds_word j, cds_word bpe) {
   return ret;
 }
 
+Array *Array::Create(const vector<cds_word> &values) {
+  cds_word max_value = 0;
+  for (cds_word k = 0; k < values.size(); k++) {
+    max_value = max(max_value, values[k]);
+  }
+  Array *ret = Create(values.size(), msb(max_value));
+  for (cds_word k = 0; k < values.size(); k++) {
+    assert(values[k] <= max_value);
+    ret->SetField(k, values[k]);
+  }
+  return ret;
+}
+
 template <cds_word bpe> void ArrayTpl<bpe>::Save(ostream &out) const {
   SaveValue(out, bpe);
   SaveValue(out, length_);

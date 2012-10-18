@@ -76,7 +76,7 @@ cds_word WaveletTree::Access(cds_word pos, cds_word *rank) const {
 }
 
 cds_word WaveletTree::GetSize() const {
-  return sizeof(WaveletTree) + sizeof(uint) + root_->GetSize() + am_->GetSize() + coder_->GetSize();
+  return sizeof(WaveletTree) + sizeof(cds_word) + root_->GetSize() + am_->GetSize() + coder_->GetSize();
 }
 cds_word WaveletTree::GetSigma() const {
   return max_v_;

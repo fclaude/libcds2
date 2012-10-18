@@ -35,7 +35,8 @@ OBJ=	src/basic/array.o \
 		src/immutable/mapper.o \
 		src/immutable/mappernone.o \
 		src/immutable/coder.o \
-		src/immutable/codernone.o
+		src/immutable/codernone.o \
+		src/immutable/wavelettree.o
 
 TESTOBJ= tests/test_main.o \
 		tests/test_array.o \

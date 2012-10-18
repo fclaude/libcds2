@@ -2,7 +2,8 @@
 CPPFLAGS=	-O0 \
  			-g3 \
  			$(INC) \
- 			-Wall 
+ 			-Wall \
+ 			-fPIC
 # CPPFLAGS=	-O3 \
 # 			$(INC) \
 # 			-Wall \

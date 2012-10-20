@@ -90,6 +90,29 @@ class BitSequenceOneLevelRank : public BitSequence {
 
     BitSequenceOneLevelRank() {}
 };
+
+class BitSequenceBuilderOneLevelRank : public BitSequenceBuilder {
+public:
+  BitSequenceBuilderOneLevelRank(cds_word sample) {
+    sample_ = sample;
+  }
+
+  virtual ~BitSequenceBuilderOneLevelRank() {}
+
+  virtual BitSequence *Build(Array *bitmap) const {
+    return new BitSequenceOneLevelRank(bitmap, sample_);
+  }
+
+  virtual void Save(ostream &fp) const {
+    return;
+  }
+
+  static BitSequenceBuilder *Load(istream &fp) {
+    return NULL;
+  }
+protected:
+  cds_word sample_;
+};
 };
 };
 

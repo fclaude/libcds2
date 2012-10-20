@@ -92,4 +92,7 @@ class Sequence : public cds::basic::ReferenceCounted {
 };
 };
 
+#include <libcds/immutable/wavelettreenoptrs.h>
+#include <libcds/immutable/mapper.h>
+
 #endif  // SRC_IMMUTABLE_SEQUENCE_H_

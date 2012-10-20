@@ -39,7 +39,8 @@ OBJ=	src/basic/array.o \
 		src/immutable/wavelettree.o \
 		src/immutable/permutation.o \
 		src/immutable/permutationmrrr.o \
-		src/immutable/treelouds.o
+		src/immutable/treelouds.o \
+		src/immutable/wavelettreenoptrs.o
 
 TESTOBJ= tests/test_main.o \
 		tests/test_array.o \

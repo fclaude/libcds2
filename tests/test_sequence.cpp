@@ -36,13 +36,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "./test_sequence_utils.h"
 
 using cds::immutable::Sequence;
+using cds::immutable::WaveletTreeNoPtrs;
+using cds::immutable::MapperNone;
+using cds::immutable::BitSequenceBuilderOneLevelRank;
 using cds::basic::Array;
 using cds::basic::ArrayTpl;
 using cds::basic::cds_word;
 using std::ostream;
 
 const cds_word kLength = 5000;
-const cds_word sigma[] = {1, 7777};
+const cds_word sigma[] = {1, 7759};
 const cds_word sigmas = 2;
 uint seed_test_sequence = 20;
 
@@ -129,6 +132,15 @@ TEST(Sequence, SimpleSeqAccess) {
     Array *array = CreateRandomSequence(kLength, sigma[ind], seed_test_sequence);
     SimpleSeq *seq1 = new SimpleSeq(array);
     SimpleSeqAccess *seq2 = new SimpleSeqAccess(array);
+    TestSequence(seq1, seq2);
+  }
+}
+
+TEST(WaveletTreeNoPtrs, AgainsSimpleSeq) {
+  for (cds_word ind = 0; ind < sigmas; ind++) {
+    Array *array = CreateRandomSequence(kLength, sigma[ind], seed_test_sequence);
+    SimpleSeq *seq1 = new SimpleSeq(array);
+    WaveletTreeNoPtrs *seq2 = new WaveletTreeNoPtrs(array, new BitSequenceBuilderOneLevelRank(20), new MapperNone());
     TestSequence(seq1, seq2);
   }
 }

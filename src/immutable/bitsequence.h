@@ -36,6 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <libcds/libcds.h>
 #include <libcds/io.h>
+#include <libcds/array.h>
 
 
 #include <fstream>
@@ -44,6 +45,8 @@ namespace cds {
 namespace immutable {
 
 using cds::basic::cds_word;
+using cds::basic::Array;
+using cds::basic::ReferenceCounted;
 using std::istream;
 using std::ostream;
 
@@ -55,7 +58,7 @@ const cds_word kBitSequenceOneLevelRankID = 2;
  *
  *  @author Francisco Claude
  */
-class BitSequence : public cds::basic::ReferenceCounted {
+class BitSequence : public ReferenceCounted {
   public:
     virtual ~BitSequence() {}
 
@@ -131,7 +134,17 @@ class BitSequence : public cds::basic::ReferenceCounted {
     /** Reads a bitmap determining the type. */
     static BitSequence *Load(istream &fp);
 };
+
+class BitSequenceBuilder : public ReferenceCounted {
+public:
+    virtual ~BitSequenceBuilder() {}
+    virtual BitSequence *Build(Array *bitmap) const = 0;
+    virtual void Save(ostream &fp) const = 0;
+    static BitSequenceBuilder *Load(istream &fp);
 };
 };
+};
+
+#include <libcds/immutable/bitsequenceonelevelrank.h>
 
 #endif  // SRC_IMMUTABLE_BITSEQUENCE_H_

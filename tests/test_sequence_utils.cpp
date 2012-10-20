@@ -101,4 +101,6 @@ void TestSequence(Sequence *model, Sequence *tested, bool save_and_load) {
     exp = model->Rank(sigma - 1, i);
     ASSERT_EQ(exp, rec) << "Error in Rank";
   }
+  if (save_and_load)
+    tested->Unuse();
 }

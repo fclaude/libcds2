@@ -44,7 +44,7 @@ using cds::basic::ArrayTpl;
 using cds::basic::cds_word;
 using std::ostream;
 
-const cds_word kLength = 5000;
+const cds_word kLength = 500;
 const cds_word sigma[] = {1, 7759, 10000};
 const cds_word sigmas = 3;
 uint seed_test_sequence = 20;
@@ -152,7 +152,7 @@ TEST(WaveletTreeNoPtrs, AgainsSimpleSeq) {
     seq2->Use();
     TestSequence(seq1, seq2, true);
     seq1->Unuse();
-    seq2->Unuse();
+    // seq2->Unuse();
     array->Unuse();
   }
 }

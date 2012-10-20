@@ -32,15 +32,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef SRC_IMMUTABLE_WAVELETTREENOPTRS_H_
 #define SRC_IMMUTABLE_WAVELETTREENOPTRS_H_
 
-#include <libcds/io.h>
 #include <libcds/libcds.h>
 #include <libcds/array.h>
 #include <libcds/immutable/mapper.h>
 #include <libcds/immutable/sequence.h>
 #include <libcds/immutable/bitsequence.h>
 
+#include <fstream>
+
 namespace cds {
 namespace immutable {
+
+using std::ostream;
+using std::istream;
 
 const cds_word kWTNoPtrs = 3;
 
@@ -61,6 +65,7 @@ class WaveletTreeNoPtrs : public Sequence {
 
   protected:
 
+    WaveletTreeNoPtrs() {}
     BitSequence **level_;
     cds_word height_;
     Mapper *am_;

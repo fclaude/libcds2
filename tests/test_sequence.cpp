@@ -45,8 +45,8 @@ using cds::basic::cds_word;
 using std::ostream;
 
 const cds_word kLength = 5000;
-const cds_word sigma[] = {1, 7759};
-const cds_word sigmas = 2;
+const cds_word sigma[] = {1, 7759, 10000};
+const cds_word sigmas = 3;
 uint seed_test_sequence = 20;
 
 class SimpleSeq : public Sequence {

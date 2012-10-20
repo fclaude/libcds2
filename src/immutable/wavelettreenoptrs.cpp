@@ -30,12 +30,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************************/
 
 #include <libcds/immutable/wavelettreenoptrs.h>
+#include <libcds/io.h>
 
 #include <vector>
-using std::vector;
 
 namespace cds {
 namespace immutable {
+
+using cds::basic::LoadValue;
+using cds::basic::SaveValue;
+
+using std::vector;
+
 inline cds_word GetStart(cds_word symbol, cds_word mask) {
   return symbol & mask;
 }
@@ -252,11 +258,36 @@ cds_word WaveletTreeNoPtrs::GetLength() const {
 }
 
 void WaveletTreeNoPtrs::Save(ostream &fp) const {
-  return;
+  SaveValue(fp, kWTNoPtrs);
+  SaveValue(fp, n_);
+  SaveValue(fp, max_v_);
+  SaveValue(fp, height_);
+  am_->Save(fp);
+  occ_->Save(fp);
+  for (cds_word i = 0; i < height_; i++)
+    level_[i]->Save(fp);
 }
 
 WaveletTreeNoPtrs *WaveletTreeNoPtrs::Load(istream &fp) {
-  return NULL;
+  cds_word id;
+  id = LoadValue<cds_word>(fp);
+  if (id != kWTNoPtrs) {
+    return NULL;
+  }
+  WaveletTreeNoPtrs *ret = new WaveletTreeNoPtrs();
+  ret->n_ = LoadValue<cds_word>(fp);
+  ret->max_v_ = LoadValue<cds_word>(fp);
+  ret->height_ = LoadValue<cds_word>(fp);
+  ret->am_ = Mapper::Load(fp);
+  ret->am_->Use();
+  ret->occ_ = Array::Load(fp);
+  ret->occ_->Use();
+  ret->level_ = new BitSequence*[ret->height_];
+  for (cds_word i = 0; i < ret->height_; i++) {
+    ret->level_[i] = BitSequence::Load(fp);
+    ret->level_[i]->Use();
+  }
+  return ret;
 }
 };
 };

@@ -52,7 +52,10 @@ TreeLouds::TreeLouds(BitSequence *bitmap) {
 }
 
 TreeLouds::~TreeLouds() {
-	bitmap_->Unuse();
+	if (bitmap_ != NULL) {
+		bitmap_->Unuse();
+		bitmap_ = NULL;
+	}
 }
 
 cds_word TreeLouds::Parent(cds_word i) const {
@@ -106,12 +109,28 @@ cds_word TreeLouds::GetSize() const {
 	return bitmap_->GetSize();
 }
 
-void TreeLouds::Save(ostream &out) const {
-	return;
+void TreeLouds::Save(ostream &fp) const {
+	SaveValue(fp, kTreeLoudsHdr);
+	bitmap_->Save(fp);
 }
 
-TreeLouds *Load(istream &fp) {
+TreeLouds *TreeLouds::Load(istream &fp) {
+  cds_word rd = cds::basic::LoadValue<cds_word>(fp);
+  if (rd != kTreeLoudsHdr) {
+	  cds_word pos = fp.tellg();
+	  fp.seekg(pos - sizeof(cds_word));
+	  return NULL;
+  }
+  TreeLouds *ret = new TreeLouds();
+  ret->bitmap_ = BitSequence::Load(fp);
+  if (ret->bitmap_ == NULL) {
+  	cds_word pos = fp.tellg();
+	fp.seekg(pos - sizeof(cds_word));
+	delete ret;
 	return NULL;
+  }
+  ret->bitmap_->Use();
+  return ret;
 }
 };
 };

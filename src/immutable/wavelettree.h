@@ -80,12 +80,12 @@ class WaveletTree : public Sequence {
       public:
         WtNodeInternal(const cds::basic::Array *seq, cds_word l,  Coder *c, BitSequence *bmb);
         virtual ~WtNodeInternal();
-        virtual cds_word Rank(cds_word symbol, cds_word pos, cds_word level, Coder *c) const;
-        virtual cds_word Select(cds_word symbol, cds_word pos, cds_word level, Coder *c) const;
-        virtual cds_word Access(cds_word pos) const;
-        virtual cds_word Access(cds_word pos, cds_word *rankp) const;
-        virtual cds_word GetSize() const;
-        virtual void Save(ostream &fp) const;
+        virtual cds_word Rank(cds_word symbol, cds_word pos, cds_word level, Coder *c) const = 0;
+        virtual cds_word Select(cds_word symbol, cds_word pos, cds_word level, Coder *c) const = 0;
+        virtual cds_word Access(cds_word pos) const = 0;
+        virtual cds_word Access(cds_word pos, cds_word *rankp) const = 0;
+        virtual cds_word GetSize() const = 0;
+        virtual void Save(ostream &fp) const = 0;
         static WtNodeInternal *Load(istream &fp);
 
       protected:
@@ -99,12 +99,12 @@ class WaveletTree : public Sequence {
       public:
         WtNodeLeaf(cds_word symbol, cds_word count);
         virtual ~WtNodeLeaf();
-        virtual cds_word rank(cds_word symbol, cds_word pos, cds_word l, Coder *c) const;
-        virtual cds_word select(cds_word symbol, cds_word pos, cds_word l, Coder *c) const;
-        virtual cds_word access(cds_word pos) const;
-        virtual cds_word access(cds_word pos, cds_word *rank) const;
-        virtual cds_word getSize() const;
-        virtual void Save(ostream &fp) const;
+        virtual cds_word rank(cds_word symbol, cds_word pos, cds_word l, Coder *c) const = 0;
+        virtual cds_word select(cds_word symbol, cds_word pos, cds_word l, Coder *c) const = 0;
+        virtual cds_word access(cds_word pos) const = 0;
+        virtual cds_word access(cds_word pos, cds_word *rank) const = 0;
+        virtual cds_word getSize() const = 0;
+        virtual void Save(ostream &fp) const = 0;
         static WtNodeLeaf *Load(istream &fp);
 
       protected:

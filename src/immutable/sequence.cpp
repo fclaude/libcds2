@@ -95,5 +95,18 @@ cds_word Sequence::GetSigma() const {
   }
   return max;
 }
+
+Sequence *Sequence::Load(istream &fp) {
+  cds_word rd = LoadValue<cds_word>(fp);
+  cds_word pos = fp.tellg();
+  fp.seekg(pos - sizeof(cds_word));
+  switch (rd) {
+    // case kWTPtrsHdr:
+    //   return WaveletTree::Load(fp);
+    case kWTNoPtrsHdr:
+      return WaveletTreeNoPtrs::Load(fp);
+  }
+  return NULL;
+}
 };
 };

@@ -46,7 +46,8 @@ using cds::basic::cds_word;
 using std::istream;
 using std::ostream;
 
-const cds_word WVTREE_HDR = 2;
+const cds_word kWTPtrsHdr = 2;
+const cds_word kWTNoPtrsHdr = 3;
 
 /** Base class for static sequences, contains many abstract functions,
  *  so this can't be instantiated.
@@ -92,7 +93,7 @@ class Sequence : public cds::basic::ReferenceCounted {
 };
 };
 
+// #include <libcds/immutable/wavelettree.h>
 #include <libcds/immutable/wavelettreenoptrs.h>
-#include <libcds/immutable/mapper.h>
 
 #endif  // SRC_IMMUTABLE_SEQUENCE_H_

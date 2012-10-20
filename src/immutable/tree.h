@@ -46,7 +46,7 @@ using cds::basic::cds_word;
 using std::istream;
 using std::ostream;
 
-const cds_word kTreeLOUDSHdr = 2;
+const cds_word kTreeLoudsHdr = 2;
 
 /** Base class for static trees, contains many abstract functions,
  *  so this can't be instantiated.

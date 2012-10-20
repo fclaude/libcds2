@@ -86,47 +86,67 @@ cds_word WaveletTree::GetLength() const {
 }
 
 void WaveletTree::Save(ostream &fp) const {
-  cds_word wr = WVTREE_HDR;
+  cds_word wr = kWTPtrsHdr;
   cds::basic::SaveValue(fp, wr);
   cds::basic::SaveValue(fp, n_);
   coder_->Save(fp);
   am_->Save(fp);
-  root_->Save(fp);
+  // root_->Save(fp);
 }
 
 WaveletTree *WaveletTree::Load(istream &fp) {
-  cds_word rd = cds::basic::LoadValue<cds_word>(fp);
-  if (rd != WVTREE_HDR) {
-    return NULL;
-  }
-  WaveletTree *ret = new WaveletTree();
-  ret->n_ = cds::basic::LoadValue<cds_word>(fp);
-  ret->coder_ = Coder::Load(fp);
-  ret->coder_->Use();
-  assert(ret->coder_ != NULL);
-  ret->am_ = Mapper::Load(fp);
-  ret->am_->Use();
-  assert(ret->am_ != NULL);
-  ret->root_ = WtNode::Load(fp);
-  assert(ret->root_ != NULL);
-  return ret;
+  return NULL;
 }
+//   cds_word rd = cds::basic::LoadValue<cds_word>(fp);
+//   if (rd != kWTPtrsHdr) {
+//     return NULL;
+//   }
+//   WaveletTree *ret = new WaveletTree();
+//   ret->n_ = cds::basic::LoadValue<cds_word>(fp);
+//   ret->coder_ = Coder::Load(fp);
+//   ret->coder_->Use();
+//   assert(ret->coder_ != NULL);
+//   ret->am_ = Mapper::Load(fp);
+//   ret->am_->Use();
+//   assert(ret->am_ != NULL);
+//   // ret->root_ = WtNode::Load(fp);
+//   assert(ret->root_ != NULL);
+//   return ret;
+// }
 
 
 WaveletTree::WtNode *WaveletTree::WtNode::Load(istream &fp) {
-  cds_word rd = cds::basic::LoadValue<cds_word>(fp);
-  if (rd == kWTNodeNullHdr) {
-    return NULL;
-  }
-  cds_word pos = fp.tellg();
-  fp.seekg(pos - sizeof(cds_word));
-  switch (rd) {
-    case kWTNodeInternalHdr:
-      return WtNodeInternal::Load(fp);
-    case kWTNodeLeafHdr:
-      return WtNodeLeaf::Load(fp);
-  }
   return NULL;
 }
+
+WaveletTree::WtNodeInternal *WaveletTree::WtNodeInternal::Load(istream &fp) {
+  return NULL;
+}
+
+WaveletTree::WtNodeLeaf *WaveletTree::WtNodeLeaf::Load(istream &fp) {
+  return NULL;
+}
+
+WaveletTree::WtNodeInternal::WtNodeInternal(const cds::basic::Array *seq, cds_word l,  Coder *c, BitSequence *bmb) {
+
+}
+
+WaveletTree::WtNodeLeaf::WtNodeLeaf(cds_word symbol, cds_word count) {
+
+}
+//   cds_word rd = cds::basic::LoadValue<cds_word>(fp);
+//   if (rd == kWTNodeNullHdr) {
+//     return NULL;
+//   }
+//   cds_word pos = fp.tellg();
+//   fp.seekg(pos - sizeof(cds_word));
+//   switch (rd) {
+//     case kWTNodeInternalHdr:
+//       return WtNodeInternal::Load(fp);
+//     case kWTNodeLeafHdr:
+//       return WtNodeLeaf::Load(fp);
+//   }
+//   return NULL;
+// }
 };
 };

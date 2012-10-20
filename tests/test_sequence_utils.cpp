@@ -33,17 +33,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <libcds/array.h>
 #include <libcds/immutable/sequence.h>
 
-#include <map>
-
 using cds::immutable::Sequence;
 using cds::basic::Array;
 using cds::basic::ArrayTpl;
 using cds::basic::cds_word;
+
+#include <map>
+#include <sstream>
+
+using std::stringbuf;
+using std::ios_base;
+using std::iostream;
 using std::map;
 
 Array *CreateRandomSequence(const cds_word length, const cds_word sigma, unsigned int seed) {
   Array *ret = Array::Create(length, cds::basic::msb(sigma));
-  ret->Use();
   for (cds_word i = 0; i < length; i++) {
     cds_word s = rand_r(&seed) % (sigma + 1);
     ret->SetField(i, s);
@@ -51,9 +55,25 @@ Array *CreateRandomSequence(const cds_word length, const cds_word sigma, unsigne
   return ret;
 }
 
-void TestSequence(Sequence *model, Sequence *tested) {
+void TestSequence(Sequence *model, Sequence *tested, bool save_and_load) {
   cds_word length = model->GetLength();
   cds_word sigma = model->GetSigma();
+
+  if (save_and_load) {
+    cds_word bufflen = sizeof(cds_word) * (length + sigma) * 2;
+    char *buffer = new char[bufflen];
+    stringbuf *sbuf = new stringbuf(ios_base::in | ios_base::out);
+    sbuf->pubsetbuf(buffer, bufflen);
+    iostream io(sbuf);
+
+    tested->Save(io);
+    tested->Unuse();
+    tested = Sequence::Load(io);
+    tested->Use();
+
+    delete sbuf;
+    delete []buffer;
+  }
 
   cds_word rec = tested->GetLength();
   ASSERT_EQ(length, rec) << "Error computing length";

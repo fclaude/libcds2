@@ -46,8 +46,6 @@ namespace immutable {
 using std::ostream;
 using std::istream;
 
-const cds_word kWTNoPtrs = 3;
-
 class WaveletTreeNoPtrs : public Sequence {
   public:
     WaveletTreeNoPtrs(const cds::basic::Array *a,  BitSequenceBuilder *bmb,  Mapper *am);

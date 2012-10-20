@@ -130,17 +130,29 @@ class SimpleSeqAccess : public Sequence {
 TEST(Sequence, SimpleSeqAccess) {
   for (cds_word ind = 0; ind < sigmas; ind++) {
     Array *array = CreateRandomSequence(kLength, sigma[ind], seed_test_sequence);
+    array->Use();
     SimpleSeq *seq1 = new SimpleSeq(array);
+    seq1->Use();
     SimpleSeqAccess *seq2 = new SimpleSeqAccess(array);
-    TestSequence(seq1, seq2);
+    seq2->Use();
+    TestSequence(seq1, seq2, false);
+    seq1->Unuse();
+    seq2->Unuse();
+    array->Unuse();
   }
 }
 
 TEST(WaveletTreeNoPtrs, AgainsSimpleSeq) {
   for (cds_word ind = 0; ind < sigmas; ind++) {
     Array *array = CreateRandomSequence(kLength, sigma[ind], seed_test_sequence);
+    array->Use();
     SimpleSeq *seq1 = new SimpleSeq(array);
+    seq1->Use();
     WaveletTreeNoPtrs *seq2 = new WaveletTreeNoPtrs(array, new BitSequenceBuilderOneLevelRank(20), new MapperNone());
-    TestSequence(seq1, seq2);
+    seq2->Use();
+    TestSequence(seq1, seq2, true);
+    seq1->Unuse();
+    seq2->Unuse();
+    array->Unuse();
   }
 }

@@ -258,7 +258,7 @@ cds_word WaveletTreeNoPtrs::GetLength() const {
 }
 
 void WaveletTreeNoPtrs::Save(ostream &fp) const {
-  SaveValue(fp, kWTNoPtrs);
+  SaveValue(fp, kWTNoPtrsHdr);
   SaveValue(fp, n_);
   SaveValue(fp, max_v_);
   SaveValue(fp, height_);
@@ -271,7 +271,7 @@ void WaveletTreeNoPtrs::Save(ostream &fp) const {
 WaveletTreeNoPtrs *WaveletTreeNoPtrs::Load(istream &fp) {
   cds_word id;
   id = LoadValue<cds_word>(fp);
-  if (id != kWTNoPtrs) {
+  if (id != kWTNoPtrsHdr) {
     return NULL;
   }
   WaveletTreeNoPtrs *ret = new WaveletTreeNoPtrs();

@@ -41,6 +41,6 @@ using cds::basic::cds_word;
 using cds::immutable::Sequence;
 
 Array *CreateRandomSequence(const cds_word length, const cds_word sigma, unsigned int seed);
-void TestSequence(Sequence *model, Sequence *tested);
+void TestSequence(Sequence *model, Sequence *tested, bool save_and_load);
 
 #endif  // TESTS_TEST_SEQUENCE_UTILS_H_

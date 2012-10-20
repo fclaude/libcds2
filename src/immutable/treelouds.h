@@ -48,7 +48,6 @@ using cds::basic::cds_word;
 using std::istream;
 using std::ostream;
 
-
 /** LOUDS implementation.
  *
  *  @author Francisco Claude
@@ -67,6 +66,7 @@ class TreeLouds : public Tree {
     virtual void Save(ostream &fp) const;
     static TreeLouds *Load(istream &fp);
   protected:
+    TreeLouds() {}
     BitSequence *bitmap_;
 };
 };

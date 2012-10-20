@@ -36,11 +36,11 @@ OBJ=	src/basic/array.o \
 		src/immutable/mappernone.o \
 		src/immutable/coder.o \
 		src/immutable/codernone.o \
-		src/immutable/wavelettree.o \
 		src/immutable/permutation.o \
 		src/immutable/permutationmrrr.o \
 		src/immutable/treelouds.o \
-		src/immutable/wavelettreenoptrs.o
+		src/immutable/wavelettreenoptrs.o \
+		src/immutable/tree.o
 
 TESTOBJ= tests/test_main.o \
 		tests/test_array.o \

@@ -31,10 +31,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <gtest/gtest.h>
 #include <libcds/array.h>
-#include <libcds/immutable/treelouds.h>
+#include <libcds/immutable/tree.h>
 #include <libcds/immutable/bitsequence.h>
-#include <libcds/immutable/bitsequenceonelevelrank.h>
 
+using cds::immutable::Tree;
 using cds::immutable::TreeLouds;
 using cds::immutable::BitSequence;
 using cds::immutable::BitSequenceOneLevelRank;
@@ -43,7 +43,13 @@ using cds::basic::ArrayTpl;
 using cds::basic::cds_word;
 
 #include <vector>
+#include <map>
+#include <sstream>
 
+using std::stringbuf;
+using std::ios_base;
+using std::iostream;
+using std::map;
 using std::vector;
 
 BitSequence *createTree() {
@@ -51,17 +57,33 @@ BitSequence *createTree() {
   v[0] = v[1] = v[2] = v[4] = v[6] = v[7] = 1;
   v[9] = v[10] = v[14] = v[15] = 1;
   Array *a = Array::Create(v);
-  // std::cout << "Tree: ";
-  // for (cds_word i = 0; i < a->GetLength(); i++)
-  //   std::cout << a->GetField(i);
-  // std::cout << std::endl;
   return new BitSequenceOneLevelRank(a, 20);
 }
 
-TEST(TreeLouds, Child) {
+Tree *LoadLouds() {
   BitSequence *b = createTree();
-  TreeLouds *t = new TreeLouds(b);
+  Tree *t = new TreeLouds(b);
   t->Use();
+
+  cds_word bufflen = sizeof(cds_word) * 21; // overkill
+  char *buffer = new char[bufflen];
+  stringbuf *sbuf = new stringbuf(ios_base::in | ios_base::out);
+  sbuf->pubsetbuf(buffer, bufflen);
+  iostream io(sbuf);
+
+  t->Save(io);
+  t->Unuse();
+  t = Tree::Load(io);
+  t->Use();
+
+  delete sbuf;
+  delete []buffer;
+
+  return t;
+}
+
+TEST(TreeLouds, Child) {
+  Tree *t = LoadLouds();
   cds_word got, expected;
 
   got = t->Child(3,0);
@@ -108,9 +130,7 @@ TEST(TreeLouds, Child) {
 }
 
 TEST(TreeLouds, Parent) {
-  BitSequence *b = createTree();
-  TreeLouds *t = new TreeLouds(b);
-  t->Use();
+  Tree *t = LoadLouds();
   cds_word got, expected;
 
   got = t->Parent(5);
@@ -157,9 +177,7 @@ TEST(TreeLouds, Parent) {
 }
 
 TEST(TreeLouds, PrevSibling) {
-  BitSequence *b = createTree();
-  TreeLouds *t = new TreeLouds(b);
-  t->Use();
+  Tree *t = LoadLouds();
   cds_word got, expected;
 
   got = t->PrevSibling(5);
@@ -202,9 +220,7 @@ TEST(TreeLouds, PrevSibling) {
 }
 
 TEST(TreeLouds, NextSibling) {
-  BitSequence *b = createTree();
-  TreeLouds *t = new TreeLouds(b);
-  t->Use();
+  Tree *t = LoadLouds();
   cds_word got, expected;
 
   got = t->NextSibling(5);
@@ -247,9 +263,7 @@ TEST(TreeLouds, NextSibling) {
 }
 
 TEST(TreeLouds, Degree) {
-  BitSequence *b = createTree();
-  TreeLouds *t = new TreeLouds(b);
-  t->Use();
+  Tree *t = LoadLouds();
   cds_word got, expected;
 
   got = t->Degree(3);
@@ -300,9 +314,7 @@ TEST(TreeLouds, Degree) {
 }
 
 TEST(TreeLouds, Nodes) {
-  BitSequence *b = createTree();
-  TreeLouds *t = new TreeLouds(b);
-  t->Use();
+  Tree *t = LoadLouds();
   cds_word got, expected;
 
   got = t->GetNodes();

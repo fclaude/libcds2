@@ -108,6 +108,7 @@ WaveletTreeNoPtrs::WaveletTreeNoPtrs(const cds::basic::Array *a, BitSequenceBuil
 
   new_array->Unuse();
   bmb->Unuse();
+  delete []bitmaps;
 }
 
 void WaveletTreeNoPtrs::BuildLevels(Array *new_array, Array **bitmaps, cds_word ini, cds_word fin, cds_word level) {
@@ -150,6 +151,7 @@ WaveletTreeNoPtrs::~WaveletTreeNoPtrs() {
   for (cds_word i = 0; i < height_; i++) {
     level_[i]->Unuse();
   }
+  delete []level_;
   occ_->Unuse();
   am_->Unuse();
 }

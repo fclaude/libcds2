@@ -86,11 +86,11 @@ test: libcds $(TESTOBJ)
 	@echo " [LNK] Linking test_timeh"
 	@$(CPP) $(CPPFLAGS) -o tests/test_timeh tests/test_timeh.cpp tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_bitsequence"
-	@$(CPP) $(CPPFLAGS) -o tests/test_bitsequence tests/test_bitsequence.cpp tests/test_bitsequence_utils.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@$(CPP) $(CPPFLAGS) -o tests/test_bitsequence tests/test_bitsequence.cpp tests/test_bitsequence_utils.cpp tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_bitsequenceonelevelrank"
-	@$(CPP) $(CPPFLAGS) -o tests/test_bitsequenceonelevelrank tests/test_bitsequenceonelevelrank.o tests/test_bitsequence_utils.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@$(CPP) $(CPPFLAGS) -o tests/test_bitsequenceonelevelrank tests/test_bitsequenceonelevelrank.cpp tests/test_bitsequence_utils.cpp tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_sequence"
-	@$(CPP) $(CPPFLAGS) -o tests/test_sequence tests/test_sequence.cpp tests/test_sequence_utils.o tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
+	@$(CPP) $(CPPFLAGS) -o tests/test_sequence tests/test_sequence.cpp tests/test_sequence_utils.cpp tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_mappernone"
 	@$(CPP) $(CPPFLAGS) -o tests/test_mappernone tests/test_mappernone.cpp tests/test_main.o -lpthread $(LIB) $(TEST_INC) $(INC) $(GTEST_DIR)/src/gtest-all.o
 	@echo " [LNK] Linking test_codernone"
@@ -108,7 +108,7 @@ autotest: test
 shared_lib: libcds
 	@mkdir -p tmp
 	@echo " [MSG] Running SWIG"
-	@swig -wall -c++ -go -outdir gocode/src/libcds2/ -o tmp/libcds2_wrap.cxx gocode/libcds.i
+	@swig -wall -c++ -go -intgosize 32 -outdir gocode/src/libcds2/ -o tmp/libcds2_wrap.cxx gocode/libcds.i
 	@echo " [C++] Compiling shared library"
 	@g++ -shared $(CPPFLAGS) -w -o lib/libcds2.so tmp/libcds2_wrap.cxx ./lib/libcds.a
 	@rm -rf tmp
@@ -116,6 +116,10 @@ shared_lib: libcds
 shared_lib_install:
 	@cp ./lib/libcds2.so /usr/lib
 	@echo " [MSG] Library copied to /usr/lib"
+	@mkdir -p /usr/include/libcds2
+	@cp -rf ./includes /usr/include/libcds2
+	@echo " [MSG] Headers copied to /usr/include/libcds2"
+
 
 gotest:
 	@make -C gocode

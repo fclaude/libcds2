@@ -59,6 +59,7 @@ typedef size_t cds_word;
 /** Number of bits in a word in libcds. */
 const cds_word kWordSize = (8 * sizeof(cds_word));
 const cds_word kDoubleWordSize = (16 * sizeof(cds_word));
+const cds_word kPointerSize = 8*sizeof(void*);
 
 /** Number of bytes in a word in libcds. */
 const cds_word kBytesPerWord = (sizeof(cds_word));

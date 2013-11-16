@@ -47,3 +47,4 @@ libtool
 /tests/test_sequence
 /tests/test_timeh
 /tests/test_treelouds
+/include/Makefile

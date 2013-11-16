@@ -16743,7 +16743,7 @@ fi
 done
 
 
-ac_config_files="$ac_config_files Makefile lib/Makefile tests/Makefile"
+ac_config_files="$ac_config_files Makefile lib/Makefile tests/Makefile include/Makefile"
 
 
 
@@ -17867,6 +17867,7 @@ do
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "lib/Makefile") CONFIG_FILES="$CONFIG_FILES lib/Makefile" ;;
     "tests/Makefile") CONFIG_FILES="$CONFIG_FILES tests/Makefile" ;;
+    "include/Makefile") CONFIG_FILES="$CONFIG_FILES include/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

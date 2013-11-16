@@ -14,6 +14,9 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
+
+# This Makefile is the base Makefile of the project and is used to
+# build the entire project.
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
@@ -234,7 +237,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 ACLOCAL_AMFLAGS = -I m4
-SUBDIRS = lib dep/gtest-1.6.0 tests
+SUBDIRS = include lib dep/gtest-1.6.0 tests
 all: all-recursive
 
 .SUFFIXES:

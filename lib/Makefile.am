@@ -1,7 +1,6 @@
+# This Makefile builds the libcds library.
 
-CPP=g++
 AM_CPPFLAGS = -I../include/
-TEST_INC=
 
 lib_LTLIBRARIES = libcds.la
 libcds_la_LDFLAGS = -static -version-info 2:0:0

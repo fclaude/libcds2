@@ -1,5 +1,10 @@
 #                                               -*- Autoconf -*-
-# Process this file with autoconf to produce a configure script.
+# To rebuild the configure script and Makefile.in files (as well as some
+# supporting files mainly in build-aux/ and m4/) run the following
+# command:
+#     autoreconf -vif --no-recursive
+# The last flag is there to prevent autoconf from trying to rebuild
+# the autoconf files in dep/gflags-1.6.0.
 
 m4_include(m4/acx_pthread.m4)
 
@@ -41,6 +46,6 @@ AC_TYPE_UINT8_T
 # Checks for library functions.
 AC_CHECK_FUNCS([gettimeofday select])
 
-AC_CONFIG_FILES([Makefile lib/Makefile tests/Makefile])
+AC_CONFIG_FILES([Makefile lib/Makefile tests/Makefile include/Makefile])
 AC_CONFIG_SUBDIRS([dep/gtest-1.6.0])
 AC_OUTPUT

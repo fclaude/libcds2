@@ -1,3 +1,6 @@
+# This Makefile is used to build and execute the tests when "make check"
+# is run.
+
 AM_CXXFLAGS = @PTHREAD_CFLAGS@ -I../include/ -I../dep/gtest-1.6.0/include/
 AM_LIBS = @PTHREAD_LIBS@
 

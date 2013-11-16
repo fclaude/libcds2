@@ -41,6 +41,6 @@ AC_TYPE_UINT8_T
 # Checks for library functions.
 AC_CHECK_FUNCS([gettimeofday select])
 
-AC_CONFIG_FILES([Makefile lib/Makefile])
+AC_CONFIG_FILES([Makefile lib/Makefile tests/Makefile])
 AC_CONFIG_SUBDIRS([dep/gtest-1.6.0])
 AC_OUTPUT

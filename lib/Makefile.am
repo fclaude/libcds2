@@ -1,6 +1,6 @@
 
 CPP=g++
-AM_CPPFLAGS = -I../include/ -I../dep/gtest-1.6.0/include/
+AM_CPPFLAGS = -I../include/
 TEST_INC=
 
 lib_LTLIBRARIES = libcds.la

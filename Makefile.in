@@ -234,7 +234,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 ACLOCAL_AMFLAGS = -I m4
-SUBDIRS = dep/gtest-1.6.0 lib
+SUBDIRS = lib dep/gtest-1.6.0 tests
 all: all-recursive
 
 .SUFFIXES:

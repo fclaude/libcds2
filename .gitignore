@@ -15,4 +15,5 @@ dep/gtest-1.6.0/test/.deps/
 .DS_Store
 *.dSYM
 .*.swp
+*~
 lib/

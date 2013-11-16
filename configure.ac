@@ -9,8 +9,9 @@ AC_CONFIG_SRCDIR([src/dynamic/memorymanager.h])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([build-aux/config.h])
-
 AM_INIT_AUTOMAKE([1.9 subdir-objects])
+LT_INIT
+AC_SUBST([LIBTOOL_DEPS])
 
 # Checks for programs.
 # If we want to explicitly set this to a different optimization level, this
@@ -21,7 +22,6 @@ AC_PROG_CC
 AC_LANG([C++])
 AC_PROG_INSTALL
 AC_PROG_CPP
-AC_PROG_LIBTOOL
 
 # Checks for libraries.
 ACX_PTHREAD([],

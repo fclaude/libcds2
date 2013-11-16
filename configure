@@ -575,7 +575,7 @@ PACKAGE_STRING='libcds2 2.0'
 PACKAGE_BUGREPORT='fclaude@gmail.com'
 PACKAGE_URL=''
 
-ac_unique_file="src/dynamic/memorymanager.h"
+ac_unique_file="src/basic/array.cpp"
 # Factoring default headers for most tests.
 ac_includes_default="\
 #include <stdio.h>

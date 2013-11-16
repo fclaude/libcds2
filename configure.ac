@@ -5,7 +5,7 @@ m4_include(m4/acx_pthread.m4)
 
 AC_PREREQ([2.68])
 AC_INIT([libcds2], [2.0], [fclaude@gmail.com])
-AC_CONFIG_SRCDIR([src/dynamic/memorymanager.h])
+AC_CONFIG_SRCDIR([src/basic/array.cpp])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([build-aux/config.h])

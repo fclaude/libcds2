@@ -763,7 +763,7 @@ CXX
 CXXFLAGS
 CCC
 CXXCPP'
-ac_subdirs_all='deps/gtest-1.6.0'
+ac_subdirs_all='dep/gtest-1.6.0'
 
 # Initialize some variables set by options.
 ac_init_help=
@@ -16747,7 +16747,7 @@ ac_config_files="$ac_config_files Makefile lib/Makefile"
 
 
 
-subdirs="$subdirs deps/gtest-1.6.0"
+subdirs="$subdirs dep/gtest-1.6.0"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure

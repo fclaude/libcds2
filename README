@@ -33,12 +33,13 @@ Some useful project links are below:
 Guidelines
 ----------
 
+ - If you make changes to autoconf files (configure.ac or Makefile.am files), please rerun autoconf like so: `autoreconf -vif --no-recursive`.
+
  - When you commit, it is useful to give a good message.
 
  - The code tries to follow this style guide [C++ Style Guide][cppstyle].
 
  - Before commiting, please make sure you run all tests and 'make cpplint/indent' to check for style errors.
-
 
 [libcds1]: http://libcds.recoded.cl/
 [devgroup]: http://groups.google.com/group/libcds-dev/

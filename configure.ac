@@ -42,5 +42,5 @@ AC_TYPE_UINT8_T
 AC_CHECK_FUNCS([gettimeofday select])
 
 AC_CONFIG_FILES([Makefile lib/Makefile])
-AC_CONFIG_SUBDIRS([deps/gtest-1.6.0])
+AC_CONFIG_SUBDIRS([dep/gtest-1.6.0])
 AC_OUTPUT

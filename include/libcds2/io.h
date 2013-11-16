@@ -33,8 +33,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef SRC_BASIC_IO_H_
 #define SRC_BASIC_IO_H_
 
-#include <libcds/libcds.h>
-#include <libcds/cdsexception.h>
+#include <libcds2/libcds.h>
+#include <libcds2/cdsexception.h>
 
 #include <vector>
 #include <string>

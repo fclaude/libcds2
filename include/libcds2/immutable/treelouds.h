@@ -1,5 +1,5 @@
 /********************************************************************************
-Copyright (c) 2012, Francisco Claude,Roberto Konow
+Copyright (c) 2012, Francisco Claude.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -29,32 +29,47 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ********************************************************************************/
 
-#ifndef SRC_IMMUTABLE_CODERNONE_H_
-#define SRC_IMMUTABLE_CODERNONE_H_
 
-#include <libcds/immutable/coder.h>
+#ifndef SRC_IMMUTABLE_TREELOUDS_H_
+#define SRC_IMMUTABLE_TREELOUDS_H_
+
+
+#include <libcds2/libcds.h>
+#include <libcds2/io.h>
+#include <libcds2/immutable/bitsequence.h>
+#include <libcds2/immutable/tree.h>
+
+#include <fstream>
 
 namespace cds {
 namespace immutable {
 
 using cds::basic::cds_word;
-using std::ostream;
 using std::istream;
+using std::ostream;
 
-
-
-class CoderNone : public Coder {
+/** LOUDS implementation.
+ *
+ *  @author Francisco Claude
+ */
+class TreeLouds : public Tree {
   public:
-    CoderNone();
-    virtual ~CoderNone() { }
-    virtual void Encode(cds_word symb, cds_word *stream, cds_word *pos) const;
-    virtual cds_word Decode(cds_word *stream, cds_word *pos)  const;
-    virtual cds_word MaxLength() const;
+    TreeLouds(BitSequence *bitmap);
+    virtual ~TreeLouds();
+    virtual cds_word Child(cds_word i, cds_word j) const;
+    virtual cds_word Parent(cds_word i) const;
+    virtual cds_word Degree(cds_word i) const;
+    virtual cds_word NextSibling(cds_word i) const;
+    virtual cds_word PrevSibling(cds_word i) const;
+    virtual cds_word GetNodes() const;
     virtual cds_word GetSize() const;
-    virtual void Save(ostream &output) const;
-    static CoderNone *Load(istream &input);
+    virtual void Save(ostream &fp) const;
+    static TreeLouds *Load(istream &fp);
+  protected:
+    TreeLouds() {}
+    BitSequence *bitmap_;
 };
 };
 };
 
-#endif  // SRC_IMMUTABLE_CODERNONE_H_
+#endif  // SRC_IMMUTABLE_TREELOUDS_H_

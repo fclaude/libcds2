@@ -30,7 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************************/
 
 #include <gtest/gtest.h>
-#include <libcds/immutable/mappernone.h>
+#include <libcds2/immutable/mappernone.h>
 
 using cds::immutable::MapperNone;
 using cds::basic::cds_word;

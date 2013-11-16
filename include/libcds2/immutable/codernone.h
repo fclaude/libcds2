@@ -1,5 +1,5 @@
 /********************************************************************************
-Copyright (c) 2012, Francisco Claude.
+Copyright (c) 2012, Francisco Claude,Roberto Konow
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -29,55 +29,32 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ********************************************************************************/
 
+#ifndef SRC_IMMUTABLE_CODERNONE_H_
+#define SRC_IMMUTABLE_CODERNONE_H_
 
-#ifndef SRC_IMMUTABLE_PERMUTATION_H_
-#define SRC_IMMUTABLE_PERMUTATIOM_H_
-
-
-#include <libcds/libcds.h>
-#include <libcds/io.h>
-
-#include <fstream>
+#include <libcds2/immutable/coder.h>
 
 namespace cds {
 namespace immutable {
 
 using cds::basic::cds_word;
-using std::istream;
 using std::ostream;
+using std::istream;
 
-const cds_word kPermutationMRRRHdr = 2;
 
-/** Base class for static permutations, contains many abstract functions,
- *  so this can't be instantiated.
- *
- *  @author Francisco Claude
- */
-class Permutation : public cds::basic::ReferenceCounted {
+
+class CoderNone : public Coder {
   public:
-    virtual ~Permutation() {}
-
-    /** Retrieves the element at position i. */
-    virtual cds_word Access(cds_word i) const = 0;
-
-    /** Retrieves the inverse for position i. */
-    virtual cds_word Reverse(cds_word i) const = 0;
-
-    /** Returns the length of the permutation */
-    virtual cds_word GetLength() const = 0;
-
-    /** Returns the size of the structure in bytes */
-    virtual cds_word GetSize() const = 0;
-
-    /** Stores the sequence given an output stream. */
-    virtual void Save(ostream &fp) const = 0;
-
-    /** Reads a sequence determining the type. */
-    static Permutation *Load(istream &fp);
+    CoderNone();
+    virtual ~CoderNone() { }
+    virtual void Encode(cds_word symb, cds_word *stream, cds_word *pos) const;
+    virtual cds_word Decode(cds_word *stream, cds_word *pos)  const;
+    virtual cds_word MaxLength() const;
+    virtual cds_word GetSize() const;
+    virtual void Save(ostream &output) const;
+    static CoderNone *Load(istream &input);
 };
 };
 };
 
-#include <libcds/immutable/permutationmrrr.h>
-
-#endif  // SRC_IMMUTABLE_PERMUTATION_H_
+#endif  // SRC_IMMUTABLE_CODERNONE_H_

@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef SRC_BASIC_TIME_H_
 #define SRC_BASIC_TIME_H_
 
-#include <libcds/libcds.h>
+#include <libcds2/libcds.h>
 #include <sys/time.h>
 
 namespace cds {

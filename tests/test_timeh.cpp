@@ -30,7 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************************/
 
 #include <gtest/gtest.h>
-#include <libcds/time.h>
+#include <libcds2/time.h>
 
 #include <algorithm>
 

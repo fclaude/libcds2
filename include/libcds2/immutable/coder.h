@@ -29,34 +29,31 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ********************************************************************************/
 
-#ifndef SRC_IMMUTABLE_MAPPERNONE_H_
-#define SRC_IMMUTABLE_MAPPERNONE_H_
+#ifndef SRC_IMMUTABLE_CODER_H_
+#define SRC_IMMUTABLE_CODER_H_
 
-#include <libcds/libcds.h>
-#include <libcds/io.h>
-#include <libcds/immutable/mapper.h>
+#include <libcds2/libcds.h>
 
 namespace cds {
 namespace immutable {
 
+#define CODER_NONE_HDR 4
+
+using cds::basic::cds_word;
 using std::ostream;
 using std::istream;
 
-/** Mapper that doesn't change the value (identity)
- *
- *  @author Francisco Claude
- */
-class MapperNone : public Mapper {
+class Coder : public cds::basic::ReferenceCounted {
   public:
-    MapperNone();
-    virtual ~MapperNone() {}
-    virtual cds_word Map(cds_word s) const;
-    virtual cds_word Unmap(cds_word s) const;
-    virtual cds_word GetSize() const;
-    virtual void Save(ostream &out) const;
-    static MapperNone *Load(istream &input);
+    Coder();
+    virtual ~Coder() { }
+    virtual void Encode(cds_word symb, cds_word *stream, cds_word *pos) const = 0;
+    virtual cds_word Decode(cds_word *stream, cds_word *pos) const = 0;
+    virtual cds_word MaxLength() const = 0;
+    virtual cds_word GetSize() const = 0;
+    virtual void Save(ostream &output) const = 0;
+    static Coder *Load(istream &input);
 };
 };
 };
-
-#endif  // SRC_IMMUTABLE_MAPPERNONE_H_
+#endif  // SRC_IMMUTABLE_CODER_H_

@@ -29,8 +29,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ********************************************************************************/
 
-#include <libcds/immutable/tree.h>
-#include <libcds/io.h>
+#include <libcds2/immutable/tree.h>
+#include <libcds2/io.h>
 
 namespace cds {
 namespace immutable {

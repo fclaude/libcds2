@@ -31,10 +31,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 #include <gtest/gtest.h>
-#include <libcds/array.h>
-#include <libcds/immutable/bitsequence.h>
-#include <libcds/immutable/bitsequenceseq.h>
-#include <libcds/immutable/bitsequenceonelevelrank.h>
+#include <libcds2/array.h>
+#include <libcds2/immutable/bitsequence.h>
+#include <libcds2/immutable/bitsequenceseq.h>
+#include <libcds2/immutable/bitsequenceonelevelrank.h>
 
 #include <sstream>
 

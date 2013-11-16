@@ -30,14 +30,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************************/
 
 
-#ifndef SRC_IMMUTABLE_TREELOUDS_H_
-#define SRC_IMMUTABLE_TREELOUDS_H_
+#ifndef SRC_IMMUTABLE_PERMUTATION_H_
+#define SRC_IMMUTABLE_PERMUTATIOM_H_
 
 
-#include <libcds/libcds.h>
-#include <libcds/io.h>
-#include <libcds/immutable/bitsequence.h>
-#include <libcds/immutable/tree.h>
+#include <libcds2/libcds.h>
+#include <libcds2/io.h>
 
 #include <fstream>
 
@@ -48,28 +46,38 @@ using cds::basic::cds_word;
 using std::istream;
 using std::ostream;
 
-/** LOUDS implementation.
+const cds_word kPermutationMRRRHdr = 2;
+
+/** Base class for static permutations, contains many abstract functions,
+ *  so this can't be instantiated.
  *
  *  @author Francisco Claude
  */
-class TreeLouds : public Tree {
+class Permutation : public cds::basic::ReferenceCounted {
   public:
-    TreeLouds(BitSequence *bitmap);
-    virtual ~TreeLouds();
-    virtual cds_word Child(cds_word i, cds_word j) const;
-    virtual cds_word Parent(cds_word i) const;
-    virtual cds_word Degree(cds_word i) const;
-    virtual cds_word NextSibling(cds_word i) const;
-    virtual cds_word PrevSibling(cds_word i) const;
-    virtual cds_word GetNodes() const;
-    virtual cds_word GetSize() const;
-    virtual void Save(ostream &fp) const;
-    static TreeLouds *Load(istream &fp);
-  protected:
-    TreeLouds() {}
-    BitSequence *bitmap_;
+    virtual ~Permutation() {}
+
+    /** Retrieves the element at position i. */
+    virtual cds_word Access(cds_word i) const = 0;
+
+    /** Retrieves the inverse for position i. */
+    virtual cds_word Reverse(cds_word i) const = 0;
+
+    /** Returns the length of the permutation */
+    virtual cds_word GetLength() const = 0;
+
+    /** Returns the size of the structure in bytes */
+    virtual cds_word GetSize() const = 0;
+
+    /** Stores the sequence given an output stream. */
+    virtual void Save(ostream &fp) const = 0;
+
+    /** Reads a sequence determining the type. */
+    static Permutation *Load(istream &fp);
 };
 };
 };
 
-#endif  // SRC_IMMUTABLE_TREELOUDS_H_
+#include <libcds2/immutable/permutationmrrr.h>
+
+#endif  // SRC_IMMUTABLE_PERMUTATION_H_

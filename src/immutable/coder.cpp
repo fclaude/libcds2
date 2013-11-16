@@ -28,9 +28,9 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ********************************************************************************/
-#include <libcds/immutable/coder.h>
-#include <libcds/immutable/codernone.h>
-#include <libcds/io.h>
+#include <libcds2/immutable/coder.h>
+#include <libcds2/immutable/codernone.h>
+#include <libcds2/io.h>
 
 using cds::basic::cds_word;
 using std::ostream;

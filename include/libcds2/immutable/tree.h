@@ -1,5 +1,5 @@
 /********************************************************************************
-Copyright (c) 2012, Francisco Claude,Roberto Konow
+Copyright (c) 2012, Francisco Claude.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -29,25 +29,64 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ********************************************************************************/
 
-#include <libcds2/immutable/mapper.h>
-#include <libcds2/immutable/mappernone.h>
+
+#ifndef SRC_IMMUTABLE_TREE_H_
+#define SRC_IMMUTABLE_TREE_H_
+
+
+#include <libcds2/libcds.h>
 #include <libcds2/io.h>
+
+#include <fstream>
 
 namespace cds {
 namespace immutable {
 
-Mapper::Mapper() { }
+using cds::basic::cds_word;
+using std::istream;
+using std::ostream;
 
-Mapper *Mapper::Load(istream &input) {
-  cds_word rd = cds::basic::LoadValue<cds_word>(input);
-  cds_word pos = input.tellg();
-  input.seekg(pos - sizeof(cds_word));
-  switch (rd) {
-    case MAPPER_NONE_HDR:
-      return MapperNone::Load(input);
-      // case MAPPER_CONT_HDR: return MapperCont::Load(input);
-  }
-  return NULL;
-}
+const cds_word kTreeLoudsHdr = 2;
+
+/** Base class for static trees, contains many abstract functions,
+ *  so this can't be instantiated.
+ *
+ *  @author Francisco Claude
+ */
+class Tree : public cds::basic::ReferenceCounted {
+  public:
+    virtual ~Tree() {}
+
+    /** Retrieves the j-th child of node id i. */
+    virtual cds_word Child(cds_word i, cds_word j) const = 0;
+
+    /** Retrieves the id of i's parent. */
+    virtual cds_word Parent(cds_word i) const = 0;
+
+    /** Computes the degree of a node */
+    virtual cds_word Degree(cds_word i) const = 0;
+
+    /** Retrieves the id of the next sibling (or (cds_word)-1 if such node does not exist */
+    virtual cds_word NextSibling(cds_word i) const = 0;
+
+    /** Retrieves the id of the previous sibling (or (cds_word)-1 if such node does not exist */
+    virtual cds_word PrevSibling(cds_word i) const = 0;
+
+    /** Returns the number of nodes */
+    virtual cds_word GetNodes() const = 0;
+
+    /** Returns the size of the structure in bytes */
+    virtual cds_word GetSize() const = 0;
+
+    /** Stores the sequence given an output stream. */
+    virtual void Save(ostream &fp) const = 0;
+
+    /** Reads a sequence determining the type. */
+    static Tree *Load(istream &fp);
 };
 };
+};
+
+#include <libcds2/immutable/treelouds.h>
+
+#endif  // SRC_IMMUTABLE_TREE_H_

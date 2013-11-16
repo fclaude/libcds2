@@ -34,9 +34,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SRC_IMMUTABLE_BITSEQUENCE_H_
 
 
-#include <libcds/libcds.h>
-#include <libcds/io.h>
-#include <libcds/array.h>
+#include <libcds2/libcds.h>
+#include <libcds2/io.h>
+#include <libcds2/array.h>
 
 
 #include <fstream>
@@ -145,6 +145,6 @@ public:
 };
 };
 
-#include <libcds/immutable/bitsequenceonelevelrank.h>
+#include <libcds2/immutable/bitsequenceonelevelrank.h>
 
 #endif  // SRC_IMMUTABLE_BITSEQUENCE_H_

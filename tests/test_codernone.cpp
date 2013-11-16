@@ -30,7 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************************/
 
 #include <gtest/gtest.h>
-#include <libcds/immutable/codernone.h>
+#include <libcds2/immutable/codernone.h>
 
 using cds::immutable::CoderNone;
 using cds::basic::cds_word;

@@ -32,9 +32,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef TESTS_TEST_BITSEQUENCE_UTILS_H_
 #define TESTS_TEST_BITSEQUENCE_UTILS_H_
 
-#include <libcds/libcds.h>
-#include <libcds/array.h>
-#include <libcds/immutable/bitsequence.h>
+#include <libcds2/libcds.h>
+#include <libcds2/array.h>
+#include <libcds2/immutable/bitsequence.h>
 
 using cds::basic::Array;
 using cds::basic::cds_word;

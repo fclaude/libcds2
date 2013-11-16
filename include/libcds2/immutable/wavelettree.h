@@ -32,13 +32,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef SRC_IMMUTABLE_WAVELETTREE_H_
 #define SRC_IMMUTABLE_WAVELETTREE_H_
 
-#include <libcds/io.h>
-#include <libcds/libcds.h>
-#include <libcds/array.h>
-#include <libcds/immutable/coder.h>
-#include <libcds/immutable/mapper.h>
-#include <libcds/immutable/sequence.h>
-#include <libcds/immutable/bitsequence.h>
+#include <libcds2/io.h>
+#include <libcds2/libcds.h>
+#include <libcds2/array.h>
+#include <libcds2/immutable/coder.h>
+#include <libcds2/immutable/mapper.h>
+#include <libcds2/immutable/sequence.h>
+#include <libcds2/immutable/bitsequence.h>
 
 namespace cds {
 namespace immutable {

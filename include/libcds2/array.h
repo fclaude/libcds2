@@ -33,9 +33,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef SRC_BASIC_ARRAY_H_
 #define SRC_BASIC_ARRAY_H_
 
-#include <libcds/libcds.h>
-#include <libcds/io.h>
-// #include <libcds/immutable/bitsequenceonelevelrank.h>
+#include <libcds2/libcds.h>
+#include <libcds2/io.h>
+// #include <libcds2/immutable/bitsequenceonelevelrank.h>
 
 #include <algorithm>
 #include <fstream>

@@ -29,8 +29,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ********************************************************************************/
 
-#include <libcds/immutable/codernone.h>
-#include <libcds/io.h>
+#include <libcds2/immutable/codernone.h>
+#include <libcds2/io.h>
 
 using cds::basic::kWordSize;
 

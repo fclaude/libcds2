@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ********************************************************************************/
 
-#include <libcds/immutable/bitsequenceseq.h>
+#include <libcds2/immutable/bitsequenceseq.h>
 
 namespace cds {
 namespace immutable {

@@ -1,13 +1,13 @@
 %module libcds2
 %{ 
-    #include <libcds/immutable/mapper.h>
-    #include <libcds/immutable/mappernone.h>
-    #include <libcds/immutable/coder.h>
-    #include <libcds/immutable/codernone.h>
-    #include <libcds/immutable/bitsequence.h>
-	#include <libcds/immutable/bitsequenceonelevelrank.h>
-    #include <libcds/libcds.h>
-    #include <libcds/array.h>
+    #include <libcds2/immutable/mapper.h>
+    #include <libcds2/immutable/mappernone.h>
+    #include <libcds2/immutable/coder.h>
+    #include <libcds2/immutable/codernone.h>
+    #include <libcds2/immutable/bitsequence.h>
+	#include <libcds2/immutable/bitsequenceonelevelrank.h>
+    #include <libcds2/libcds.h>
+    #include <libcds2/array.h>
     #include <iostream>
     using namespace std;
 %}

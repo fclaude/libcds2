@@ -1,5 +1,5 @@
 /********************************************************************************
-Copyright (c) 2012, Francisco Claude,Roberto Konow
+Copyright (c) 2012, Francisco Claude
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -29,40 +29,51 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ********************************************************************************/
 
-#ifndef SRC_IMMUTABLE_MAPPER_H_
-#define SRC_IMMUTABLE_MAPPER_H_
+#ifndef SRC_IMMUTABLE_WAVELETTREENOPTRS_H_
+#define SRC_IMMUTABLE_WAVELETTREENOPTRS_H_
 
-#include <libcds/libcds.h>
-#include <libcds/io.h>
+#include <libcds2/libcds.h>
+#include <libcds2/array.h>
+#include <libcds2/immutable/mapper.h>
+#include <libcds2/immutable/sequence.h>
+#include <libcds2/immutable/bitsequence.h>
+
+#include <fstream>
 
 namespace cds {
 namespace immutable {
 
-using cds::basic::cds_word;
 using std::ostream;
 using std::istream;
 
-#define MAPPER_NONE_HDR 2
-#define MAPPER_CONT_HDR 3
-
-class Mapper : public cds::basic::ReferenceCounted {
+class WaveletTreeNoPtrs : public Sequence {
   public:
-    Mapper();
-    virtual ~Mapper() {}
-    /** Maps the symbol */
-    virtual cds_word Map(cds_word s) const = 0;
-    /** Unmaps the symbol */
-    virtual cds_word Unmap(cds_word s) const = 0;
-    /** Returns the size of the mapper */
-    virtual cds_word GetSize()  const = 0;
-    /** Saves the mapper to a file */
-    virtual void Save(ostream &out) const = 0;
-    /** Loads the mapper from a file */
-    static Mapper *Load(istream &input);
+    WaveletTreeNoPtrs(const cds::basic::Array *a,  BitSequenceBuilder *bmb,  Mapper *am);
+    virtual ~WaveletTreeNoPtrs();
+    virtual cds_word Access(cds_word pos) const;
+    // virtual cds_word Access(cds_word pos, cds_word *rank) const;
+    virtual cds_word Rank(cds_word symbol, cds_word pos) const;
+    virtual cds_word Select(cds_word symbol, cds_word j) const;
+    virtual cds_word Count(cds_word symbol) const;
+    virtual cds_word GetSigma() const;
+    virtual cds_word GetLength() const;
+    virtual cds_word GetSize() const;
+    virtual void Save(ostream &fp) const;
+    static WaveletTreeNoPtrs *Load(istream &fp);
+
+  protected:
+
+    WaveletTreeNoPtrs() {}
+    BitSequence **level_;
+    cds_word height_;
+    Mapper *am_;
+    cds_word n_;
+    cds_word max_v_;
+    Array *occ_;
+
+    void BuildLevels(Array *new_array, Array **bitmaps, cds_word ini, cds_word fin, cds_word level);
 };
 };
 };
 
-#include <libcds/immutable/mappernone.h>
-
-#endif  // SRC_IMMUTABLE_MAPPER_H_
+#endif  // SRC_IMMUTABLE_WAVELETTREENOPTRS_H_

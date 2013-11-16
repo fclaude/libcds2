@@ -30,7 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************************/
 
 #include <gtest/gtest.h>
-#include <libcds/dynamic/memorymanager.h>
+#include <libcds2/dynamic/memorymanager.h>
 
 using cds::dynamic::MemoryManager;
 using cds::dynamic::MemoryAddress;

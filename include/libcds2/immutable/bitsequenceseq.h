@@ -1,5 +1,5 @@
 /********************************************************************************
-Copyright (c) 2012, Francisco Claude
+Copyright (c) 2012, Francisco Claude.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -29,51 +29,59 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ********************************************************************************/
 
-#ifndef SRC_IMMUTABLE_WAVELETTREENOPTRS_H_
-#define SRC_IMMUTABLE_WAVELETTREENOPTRS_H_
 
-#include <libcds/libcds.h>
-#include <libcds/array.h>
-#include <libcds/immutable/mapper.h>
-#include <libcds/immutable/sequence.h>
-#include <libcds/immutable/bitsequence.h>
+#ifndef SRC_IMMUTABLE_BITSEQUENCESEQ_H_
+#define SRC_IMMUTABLE_BITSEQUENCESEQ_H_
+
+
+#include <libcds2/libcds.h>
+#include <libcds2/io.h>
+#include <libcds2/array.h>
+#include <libcds2/immutable/bitsequence.h>
+
 
 #include <fstream>
 
 namespace cds {
 namespace immutable {
 
-using std::ostream;
+using cds::basic::cds_word;
+using cds::basic::Array;
 using std::istream;
+using std::ostream;
 
-class WaveletTreeNoPtrs : public Sequence {
+/** Base class for static bitsequences, contains many abstract functions,
+ *  so this can't be instantiated. It includes base implementations for
+ *  rank0, select0 and select1 based on rank0.
+ *
+ *  @author Francisco Claude
+ */
+class BitSequenceSeq : public BitSequence {
   public:
-    WaveletTreeNoPtrs(const cds::basic::Array *a,  BitSequenceBuilder *bmb,  Mapper *am);
-    virtual ~WaveletTreeNoPtrs();
-    virtual cds_word Access(cds_word pos) const;
-    // virtual cds_word Access(cds_word pos, cds_word *rank) const;
-    virtual cds_word Rank(cds_word symbol, cds_word pos) const;
-    virtual cds_word Select(cds_word symbol, cds_word j) const;
-    virtual cds_word Count(cds_word symbol) const;
-    virtual cds_word GetSigma() const;
+    explicit BitSequenceSeq(Array *array);
+    virtual ~BitSequenceSeq();
+    virtual cds_word Rank0(const cds_word i) const;
+    virtual cds_word Rank0(const cds_word i, bool *access) const;
+    virtual cds_word Select0(const cds_word i) const;
+    virtual cds_word Rank1(const cds_word i) const;
+    virtual cds_word Rank1(const cds_word i, bool *access) const;
+    virtual cds_word Select1(const cds_word i) const;
+    virtual cds_word SelectNext1(const cds_word i) const;
+    virtual cds_word SelectNext0(const cds_word i) const;
+    virtual cds_word SelectPrev1(const cds_word i) const;
+    virtual cds_word SelectPrev0(const cds_word i) const;
+    virtual bool Access(const cds_word i) const;
     virtual cds_word GetLength() const;
+    virtual cds_word CountOnes() const;
+    virtual cds_word CountZeros() const;
     virtual cds_word GetSize() const;
     virtual void Save(ostream &fp) const;
-    static WaveletTreeNoPtrs *Load(istream &fp);
+    static BitSequence *Load(istream &fp);
 
   protected:
-
-    WaveletTreeNoPtrs() {}
-    BitSequence **level_;
-    cds_word height_;
-    Mapper *am_;
-    cds_word n_;
-    cds_word max_v_;
-    Array *occ_;
-
-    void BuildLevels(Array *new_array, Array **bitmaps, cds_word ini, cds_word fin, cds_word level);
+    Array *array_;
 };
 };
 };
 
-#endif  // SRC_IMMUTABLE_WAVELETTREENOPTRS_H_
+#endif  // SRC_IMMUTABLE_BITSEQUENCESEQ_H_

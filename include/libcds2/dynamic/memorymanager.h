@@ -32,8 +32,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _MEMORYMANAGER_H
 #define _MEMORYMANAGER_H
 
-#include <libcds/libcds.h>
-#include <libcds/cdsexception.h>
+#include <libcds2/libcds.h>
+#include <libcds2/cdsexception.h>
 #include <cassert>
 
 using cds::basic::cds_word;

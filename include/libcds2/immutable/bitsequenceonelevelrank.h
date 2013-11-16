@@ -34,10 +34,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SRC_IMMUTABLE_BITSEQUENCEONELEVELRANK_H_
 
 
-#include <libcds/array.h>
-#include <libcds/libcds.h>
-#include <libcds/io.h>
-#include <libcds/immutable/bitsequence.h>
+#include <libcds2/array.h>
+#include <libcds2/libcds.h>
+#include <libcds2/io.h>
+#include <libcds2/immutable/bitsequence.h>
 
 #include <fstream>
 

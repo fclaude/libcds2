@@ -14,7 +14,6 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
-
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
@@ -34,8 +33,9 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = test_ioh$(EXEEXT) test_libcdsh$(EXEEXT) \
-	test_timeh$(EXEEXT) test_bitsequence$(EXEEXT) \
+check_PROGRAMS = test_array$(EXEEXT) test_ioh$(EXEEXT) \
+	test_libcdsh$(EXEEXT) test_timeh$(EXEEXT) \
+	test_bitsequence$(EXEEXT) \
 	test_bitsequenceonelevelrank$(EXEEXT) test_sequence$(EXEEXT) \
 	test_mappernone$(EXEEXT) test_codernone$(EXEEXT) \
 	test_permutationmrrr$(EXEEXT) test_treelouds$(EXEEXT) \
@@ -53,64 +53,76 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/build-aux/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am__installdirs = "$(DESTDIR)$(bindir)"
-PROGRAMS = $(bin_PROGRAMS)
-am_test_bitsequence_OBJECTS = test_bitsequence.$(OBJEXT)
+am_test_array_OBJECTS = test_array.$(OBJEXT) test_main.$(OBJEXT)
+test_array_OBJECTS = $(am_test_array_OBJECTS)
+test_array_LDADD = $(LDADD)
+test_array_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
+	../lib/libcds.la
+am_test_bitsequence_OBJECTS = test_bitsequence.$(OBJEXT) \
+	test_bitsequence_utils.$(OBJEXT) test_main.$(OBJEXT)
 test_bitsequence_OBJECTS = $(am_test_bitsequence_OBJECTS)
 test_bitsequence_LDADD = $(LDADD)
-test_bitsequence_DEPENDENCIES = test_main.o \
-	../dep/gtest-1.6.0/src/gtest-all.o
+test_bitsequence_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
+	../lib/libcds.la
 am_test_bitsequenceonelevelrank_OBJECTS =  \
-	test_bitsequenceonelevelrank.$(OBJEXT)
+	test_bitsequenceonelevelrank.$(OBJEXT) \
+	test_bitsequence_utils.$(OBJEXT) test_main.$(OBJEXT)
 test_bitsequenceonelevelrank_OBJECTS =  \
 	$(am_test_bitsequenceonelevelrank_OBJECTS)
 test_bitsequenceonelevelrank_LDADD = $(LDADD)
-test_bitsequenceonelevelrank_DEPENDENCIES = test_main.o \
-	../dep/gtest-1.6.0/src/gtest-all.o
-am_test_codernone_OBJECTS = test_codernone.$(OBJEXT)
+test_bitsequenceonelevelrank_DEPENDENCIES =  \
+	../dep/gtest-1.6.0/lib/libgtest.la ../lib/libcds.la
+am_test_codernone_OBJECTS = test_codernone.$(OBJEXT) \
+	test_main.$(OBJEXT)
 test_codernone_OBJECTS = $(am_test_codernone_OBJECTS)
 test_codernone_LDADD = $(LDADD)
-test_codernone_DEPENDENCIES = test_main.o \
-	../dep/gtest-1.6.0/src/gtest-all.o
-am_test_ioh_OBJECTS = test_ioh.$(OBJEXT)
+test_codernone_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
+	../lib/libcds.la
+am_test_ioh_OBJECTS = test_ioh.$(OBJEXT) test_main.$(OBJEXT)
 test_ioh_OBJECTS = $(am_test_ioh_OBJECTS)
 test_ioh_LDADD = $(LDADD)
-test_ioh_DEPENDENCIES = test_main.o ../dep/gtest-1.6.0/src/gtest-all.o
-am_test_libcdsh_OBJECTS = test_libcdsh.$(OBJEXT)
+test_ioh_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
+	../lib/libcds.la
+am_test_libcdsh_OBJECTS = test_libcdsh.$(OBJEXT) test_main.$(OBJEXT)
 test_libcdsh_OBJECTS = $(am_test_libcdsh_OBJECTS)
 test_libcdsh_LDADD = $(LDADD)
-test_libcdsh_DEPENDENCIES = test_main.o \
-	../dep/gtest-1.6.0/src/gtest-all.o
-am_test_mappernone_OBJECTS = test_mappernone.$(OBJEXT)
+test_libcdsh_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
+	../lib/libcds.la
+am_test_mappernone_OBJECTS = test_mappernone.$(OBJEXT) \
+	test_main.$(OBJEXT)
 test_mappernone_OBJECTS = $(am_test_mappernone_OBJECTS)
 test_mappernone_LDADD = $(LDADD)
-test_mappernone_DEPENDENCIES = test_main.o \
-	../dep/gtest-1.6.0/src/gtest-all.o
-am_test_memorymanager_OBJECTS = test_memorymanager.$(OBJEXT)
+test_mappernone_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
+	../lib/libcds.la
+am_test_memorymanager_OBJECTS = test_memorymanager.$(OBJEXT) \
+	test_main.$(OBJEXT)
 test_memorymanager_OBJECTS = $(am_test_memorymanager_OBJECTS)
 test_memorymanager_LDADD = $(LDADD)
-test_memorymanager_DEPENDENCIES = test_main.o \
-	../dep/gtest-1.6.0/src/gtest-all.o
-am_test_permutationmrrr_OBJECTS = test_permutationmrrr.$(OBJEXT)
+test_memorymanager_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
+	../lib/libcds.la
+am_test_permutationmrrr_OBJECTS = test_permutationmrrr.$(OBJEXT) \
+	test_main.$(OBJEXT)
 test_permutationmrrr_OBJECTS = $(am_test_permutationmrrr_OBJECTS)
 test_permutationmrrr_LDADD = $(LDADD)
-test_permutationmrrr_DEPENDENCIES = test_main.o \
-	../dep/gtest-1.6.0/src/gtest-all.o
-am_test_sequence_OBJECTS = test_sequence.$(OBJEXT)
+test_permutationmrrr_DEPENDENCIES =  \
+	../dep/gtest-1.6.0/lib/libgtest.la ../lib/libcds.la
+am_test_sequence_OBJECTS = test_sequence.$(OBJEXT) \
+	test_sequence_utils.$(OBJEXT) test_main.$(OBJEXT)
 test_sequence_OBJECTS = $(am_test_sequence_OBJECTS)
 test_sequence_LDADD = $(LDADD)
-test_sequence_DEPENDENCIES = test_main.o \
-	../dep/gtest-1.6.0/src/gtest-all.o
-am_test_timeh_OBJECTS = test_timeh.$(OBJEXT)
+test_sequence_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
+	../lib/libcds.la
+am_test_timeh_OBJECTS = test_timeh.$(OBJEXT) test_main.$(OBJEXT)
 test_timeh_OBJECTS = $(am_test_timeh_OBJECTS)
 test_timeh_LDADD = $(LDADD)
-test_timeh_DEPENDENCIES = test_main.o \
-	../dep/gtest-1.6.0/src/gtest-all.o
-am_test_treelouds_OBJECTS = test_treelouds.$(OBJEXT)
+test_timeh_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
+	../lib/libcds.la
+am_test_treelouds_OBJECTS = test_treelouds.$(OBJEXT) \
+	test_main.$(OBJEXT)
 test_treelouds_OBJECTS = $(am_test_treelouds_OBJECTS)
 test_treelouds_LDADD = $(LDADD)
-test_treelouds_DEPENDENCIES = test_main.o \
-	../dep/gtest-1.6.0/src/gtest-all.o
+test_treelouds_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
+	../lib/libcds.la
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/build-aux
 depcomp = $(SHELL) $(top_srcdir)/build-aux/depcomp
 am__depfiles_maybe = depfiles
@@ -124,14 +136,14 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(test_bitsequence_SOURCES) \
+SOURCES = $(test_array_SOURCES) $(test_bitsequence_SOURCES) \
 	$(test_bitsequenceonelevelrank_SOURCES) \
 	$(test_codernone_SOURCES) $(test_ioh_SOURCES) \
 	$(test_libcdsh_SOURCES) $(test_mappernone_SOURCES) \
 	$(test_memorymanager_SOURCES) $(test_permutationmrrr_SOURCES) \
 	$(test_sequence_SOURCES) $(test_timeh_SOURCES) \
 	$(test_treelouds_SOURCES)
-DIST_SOURCES = $(test_bitsequence_SOURCES) \
+DIST_SOURCES = $(test_array_SOURCES) $(test_bitsequence_SOURCES) \
 	$(test_bitsequenceonelevelrank_SOURCES) \
 	$(test_codernone_SOURCES) $(test_ioh_SOURCES) \
 	$(test_libcdsh_SOURCES) $(test_mappernone_SOURCES) \
@@ -140,6 +152,8 @@ DIST_SOURCES = $(test_bitsequence_SOURCES) \
 	$(test_treelouds_SOURCES)
 ETAGS = etags
 CTAGS = ctags
+am__tty_colors = \
+red=; grn=; lgn=; blu=; std=
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -178,7 +192,7 @@ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
-LIBS = "$PTHREAD_LIBS -lcds"
+LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
 LIBTOOL_DEPS = @LIBTOOL_DEPS@
 LIPO = @LIPO@
@@ -265,21 +279,28 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-AM_CPPFLAGS = -I../include/ -I../dep/gtest-1.6.0/include/
-TEST_SRC = test_main.cpp ../dep/gtest-1.6.0/src/gtest-all.cc
-LDADD = test_main.o ../dep/gtest-1.6.0/src/gtest-all.o
-test_array_SOURCES = test_array.cpp
-test_ioh_SOURCES = test_ioh.cpp
-test_libcdsh_SOURCES = test_libcdsh.cpp
-test_timeh_SOURCES = test_timeh.cpp
-test_bitsequence_SOURCES = test_bitsequence.cpp
-test_bitsequenceonelevelrank_SOURCES = test_bitsequenceonelevelrank.cpp
-test_sequence_SOURCES = test_sequence.cpp
-test_mappernone_SOURCES = test_mappernone.cpp
-test_codernone_SOURCES = test_codernone.cpp
-test_permutationmrrr_SOURCES = test_permutationmrrr.cpp
-test_treelouds_SOURCES = test_treelouds.cpp
-test_memorymanager_SOURCES = test_memorymanager.cpp
+AM_CXXFLAGS = @PTHREAD_CFLAGS@ -I../include/ -I../dep/gtest-1.6.0/include/
+AM_LIBS = @PTHREAD_LIBS@
+LDADD = ../dep/gtest-1.6.0/lib/libgtest.la ../lib/libcds.la
+test_array_SOURCES = test_array.cpp test_main.cpp
+test_ioh_SOURCES = test_ioh.cpp test_main.cpp
+test_libcdsh_SOURCES = test_libcdsh.cpp test_main.cpp
+test_timeh_SOURCES = test_timeh.cpp test_main.cpp
+test_bitsequence_SOURCES = test_bitsequence.cpp \
+				       test_bitsequence_utils.cpp test_main.cpp
+
+test_bitsequenceonelevelrank_SOURCES = test_bitsequenceonelevelrank.cpp \
+				       test_bitsequence_utils.cpp test_main.cpp
+
+test_sequence_SOURCES = test_sequence.cpp \
+				       test_sequence_utils.cpp test_main.cpp
+
+test_mappernone_SOURCES = test_mappernone.cpp test_main.cpp
+test_codernone_SOURCES = test_codernone.cpp test_main.cpp
+test_permutationmrrr_SOURCES = test_permutationmrrr.cpp test_main.cpp
+test_treelouds_SOURCES = test_treelouds.cpp test_main.cpp
+test_memorymanager_SOURCES = test_memorymanager.cpp test_main.cpp
+TESTS = $(check_PROGRAMS)
 all: all-am
 
 .SUFFIXES:
@@ -314,49 +335,18 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
-install-binPROGRAMS: $(bin_PROGRAMS)
-	@$(NORMAL_INSTALL)
-	test -z "$(bindir)" || $(MKDIR_P) "$(DESTDIR)$(bindir)"
-	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
-	for p in $$list; do echo "$$p $$p"; done | \
-	sed 's/$(EXEEXT)$$//' | \
-	while read p p1; do if test -f $$p || test -f $$p1; \
-	  then echo "$$p"; echo "$$p"; else :; fi; \
-	done | \
-	sed -e 'p;s,.*/,,;n;h' -e 's|.*|.|' \
-	    -e 'p;x;s,.*/,,;s/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/' | \
-	sed 'N;N;N;s,\n, ,g' | \
-	$(AWK) 'BEGIN { files["."] = ""; dirs["."] = 1 } \
-	  { d=$$3; if (dirs[d] != 1) { print "d", d; dirs[d] = 1 } \
-	    if ($$2 == $$4) files[d] = files[d] " " $$1; \
-	    else { print "f", $$3 "/" $$4, $$1; } } \
-	  END { for (d in files) print "f", d, files[d] }' | \
-	while read type dir files; do \
-	    if test "$$dir" = .; then dir=; else dir=/$$dir; fi; \
-	    test -z "$$files" || { \
-	    echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL_PROGRAM) $$files '$(DESTDIR)$(bindir)$$dir'"; \
-	    $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL_PROGRAM) $$files "$(DESTDIR)$(bindir)$$dir" || exit $$?; \
-	    } \
-	; done
 
-uninstall-binPROGRAMS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
-	files=`for p in $$list; do echo "$$p"; done | \
-	  sed -e 'h;s,^.*/,,;s/$(EXEEXT)$$//;$(transform)' \
-	      -e 's/$$/$(EXEEXT)/' `; \
-	test -n "$$list" || exit 0; \
-	echo " ( cd '$(DESTDIR)$(bindir)' && rm -f" $$files ")"; \
-	cd "$(DESTDIR)$(bindir)" && rm -f $$files
-
-clean-binPROGRAMS:
-	@list='$(bin_PROGRAMS)'; test -n "$$list" || exit 0; \
+clean-checkPROGRAMS:
+	@list='$(check_PROGRAMS)'; test -n "$$list" || exit 0; \
 	echo " rm -f" $$list; \
 	rm -f $$list || exit $$?; \
 	test -n "$(EXEEXT)" || exit 0; \
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
+test_array$(EXEEXT): $(test_array_OBJECTS) $(test_array_DEPENDENCIES) $(EXTRA_test_array_DEPENDENCIES) 
+	@rm -f test_array$(EXEEXT)
+	$(CXXLINK) $(test_array_OBJECTS) $(test_array_LDADD) $(LIBS)
 test_bitsequence$(EXEEXT): $(test_bitsequence_OBJECTS) $(test_bitsequence_DEPENDENCIES) $(EXTRA_test_bitsequence_DEPENDENCIES) 
 	@rm -f test_bitsequence$(EXEEXT)
 	$(CXXLINK) $(test_bitsequence_OBJECTS) $(test_bitsequence_LDADD) $(LIBS)
@@ -397,15 +387,19 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_array.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_bitsequence.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_bitsequence_utils.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_bitsequenceonelevelrank.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_codernone.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_ioh.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_libcdsh.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_mappernone.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_memorymanager.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_permutationmrrr.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_sequence.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_sequence_utils.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_timeh.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_treelouds.Po@am__quote@
 
@@ -491,6 +485,99 @@ GTAGS:
 distclean-tags:
 	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
 
+check-TESTS: $(TESTS)
+	@failed=0; all=0; xfail=0; xpass=0; skip=0; \
+	srcdir=$(srcdir); export srcdir; \
+	list=' $(TESTS) '; \
+	$(am__tty_colors); \
+	if test -n "$$list"; then \
+	  for tst in $$list; do \
+	    if test -f ./$$tst; then dir=./; \
+	    elif test -f $$tst; then dir=; \
+	    else dir="$(srcdir)/"; fi; \
+	    if $(TESTS_ENVIRONMENT) $${dir}$$tst; then \
+	      all=`expr $$all + 1`; \
+	      case " $(XFAIL_TESTS) " in \
+	      *[\ \	]$$tst[\ \	]*) \
+		xpass=`expr $$xpass + 1`; \
+		failed=`expr $$failed + 1`; \
+		col=$$red; res=XPASS; \
+	      ;; \
+	      *) \
+		col=$$grn; res=PASS; \
+	      ;; \
+	      esac; \
+	    elif test $$? -ne 77; then \
+	      all=`expr $$all + 1`; \
+	      case " $(XFAIL_TESTS) " in \
+	      *[\ \	]$$tst[\ \	]*) \
+		xfail=`expr $$xfail + 1`; \
+		col=$$lgn; res=XFAIL; \
+	      ;; \
+	      *) \
+		failed=`expr $$failed + 1`; \
+		col=$$red; res=FAIL; \
+	      ;; \
+	      esac; \
+	    else \
+	      skip=`expr $$skip + 1`; \
+	      col=$$blu; res=SKIP; \
+	    fi; \
+	    echo "$${col}$$res$${std}: $$tst"; \
+	  done; \
+	  if test "$$all" -eq 1; then \
+	    tests="test"; \
+	    All=""; \
+	  else \
+	    tests="tests"; \
+	    All="All "; \
+	  fi; \
+	  if test "$$failed" -eq 0; then \
+	    if test "$$xfail" -eq 0; then \
+	      banner="$$All$$all $$tests passed"; \
+	    else \
+	      if test "$$xfail" -eq 1; then failures=failure; else failures=failures; fi; \
+	      banner="$$All$$all $$tests behaved as expected ($$xfail expected $$failures)"; \
+	    fi; \
+	  else \
+	    if test "$$xpass" -eq 0; then \
+	      banner="$$failed of $$all $$tests failed"; \
+	    else \
+	      if test "$$xpass" -eq 1; then passes=pass; else passes=passes; fi; \
+	      banner="$$failed of $$all $$tests did not behave as expected ($$xpass unexpected $$passes)"; \
+	    fi; \
+	  fi; \
+	  dashes="$$banner"; \
+	  skipped=""; \
+	  if test "$$skip" -ne 0; then \
+	    if test "$$skip" -eq 1; then \
+	      skipped="($$skip test was not run)"; \
+	    else \
+	      skipped="($$skip tests were not run)"; \
+	    fi; \
+	    test `echo "$$skipped" | wc -c` -le `echo "$$banner" | wc -c` || \
+	      dashes="$$skipped"; \
+	  fi; \
+	  report=""; \
+	  if test "$$failed" -ne 0 && test -n "$(PACKAGE_BUGREPORT)"; then \
+	    report="Please report to $(PACKAGE_BUGREPORT)"; \
+	    test `echo "$$report" | wc -c` -le `echo "$$banner" | wc -c` || \
+	      dashes="$$report"; \
+	  fi; \
+	  dashes=`echo "$$dashes" | sed s/./=/g`; \
+	  if test "$$failed" -eq 0; then \
+	    col="$$grn"; \
+	  else \
+	    col="$$red"; \
+	  fi; \
+	  echo "$${col}$$dashes$${std}"; \
+	  echo "$${col}$$banner$${std}"; \
+	  test -z "$$skipped" || echo "$${col}$$skipped$${std}"; \
+	  test -z "$$report" || echo "$${col}$$report$${std}"; \
+	  echo "$${col}$$dashes$${std}"; \
+	  test "$$failed" -eq 0; \
+	else :; fi
+
 distdir: $(DISTFILES)
 	@srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
@@ -522,12 +609,11 @@ distdir: $(DISTFILES)
 	  fi; \
 	done
 check-am: all-am
+	$(MAKE) $(AM_MAKEFLAGS) $(check_PROGRAMS)
+	$(MAKE) $(AM_MAKEFLAGS) check-TESTS
 check: check-am
-all-am: Makefile $(PROGRAMS)
+all-am: Makefile
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)"; do \
-	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
-	done
 install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
@@ -560,7 +646,8 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-binPROGRAMS clean-generic clean-libtool mostlyclean-am
+clean-am: clean-checkPROGRAMS clean-generic clean-libtool \
+	mostlyclean-am
 
 distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
@@ -586,7 +673,7 @@ install-dvi: install-dvi-am
 
 install-dvi-am:
 
-install-exec-am: install-binPROGRAMS
+install-exec-am:
 
 install-html: install-html-am
 
@@ -626,27 +713,24 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-binPROGRAMS
+uninstall-am:
 
-.MAKE: install-am install-strip
+.MAKE: check-am install-am install-strip
 
-.PHONY: CTAGS GTAGS all all-am check check-am clean clean-binPROGRAMS \
-	clean-generic clean-libtool ctags distclean distclean-compile \
-	distclean-generic distclean-libtool distclean-tags distdir dvi \
-	dvi-am html html-am info info-am install install-am \
-	install-binPROGRAMS install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am install-man \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags uninstall uninstall-am \
-	uninstall-binPROGRAMS
+.PHONY: CTAGS GTAGS all all-am check check-TESTS check-am clean \
+	clean-checkPROGRAMS clean-generic clean-libtool ctags \
+	distclean distclean-compile distclean-generic \
+	distclean-libtool distclean-tags distdir dvi dvi-am html \
+	html-am info info-am install install-am install-data \
+	install-data-am install-dvi install-dvi-am install-exec \
+	install-exec-am install-html install-html-am install-info \
+	install-info-am install-man install-pdf install-pdf-am \
+	install-ps install-ps-am install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags uninstall uninstall-am
 
-
-test_main.o: test_main.cpp
-	$(CXXCOMPILE) test_main.cpp
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

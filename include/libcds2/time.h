@@ -35,6 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <libcds2/libcds.h>
 #include <sys/time.h>
+#include <sys/resource.h>
 
 namespace cds {
 namespace basic {

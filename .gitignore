@@ -4,6 +4,7 @@
 *.la
 *.lo
 *.o
+*.core
 dep/gtest-1.6.0/Makefile
 dep/gtest-1.6.0/build-aux/config.h
 dep/gtest-1.6.0/build-aux/stamp-h1

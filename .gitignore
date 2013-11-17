@@ -50,3 +50,4 @@ libtool
 /tests/test_timeh
 /tests/test_treelouds
 /include/Makefile
+cds*.pc

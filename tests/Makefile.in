@@ -60,13 +60,13 @@ am_test_array_OBJECTS = test_array.$(OBJEXT) test_main.$(OBJEXT)
 test_array_OBJECTS = $(am_test_array_OBJECTS)
 test_array_LDADD = $(LDADD)
 test_array_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
-	../lib/libcds.la
+	../lib/libcds$(CDS_API_VERSION).la
 am_test_bitsequence_OBJECTS = test_bitsequence.$(OBJEXT) \
 	test_bitsequence_utils.$(OBJEXT) test_main.$(OBJEXT)
 test_bitsequence_OBJECTS = $(am_test_bitsequence_OBJECTS)
 test_bitsequence_LDADD = $(LDADD)
 test_bitsequence_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
-	../lib/libcds.la
+	../lib/libcds$(CDS_API_VERSION).la
 am_test_bitsequenceonelevelrank_OBJECTS =  \
 	test_bitsequenceonelevelrank.$(OBJEXT) \
 	test_bitsequence_utils.$(OBJEXT) test_main.$(OBJEXT)
@@ -74,58 +74,60 @@ test_bitsequenceonelevelrank_OBJECTS =  \
 	$(am_test_bitsequenceonelevelrank_OBJECTS)
 test_bitsequenceonelevelrank_LDADD = $(LDADD)
 test_bitsequenceonelevelrank_DEPENDENCIES =  \
-	../dep/gtest-1.6.0/lib/libgtest.la ../lib/libcds.la
+	../dep/gtest-1.6.0/lib/libgtest.la \
+	../lib/libcds$(CDS_API_VERSION).la
 am_test_codernone_OBJECTS = test_codernone.$(OBJEXT) \
 	test_main.$(OBJEXT)
 test_codernone_OBJECTS = $(am_test_codernone_OBJECTS)
 test_codernone_LDADD = $(LDADD)
 test_codernone_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
-	../lib/libcds.la
+	../lib/libcds$(CDS_API_VERSION).la
 am_test_ioh_OBJECTS = test_ioh.$(OBJEXT) test_main.$(OBJEXT)
 test_ioh_OBJECTS = $(am_test_ioh_OBJECTS)
 test_ioh_LDADD = $(LDADD)
 test_ioh_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
-	../lib/libcds.la
+	../lib/libcds$(CDS_API_VERSION).la
 am_test_libcdsh_OBJECTS = test_libcdsh.$(OBJEXT) test_main.$(OBJEXT)
 test_libcdsh_OBJECTS = $(am_test_libcdsh_OBJECTS)
 test_libcdsh_LDADD = $(LDADD)
 test_libcdsh_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
-	../lib/libcds.la
+	../lib/libcds$(CDS_API_VERSION).la
 am_test_mappernone_OBJECTS = test_mappernone.$(OBJEXT) \
 	test_main.$(OBJEXT)
 test_mappernone_OBJECTS = $(am_test_mappernone_OBJECTS)
 test_mappernone_LDADD = $(LDADD)
 test_mappernone_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
-	../lib/libcds.la
+	../lib/libcds$(CDS_API_VERSION).la
 am_test_memorymanager_OBJECTS = test_memorymanager.$(OBJEXT) \
 	test_main.$(OBJEXT)
 test_memorymanager_OBJECTS = $(am_test_memorymanager_OBJECTS)
 test_memorymanager_LDADD = $(LDADD)
 test_memorymanager_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
-	../lib/libcds.la
+	../lib/libcds$(CDS_API_VERSION).la
 am_test_permutationmrrr_OBJECTS = test_permutationmrrr.$(OBJEXT) \
 	test_main.$(OBJEXT)
 test_permutationmrrr_OBJECTS = $(am_test_permutationmrrr_OBJECTS)
 test_permutationmrrr_LDADD = $(LDADD)
 test_permutationmrrr_DEPENDENCIES =  \
-	../dep/gtest-1.6.0/lib/libgtest.la ../lib/libcds.la
+	../dep/gtest-1.6.0/lib/libgtest.la \
+	../lib/libcds$(CDS_API_VERSION).la
 am_test_sequence_OBJECTS = test_sequence.$(OBJEXT) \
 	test_sequence_utils.$(OBJEXT) test_main.$(OBJEXT)
 test_sequence_OBJECTS = $(am_test_sequence_OBJECTS)
 test_sequence_LDADD = $(LDADD)
 test_sequence_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
-	../lib/libcds.la
+	../lib/libcds$(CDS_API_VERSION).la
 am_test_timeh_OBJECTS = test_timeh.$(OBJEXT) test_main.$(OBJEXT)
 test_timeh_OBJECTS = $(am_test_timeh_OBJECTS)
 test_timeh_LDADD = $(LDADD)
 test_timeh_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
-	../lib/libcds.la
+	../lib/libcds$(CDS_API_VERSION).la
 am_test_treelouds_OBJECTS = test_treelouds.$(OBJEXT) \
 	test_main.$(OBJEXT)
 test_treelouds_OBJECTS = $(am_test_treelouds_OBJECTS)
 test_treelouds_LDADD = $(LDADD)
 test_treelouds_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
-	../lib/libcds.la
+	../lib/libcds$(CDS_API_VERSION).la
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/build-aux
 depcomp = $(SHELL) $(top_srcdir)/build-aux/depcomp
 am__depfiles_maybe = depfiles
@@ -167,6 +169,8 @@ AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
+CDS_API_VERSION = @CDS_API_VERSION@
+CDS_SO_VERSION = @CDS_SO_VERSION@
 CFLAGS = @CFLAGS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
@@ -282,9 +286,9 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-AM_CXXFLAGS = @PTHREAD_CFLAGS@ -I../include/ -I../dep/gtest-1.6.0/include/
-AM_LIBS = @PTHREAD_LIBS@
-LDADD = ../dep/gtest-1.6.0/lib/libgtest.la ../lib/libcds.la
+AM_CXXFLAGS = $(PTHREAD_CFLAGS) -I../include/ -I../dep/gtest-1.6.0/include/
+AM_LIBS = $(PTHREAD_LIBS)
+LDADD = ../dep/gtest-1.6.0/lib/libgtest.la ../lib/libcds$(CDS_API_VERSION).la
 test_array_SOURCES = test_array.cpp test_main.cpp
 test_ioh_SOURCES = test_ioh.cpp test_main.cpp
 test_libcdsh_SOURCES = test_libcdsh.cpp test_main.cpp

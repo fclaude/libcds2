@@ -78,10 +78,10 @@ am__uninstall_files_from_dir = { \
   }
 am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libcds_la_LIBADD =
+libcds@CDS_API_VERSION@_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
-am_libcds_la_OBJECTS = ../src/basic/array.lo ../src/basic/io.lo \
-	../src/immutable/bitsequence.lo \
+am_libcds@CDS_API_VERSION@_la_OBJECTS = ../src/basic/array.lo \
+	../src/basic/io.lo ../src/immutable/bitsequence.lo \
 	../src/immutable/bitsequenceseq.lo \
 	../src/immutable/bitsequenceonelevelrank.lo \
 	../src/immutable/sequence.lo ../src/immutable/mapper.lo \
@@ -90,10 +90,12 @@ am_libcds_la_OBJECTS = ../src/basic/array.lo ../src/basic/io.lo \
 	../src/immutable/permutationmrrr.lo \
 	../src/immutable/treelouds.lo \
 	../src/immutable/wavelettreenoptrs.lo ../src/immutable/tree.lo
-libcds_la_OBJECTS = $(am_libcds_la_OBJECTS)
-libcds_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
-	$(CXXFLAGS) $(libcds_la_LDFLAGS) $(LDFLAGS) -o $@
+libcds@CDS_API_VERSION@_la_OBJECTS =  \
+	$(am_libcds@CDS_API_VERSION@_la_OBJECTS)
+libcds@CDS_API_VERSION@_la_LINK = $(LIBTOOL) --tag=CXX \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(AM_CXXFLAGS) $(CXXFLAGS) \
+	$(libcds@CDS_API_VERSION@_la_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/build-aux
 depcomp = $(SHELL) $(top_srcdir)/build-aux/depcomp
 am__depfiles_maybe = depfiles
@@ -107,8 +109,8 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(libcds_la_SOURCES)
-DIST_SOURCES = $(libcds_la_SOURCES)
+SOURCES = $(libcds@CDS_API_VERSION@_la_SOURCES)
+DIST_SOURCES = $(libcds@CDS_API_VERSION@_la_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -121,6 +123,8 @@ AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
+CDS_API_VERSION = @CDS_API_VERSION@
+CDS_SO_VERSION = @CDS_SO_VERSION@
 CFLAGS = @CFLAGS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
@@ -237,23 +241,24 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AM_CPPFLAGS = -I../include/
-lib_LTLIBRARIES = libcds.la
-libcds_la_LDFLAGS = -version-info 2:0:0
-libcds_la_SOURCES = ../src/basic/array.cpp \
-		    ../src/basic/io.cpp \
-		    ../src/immutable/bitsequence.cpp \
-		    ../src/immutable/bitsequenceseq.cpp \
-		    ../src/immutable/bitsequenceonelevelrank.cpp \
-		    ../src/immutable/sequence.cpp \
-		    ../src/immutable/mapper.cpp \
-		    ../src/immutable/mappernone.cpp \
-		    ../src/immutable/coder.cpp \
-		    ../src/immutable/codernone.cpp \
-		    ../src/immutable/permutation.cpp \
-		    ../src/immutable/permutationmrrr.cpp \
-		    ../src/immutable/treelouds.cpp \
-		    ../src/immutable/wavelettreenoptrs.cpp \
-		    ../src/immutable/tree.cpp
+lib_LTLIBRARIES = libcds@CDS_API_VERSION@.la
+libcds@CDS_API_VERSION@_la_LDFLAGS = -version-info $(CDS_SO_VERSION)
+libcds@CDS_API_VERSION@_la_SOURCES = \
+    ../src/basic/array.cpp \
+    ../src/basic/io.cpp \
+    ../src/immutable/bitsequence.cpp \
+    ../src/immutable/bitsequenceseq.cpp \
+    ../src/immutable/bitsequenceonelevelrank.cpp \
+    ../src/immutable/sequence.cpp \
+    ../src/immutable/mapper.cpp \
+    ../src/immutable/mappernone.cpp \
+    ../src/immutable/coder.cpp \
+    ../src/immutable/codernone.cpp \
+    ../src/immutable/permutation.cpp \
+    ../src/immutable/permutationmrrr.cpp \
+    ../src/immutable/treelouds.cpp \
+    ../src/immutable/wavelettreenoptrs.cpp \
+    ../src/immutable/tree.cpp
 
 all: all-am
 
@@ -364,8 +369,8 @@ clean-libLTLIBRARIES:
 	../src/immutable/$(DEPDIR)/$(am__dirstamp)
 ../src/immutable/tree.lo: ../src/immutable/$(am__dirstamp) \
 	../src/immutable/$(DEPDIR)/$(am__dirstamp)
-libcds.la: $(libcds_la_OBJECTS) $(libcds_la_DEPENDENCIES) $(EXTRA_libcds_la_DEPENDENCIES) 
-	$(libcds_la_LINK) -rpath $(libdir) $(libcds_la_OBJECTS) $(libcds_la_LIBADD) $(LIBS)
+libcds@CDS_API_VERSION@.la: $(libcds@CDS_API_VERSION@_la_OBJECTS) $(libcds@CDS_API_VERSION@_la_DEPENDENCIES) $(EXTRA_libcds@CDS_API_VERSION@_la_DEPENDENCIES) 
+	$(libcds@CDS_API_VERSION@_la_LINK) -rpath $(libdir) $(libcds@CDS_API_VERSION@_la_OBJECTS) $(libcds@CDS_API_VERSION@_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)

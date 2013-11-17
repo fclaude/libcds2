@@ -1,12 +1,12 @@
 # This Makefile is used to build and execute the tests when "make check"
 # is run.
 
-AM_CXXFLAGS = @PTHREAD_CFLAGS@ -I../include/ -I../dep/gtest-1.6.0/include/
-AM_LIBS = @PTHREAD_LIBS@
+AM_CXXFLAGS = $(PTHREAD_CFLAGS) -I../include/ -I../dep/gtest-1.6.0/include/
+AM_LIBS = $(PTHREAD_LIBS)
 
 check_PROGRAMS = test_array test_ioh test_libcdsh test_timeh test_bitsequence test_bitsequenceonelevelrank test_sequence test_mappernone test_codernone test_permutationmrrr test_treelouds test_memorymanager
 
-LDADD = ../dep/gtest-1.6.0/lib/libgtest.la ../lib/libcds.la
+LDADD = ../dep/gtest-1.6.0/lib/libgtest.la ../lib/libcds$(CDS_API_VERSION).la
 test_array_SOURCES                   = test_array.cpp test_main.cpp
 test_ioh_SOURCES                     = test_ioh.cpp test_main.cpp
 test_libcdsh_SOURCES                 = test_libcdsh.cpp test_main.cpp

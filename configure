@@ -569,11 +569,11 @@ MAKEFLAGS=
 
 # Identity of this package.
 PACKAGE_NAME='libcds2'
-PACKAGE_TARNAME='libcds2'
+PACKAGE_TARNAME='cds2'
 PACKAGE_VERSION='2.0'
 PACKAGE_STRING='libcds2 2.0'
 PACKAGE_BUGREPORT='fclaude@gmail.com'
-PACKAGE_URL=''
+PACKAGE_URL='https://github.com/fclaude/libcds2'
 
 ac_unique_file="src/basic/array.cpp"
 # Factoring default headers for most tests.
@@ -629,6 +629,8 @@ CXXDEPMODE
 ac_ct_CXX
 CXXFLAGS
 CXX
+CDS_API_VERSION
+CDS_SO_VERSION
 LIBTOOL_DEPS
 CPP
 OTOOL64
@@ -1353,7 +1355,7 @@ Fine tuning of the installation directories:
   --infodir=DIR           info documentation [DATAROOTDIR/info]
   --localedir=DIR         locale-dependent data [DATAROOTDIR/locale]
   --mandir=DIR            man documentation [DATAROOTDIR/man]
-  --docdir=DIR            documentation root [DATAROOTDIR/doc/libcds2]
+  --docdir=DIR            documentation root [DATAROOTDIR/doc/cds2]
   --htmldir=DIR           html documentation [DOCDIR]
   --dvidir=DIR            dvi documentation [DOCDIR]
   --pdfdir=DIR            pdf documentation [DOCDIR]
@@ -1417,6 +1419,7 @@ Use these variables to override the choices made by `configure' or to help
 it to find libraries and programs with nonstandard names/locations.
 
 Report bugs to <fclaude@gmail.com>.
+libcds2 home page: <https://github.com/fclaude/libcds2>.
 _ACEOF
 ac_status=$?
 fi
@@ -2961,7 +2964,7 @@ fi
 
 
 # Define the identity of the package.
- PACKAGE='libcds2'
+ PACKAGE='cds2'
  VERSION='2.0'
 
 
@@ -11580,6 +11583,10 @@ CC="$lt_save_CC"
 
 
 
+CDS_SO_VERSION=2:0:0
+
+CDS_API_VERSION=2
+
 
 # Checks for programs.
 # If we want to explicitly set this to a different optimization level, this
@@ -16741,7 +16748,7 @@ fi
 done
 
 
-ac_config_files="$ac_config_files Makefile lib/Makefile tests/Makefile include/Makefile"
+ac_config_files="$ac_config_files Makefile lib/Makefile tests/Makefile include/Makefile cds${CDS_API_VERSION}.pc:cds.pc.in"
 
 
 
@@ -17349,7 +17356,8 @@ $config_headers
 Configuration commands:
 $config_commands
 
-Report bugs to <fclaude@gmail.com>."
+Report bugs to <fclaude@gmail.com>.
+libcds2 home page: <https://github.com/fclaude/libcds2>."
 
 _ACEOF
 cat >>$CONFIG_STATUS <<_ACEOF || ac_write_fail=1
@@ -17866,6 +17874,7 @@ do
     "lib/Makefile") CONFIG_FILES="$CONFIG_FILES lib/Makefile" ;;
     "tests/Makefile") CONFIG_FILES="$CONFIG_FILES tests/Makefile" ;;
     "include/Makefile") CONFIG_FILES="$CONFIG_FILES include/Makefile" ;;
+    "cds${CDS_API_VERSION}.pc") CONFIG_FILES="$CONFIG_FILES cds${CDS_API_VERSION}.pc:cds.pc.in" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

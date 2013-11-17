@@ -51,3 +51,7 @@ libtool
 /tests/test_treelouds
 /include/Makefile
 cds*.pc
+/dep/gtest-stamp
+/dep/gtest-1.6.0/CMakeCache.txt
+*.cmake
+/dep/gtest-1.6.0/CMakeFiles

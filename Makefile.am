@@ -3,4 +3,7 @@
 
 ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = include lib dep/gtest-1.6.0 tests
+SUBDIRS = include lib dep tests
+
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = cds$(CDS_API_VERSION).pc

@@ -3,7 +3,7 @@
 AM_CPPFLAGS = -I../include/
 
 lib_LTLIBRARIES = libcds.la
-libcds_la_LDFLAGS = -static -version-info 2:0:0
+libcds_la_LDFLAGS = -version-info 2:0:0
 libcds_la_SOURCES = ../src/basic/array.cpp \
 		    ../src/basic/io.cpp \
 		    ../src/immutable/bitsequence.cpp \

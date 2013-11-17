@@ -15,7 +15,7 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([build-aux/config.h])
 AM_INIT_AUTOMAKE([1.9 subdir-objects])
-LT_INIT
+LT_INIT([shared static])
 AC_SUBST([LIBTOOL_DEPS])
 
 # Checks for programs.

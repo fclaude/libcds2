@@ -5,7 +5,7 @@ Build tools:
 
     autoreconf -vif --no-recursive
 
-Portability:
+Portability (last fully checked in commit 87434a0):
 
   Ubuntu 12.04 (x86_64):
     no issues.
@@ -30,3 +30,9 @@ Portability:
     * [ RUN      ] Fields.AllBits
       Segmentation fault (core dumped) 
       FAIL: test_libcdsh
+
+  Solaris 11 (i386):
+    The same tests fail as in OpenBSD, but also make check ends with
+    an error which might just be a known-ish autoconf issue:
+      make: Fatal error: Command failed for target `check-TESTS'
+

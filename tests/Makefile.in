@@ -61,6 +61,9 @@ test_array_OBJECTS = $(am_test_array_OBJECTS)
 test_array_LDADD = $(LDADD)
 test_array_DEPENDENCIES = ../dep/gtest-1.6.0/lib/libgtest.la \
 	../lib/libcds$(CDS_API_VERSION).la
+AM_V_lt = $(am__v_lt_@AM_V@)
+am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
+am__v_lt_0 = --silent
 am_test_bitsequence_OBJECTS = test_bitsequence.$(OBJEXT) \
 	test_bitsequence_utils.$(OBJEXT) test_main.$(OBJEXT)
 test_bitsequence_OBJECTS = $(am_test_bitsequence_OBJECTS)
@@ -134,13 +137,26 @@ am__depfiles_maybe = depfiles
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
-LTCXXCOMPILE = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+LTCXXCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CXXFLAGS) $(CXXFLAGS)
+AM_V_CXX = $(am__v_CXX_@AM_V@)
+am__v_CXX_ = $(am__v_CXX_@AM_DEFAULT_V@)
+am__v_CXX_0 = @echo "  CXX   " $@;
+AM_V_at = $(am__v_at_@AM_V@)
+am__v_at_ = $(am__v_at_@AM_DEFAULT_V@)
+am__v_at_0 = @
 CXXLD = $(CXX)
-CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+CXXLINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
+am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
+am__v_CXXLD_0 = @echo "  CXXLD " $@;
+AM_V_GEN = $(am__v_GEN_@AM_V@)
+am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
+am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(test_array_SOURCES) $(test_bitsequence_SOURCES) \
 	$(test_bitsequenceonelevelrank_SOURCES) \
 	$(test_codernone_SOURCES) $(test_ioh_SOURCES) \
@@ -162,6 +178,7 @@ red=; grn=; lgn=; blu=; std=
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
+AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -353,40 +370,40 @@ clean-checkPROGRAMS:
 	rm -f $$list
 test_array$(EXEEXT): $(test_array_OBJECTS) $(test_array_DEPENDENCIES) $(EXTRA_test_array_DEPENDENCIES) 
 	@rm -f test_array$(EXEEXT)
-	$(CXXLINK) $(test_array_OBJECTS) $(test_array_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(test_array_OBJECTS) $(test_array_LDADD) $(LIBS)
 test_bitsequence$(EXEEXT): $(test_bitsequence_OBJECTS) $(test_bitsequence_DEPENDENCIES) $(EXTRA_test_bitsequence_DEPENDENCIES) 
 	@rm -f test_bitsequence$(EXEEXT)
-	$(CXXLINK) $(test_bitsequence_OBJECTS) $(test_bitsequence_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(test_bitsequence_OBJECTS) $(test_bitsequence_LDADD) $(LIBS)
 test_bitsequenceonelevelrank$(EXEEXT): $(test_bitsequenceonelevelrank_OBJECTS) $(test_bitsequenceonelevelrank_DEPENDENCIES) $(EXTRA_test_bitsequenceonelevelrank_DEPENDENCIES) 
 	@rm -f test_bitsequenceonelevelrank$(EXEEXT)
-	$(CXXLINK) $(test_bitsequenceonelevelrank_OBJECTS) $(test_bitsequenceonelevelrank_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(test_bitsequenceonelevelrank_OBJECTS) $(test_bitsequenceonelevelrank_LDADD) $(LIBS)
 test_codernone$(EXEEXT): $(test_codernone_OBJECTS) $(test_codernone_DEPENDENCIES) $(EXTRA_test_codernone_DEPENDENCIES) 
 	@rm -f test_codernone$(EXEEXT)
-	$(CXXLINK) $(test_codernone_OBJECTS) $(test_codernone_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(test_codernone_OBJECTS) $(test_codernone_LDADD) $(LIBS)
 test_ioh$(EXEEXT): $(test_ioh_OBJECTS) $(test_ioh_DEPENDENCIES) $(EXTRA_test_ioh_DEPENDENCIES) 
 	@rm -f test_ioh$(EXEEXT)
-	$(CXXLINK) $(test_ioh_OBJECTS) $(test_ioh_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(test_ioh_OBJECTS) $(test_ioh_LDADD) $(LIBS)
 test_libcdsh$(EXEEXT): $(test_libcdsh_OBJECTS) $(test_libcdsh_DEPENDENCIES) $(EXTRA_test_libcdsh_DEPENDENCIES) 
 	@rm -f test_libcdsh$(EXEEXT)
-	$(CXXLINK) $(test_libcdsh_OBJECTS) $(test_libcdsh_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(test_libcdsh_OBJECTS) $(test_libcdsh_LDADD) $(LIBS)
 test_mappernone$(EXEEXT): $(test_mappernone_OBJECTS) $(test_mappernone_DEPENDENCIES) $(EXTRA_test_mappernone_DEPENDENCIES) 
 	@rm -f test_mappernone$(EXEEXT)
-	$(CXXLINK) $(test_mappernone_OBJECTS) $(test_mappernone_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(test_mappernone_OBJECTS) $(test_mappernone_LDADD) $(LIBS)
 test_memorymanager$(EXEEXT): $(test_memorymanager_OBJECTS) $(test_memorymanager_DEPENDENCIES) $(EXTRA_test_memorymanager_DEPENDENCIES) 
 	@rm -f test_memorymanager$(EXEEXT)
-	$(CXXLINK) $(test_memorymanager_OBJECTS) $(test_memorymanager_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(test_memorymanager_OBJECTS) $(test_memorymanager_LDADD) $(LIBS)
 test_permutationmrrr$(EXEEXT): $(test_permutationmrrr_OBJECTS) $(test_permutationmrrr_DEPENDENCIES) $(EXTRA_test_permutationmrrr_DEPENDENCIES) 
 	@rm -f test_permutationmrrr$(EXEEXT)
-	$(CXXLINK) $(test_permutationmrrr_OBJECTS) $(test_permutationmrrr_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(test_permutationmrrr_OBJECTS) $(test_permutationmrrr_LDADD) $(LIBS)
 test_sequence$(EXEEXT): $(test_sequence_OBJECTS) $(test_sequence_DEPENDENCIES) $(EXTRA_test_sequence_DEPENDENCIES) 
 	@rm -f test_sequence$(EXEEXT)
-	$(CXXLINK) $(test_sequence_OBJECTS) $(test_sequence_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(test_sequence_OBJECTS) $(test_sequence_LDADD) $(LIBS)
 test_timeh$(EXEEXT): $(test_timeh_OBJECTS) $(test_timeh_DEPENDENCIES) $(EXTRA_test_timeh_DEPENDENCIES) 
 	@rm -f test_timeh$(EXEEXT)
-	$(CXXLINK) $(test_timeh_OBJECTS) $(test_timeh_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(test_timeh_OBJECTS) $(test_timeh_LDADD) $(LIBS)
 test_treelouds$(EXEEXT): $(test_treelouds_OBJECTS) $(test_treelouds_DEPENDENCIES) $(EXTRA_test_treelouds_DEPENDENCIES) 
 	@rm -f test_treelouds$(EXEEXT)
-	$(CXXLINK) $(test_treelouds_OBJECTS) $(test_treelouds_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(test_treelouds_OBJECTS) $(test_treelouds_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -411,28 +428,28 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_treelouds.Po@am__quote@
 
 .cpp.o:
-@am__fastdepCXX_TRUE@	depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
 @am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ $<
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ $<
 
 .cpp.obj:
-@am__fastdepCXX_TRUE@	depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.obj$$||'`;\
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.obj$$||'`;\
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ `$(CYGPATH_W) '$<'` &&\
 @am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
 .cpp.lo:
-@am__fastdepCXX_TRUE@	depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.lo$$||'`;\
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.lo$$||'`;\
 @am__fastdepCXX_TRUE@	$(LTCXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
 @am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
 
 mostlyclean-libtool:
 	-rm -f *.lo

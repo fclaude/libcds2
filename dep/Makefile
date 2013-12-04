@@ -22,17 +22,17 @@ mostlyclean:
 .PHONY: clean
 clean:
 	@cd $(GTEST_DIR) && $(MAKE) clean
-	@rm gtest-stamp
+	@rm -f gtest-stamp
 
 .PHONY: distclean
 distclean:
 	@cd $(GTEST_DIR) && $(MAKE) distclean || $(MAKE) clean
-	@rm gtest-stamp
+	@rm -f gtest-stamp
 
 .PHONY: maintainer-clean
 maintainer-clean:
 	@cd $(GTEST_DIR) && $(MAKE) maintainer-clean || $(MAKE) clean
-	@rm gtest-stamp
+	@rm -f gtest-stamp
 
 
 EMPTY_AUTOMAKE_TARGETS = dvi pdf ps info html tags ctags distdir install install-data install-exec uninstall install-dvi install-html install-info install-ps install-pdf installdirs

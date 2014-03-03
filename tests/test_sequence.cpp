@@ -30,8 +30,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************************/
 
 #include <gtest/gtest.h>
-#include <libcds/array.h>
-#include <libcds/immutable/sequence.h>
+#include <libcds2/array.h>
+#include <libcds2/immutable/sequence.h>
 
 #include "./test_sequence_utils.h"
 

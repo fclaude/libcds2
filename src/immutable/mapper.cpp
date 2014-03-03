@@ -29,9 +29,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ********************************************************************************/
 
-#include <libcds/immutable/mapper.h>
-#include <libcds/immutable/mappernone.h>
-#include <libcds/io.h>
+#include <libcds2/immutable/mapper.h>
+#include <libcds2/immutable/mappernone.h>
+#include <libcds2/io.h>
 
 namespace cds {
 namespace immutable {

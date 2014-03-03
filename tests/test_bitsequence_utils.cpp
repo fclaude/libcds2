@@ -30,8 +30,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************************/
 
 #include <gtest/gtest.h>
-#include <libcds/array.h>
-#include <libcds/immutable/bitsequence.h>
+#include <libcds2/array.h>
+#include <libcds2/immutable/bitsequence.h>
 
 using cds::immutable::BitSequence;
 using cds::basic::Array;

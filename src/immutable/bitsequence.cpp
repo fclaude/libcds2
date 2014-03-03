@@ -30,10 +30,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************************/
 
 
-#include <libcds/immutable/bitsequence.h>
-#include <libcds/immutable/bitsequenceonelevelrank.h>
-#include <libcds/cdsexception.h>
-#include <libcds/io.h>
+#include <libcds2/immutable/bitsequence.h>
+#include <libcds2/immutable/bitsequenceonelevelrank.h>
+#include <libcds2/cdsexception.h>
+#include <libcds2/io.h>
 
 namespace cds {
 namespace immutable {

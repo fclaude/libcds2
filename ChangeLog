@@ -1,0 +1,322 @@
+2013-01-10  Francisco Claude  <fclaude@scspc199.cs.uwaterloo.ca>
+
+	fixed makefile to run with the new version of swig also the includes can be installed with shared_lib_install
+
+2013-01-10  Francisco Claude  <fc@akori.cl>
+
+	Adding test for memory manager
+
+	Adding missing tree.cpp file and a small memory manager (work in progress)
+
+	New compilation for tests Updated constants
+
+2012-10-22  Francisco Claude  <fclaude@recoded.cl>
+
+	Adding spire 2012 tutorial
+
+2012-10-20  Francisco Claude  <fclaude@recoded.cl>
+
+	Fixed a memory leak in the test for sequences
+
+	Fixed two leaks in the wavelet tree without pointers
+
+	Load and Save tested for trees and sequences. Valgrind is not showing any problems in Mac OS X, will try it in Linux too.
+
+	Added Save/Load functions for wavelet trees without pointers.
+
+	Adding wavelet trees without pointers. Basic version, needs work on non-standard queries for sequences.
+
+2012-10-18  Francisco Claude  <fclaude@recoded.cl>
+
+	Adding louds and fixed some issues with memory management of permutations
+
+	Adding permutations (Base class and MRRR)
+
+	Merge branch 'master' of github.com:fclaude/libcds2
+
+	Makefile
+
+2012-09-27  Roberto Konow  <rkonowkr@gmail.com>
+
+	Wavelet Tree Basics and more cpplint fixes
+
+	FIX: cpplint of bitsequence,basics,array ADD: WavletTreeNode and WaveletTreeLeaf classes inside WaveletTree Class.
+
+2012-09-25  Roberto Konow  <rkonowkr@gmail.com>
+
+	added WaveletTree definitions and git testing
+
+	testing git header2
+
+	Merge branch 'master' of github.com:fclaude/libcds2
+
+	testing git header...3
+
+2012-09-25  Roberto Konow  <rkonow@ratonera-laptop.(none)>
+
+	testing git header...
+
+2012-09-20  Francisco Claude  <fclaude@recoded.cl>
+
+	Fixed a memory leak
+
+2012-09-19  Francisco Claude  <fclaude@recoded.cl>
+
+	Fixed an array out of bounds in Select/SelectNext
+
+	Fixed makefile and removed a message from array.
+
+2012-09-19  Roberto Konow  <rkonow@ratonera-laptop.(none)>
+
+	temporary makefile
+
+	adding dummy file to keep an empty directory
+
+	Small change to test gccgo
+
+	patada!
+
+2012-09-19  Francisco Claude  <fclaude@recoded.cl>
+
+	Added sample code for Go Wrote a small test to compare C++ vs Go speed Updated .gitignore
+
+	Array out-of-bouds fix and interface for swig improved
+
+	Formatted code
+
+2012-09-19  Roberto Konow  <rkonow@ratonera-laptop.(none)>
+
+	Added Coder Interface and Dummy implementation Fixed Makefile
+
+	forgot to include test
+
+	Added Mapper interface and MapperNone as a dummy implementation
+
+	Fixed: - astyle - memory leak in bitsequenceonelevelrank
+
+2012-09-18  Francisco Claude  <fclaude@scspc199.(none)>
+
+	Added destructor
+
+2012-06-12  Francisco Claude  <fclaude@recoded.cl>
+
+	Fixed a similar bug in Array::BinarySearch (boundary issues)
+
+	fixed a small bug in Array::BinarySearch
+
+2012-06-03  Francisco Claude  <fclaude@recoded.cl>
+
+	Fixed a bug in SelectNext1.
+
+	Fixed a bug in Select1 and SelectNext1.
+
+	Adding simple script for nightly tests runs.
+
+	Removing unused stuff from Makefile
+
+	Fixed bug in optimized version of Access+Rank.
+
+2012-06-02  Francisco Claude  <fclaude@recoded.cl>
+
+	Messed up with the test for bitsequence, now it's fixed.
+
+2012-06-01  Francisco Claude  <fclaude@recoded.cl>
+
+	Fixed formating and style.
+
+	Added Sequence and cleaned up tests.
+	- Added the base class for representing sequences
+	- Added the restricted select methods to the base BitSequence representation
+	- Added (commented) the methods missing in BitSequenceOneLevelRank
+	- Cleaned tests for BitSequence, no we only have one test for the base class
+	- Added the tests for the class Sequence
+
+2012-05-31  Francisco Claude  <fclaude@recoded.cl>
+
+	Updating README again, removed stuff we are not using.
+
+	Fixed formatting and style. Passing all tests.
+
+	Updated gitignore, and added a script to run all tests.
+
+	Removing reviews page, they are not working.
+
+	Changes: - Fixed some issues with Save/Load - Implemented optimized versions for rank+access and access+rank (BitSequenceOneLevelRank) - Added corresponding tests
+
+2012-05-30  Francisco Claude  <fclaude@recoded.cl>
+
+	Changed the Load and Save functions to use istream and ostream instead of the if/ofstream objects. Also added a Load/Save function for Arrays (new implementation) and BitSequenceOneLevelRank.
+
+	Formatted and revised style.
+
+	Updating README file to what we are actually doing.
+
+	Added: - SelectNext1 to BitSequenceRankOneLevel - Added LowerBoundExp to the array representation (exponential search) - Changed the ceiling function in libcds.h so it avoids using %
+
+2012-05-29  Francisco Claude  <fclaude@recoded.cl>
+
+	Added Select0 for BitSequenceOneLevelRank
+
+	- Added test for BitSequenceOneLevelRank - Finished implementation for Rank1 for BitSequenceOneLevelRank - Finished implementation for Select1 for BitSequenceOneLevelRank - Corrected method names for time.h - Fixed minor things in array, and it's tests - New test fro time.h - All tests are passing at this point
+
+2012-05-28  Francisco Claude  <fclaude@recoded.cl>
+
+	changed a comment
+
+	inlined some functions in array.cpp
+
+2012-05-24  Francisco Claude  <fclaude@recoded.cl>
+
+	adding documentation.
+
+	fixing a lint warning.
+
+	new arrays that optimize access for certain bit-sizes.
+
+2012-03-30  Rodrigo Cánovas  <yigorc@gmail.com>
+
+	GetSize() method ready and only the last part of select1 is missing
+
+	Update src/basic/time.h
+
+	Update time.h and add method to compute CPU usage time
+
+2012-03-29  Rodrigo Cánovas  <yigorc@gmail.com>
+
+	Update src/basic/time.h
+
+2012-03-28  Rodrigo Cánovas  <yigorc@gmail.com>
+
+	Modify Access function, fix Rank (still not tested), and start implement Select 1 using binary search
+
+2012-03-20  Francisco Claude  <fclaude@recoded.cl>
+
+	Adding the one level rank, this is not ready, it may not even compile, but I'm uploading it so Rodrigo Canovas can also work on these files.
+
+2012-02-19  Francisco Claude  <fclaude@recoded.cl>
+
+	Added another test, corrected the previous one.
+
+	Created the first tests for BitSequence. Fixed some issues found by the tests.
+
+2012-02-18  Francisco Claude  <fclaude@recoded.cl>
+
+	Fixed several bugs in the Makefile. Now everything compiles and tests pass.
+
+	Fixed makefile.
+
+	Separated tests into smaller units. Updated Makefile.
+
+2012-02-16  Francisco Claude  <fclaude@recoded.cl>
+
+	Fixing coding style.
+
+	Added tests for Array::UpperBound, Array::LowerBound, and Array::BinarySearch.
+
+	Adding gtest-1.6.0.
+
+	cleaning gtest library
+
+	removing the missing file in .gitignore.
+
+	deleting most of the ignored files.
+
+	adding a .gitignore
+
+	Adding a ReferenceCounted base clase, inheriting from this one gives reference counting to the object.
+
+	I had introduced an extra . to the licence text.
+
+2012-02-14  Francisco Claude  <fclaude@recoded.cl>
+
+	messed up the licence, now it's fixed.
+
+2012-02-13  Francisco Claude  <fclaude@recoded.cl>
+
+	Merging with develop
+
+	Adding a configuration file to make the use of post-review easier.
+
+	Changing the licence. We got authorization from Rodrigo Gonzalez, so everything is in order.
+
+2012-02-12  Francisco Claude  <fclaude@gmail.com>
+
+	Library compiles and passes the tests in 32 bits machines too.
+
+	Fixing extra blank lines.
+
+	Updating readme.md to include latests changes to the project.
+
+	big set of changes: - makefile now supports:   - make indent: requires astyle.   - make cpplint: checks for style errors in the code. - the cpplint original file was modified to allow a space after catch. - all code has been adapted to pass the style tests. - all .h files of the gtest library went through a bcpp (this was not on purpose)
+
+	The timer test has been removed. It tends to give a false negative.
+
+	The main makefile was calling make in the gtest directory, but not configure. This would cause the library to fail to compile the tests for other users.
+
+2012-02-11  Francisco Claude  <fclaude@gmail.com>
+
+	Improved readability of basic and tests.
+
+	Added gtest and fixed makefile to compile in Mac OSX.
+
+2011-08-18  Francisco Claude  <fclaude@cs.uwaterloo.ca>
+
+	forgot to add the lib directory, now it should compile on other people's machines
+
+	Merge branch 'develop' of github.com:fclaude/libcds2 into develop
+
+	ok, Makefile done, this one is simpler than the one for libcds1. I assumed that there are going to be few test binaries and thus more effort into them is not worth it.
+
+	improving the makefile, this is a commit to register some file I'll erase
+
+2011-05-19  Francisco Claude  <fclaude@cs.uwaterloo.ca>
+
+	changed the representation of cds_word to size_t, also patched io.h to support reading files in 32bits.
+
+2011-05-18  Francisco Claude  <fclaude@cs.uwaterloo.ca>
+
+	Fixed msb() function on 32 bits (detected on virtual machine).
+
+2011-05-16  Francisco Claude  <fclaude@cs.uwaterloo.ca>
+
+	Fixed a number that was too long for 32bits (adding ull at the end).
+
+2011-05-16  Francisco Claude  <fclaude@cs.uwaterloo.ca>
+
+	Finished the skeleton for basic and started defining BitSequence
+	Added the following to src/basic:
+	- CDSException: Base exception class, for now a very simple version, we can start pushing this direction further if we see that we are actually using it.
+	- Timer: basic timer to measure time, it is not as aqurate as we would like, it is a good candidate for replacing in the future.
+	- io.h: I/O and parsing functions.
+
+	The bitsequence.h file contains the definition for BitSequence, the base class from which RG, RRR, SD are going to inherit.
+
+2011-05-13  Francisco Claude  <fclaude@cs.uwaterloo.ca>
+
+	Merge branch 'master' of github.com:fclaude/libcds2
+
+	Fixed link to libcds1
+
+2011-05-13  Francisco Claude  <fclaude@cs.uwaterloo.ca>
+
+	Base code
+	- First version of libcds.h and its test
+	- Temporary Makefile
+
+	This file determines how the bits are read and written to the memory,
+	the rest of the code should use these functions (or compatible ones).
+
+	The makefile is temporary, just a quick hack to compile the test we
+	have so far.
+
+2011-05-13  alexbowe  <bowe.alexander@gmail.com>
+
+	Fix markdown bullet points
+
+	Add initial readme
+	The readme includes these sections:
+	 - Brief rationale in order to explain the projects goals.
+	 - Some useful links relating to the project.
+	 - Some brief guidelines about using git.
+
+	Initial commit

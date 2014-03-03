@@ -31,8 +31,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 #include <gtest/gtest.h>
-#include <libcds/io.h>
-#include <libcds/cdsexception.h>
+#include <libcds2/io.h>
+#include <libcds2/cdsexception.h>
 
 using cds::basic::Tokenize;
 using cds::basic::TransformString;

@@ -1,0 +1,38 @@
+Build tools:
+
+  If you modify the configure.ac or Makefile.am files, rebuild the
+  autoconf/automake generated files like so:
+
+    autoreconf -vif --no-recursive
+
+Portability (last fully checked in commit 87434a0):
+
+  Ubuntu 12.04 (x86_64):
+    no issues.
+
+  OpenBSD 5.4 (i386):
+    Three test failures:
+    * [ RUN      ] Fields.AllBits
+      Segmentation fault (core dumped) 
+      FAIL: test_libcdsh
+    * [ RUN      ] BitSequence.SupportingRank0
+      assertion "users_count_ > 0" failed: file "../include/libcds2/libcds.h", line 342, function "Unuse"
+      Abort trap (core dumped) 
+      FAIL: test_bitsequence
+    * [ RUN      ] CoderNone.EncodeRandomElements
+      unknown file: Failure
+      C++ exception with description "std::bad_alloc" thrown in the test body.
+      [  FAILED  ] CoderNone.EncodeRandomElements (54 ms)
+      FAIL: test_codernone
+
+  FreeBSD 9.2 (i386):
+    One test failure:
+    * [ RUN      ] Fields.AllBits
+      Segmentation fault (core dumped) 
+      FAIL: test_libcdsh
+
+  Solaris 11 (i386):
+    The same tests fail as in OpenBSD, but also make check ends with
+    an error which might just be a known-ish autoconf issue:
+      make: Fatal error: Command failed for target `check-TESTS'
+

@@ -30,7 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************************/
 
 #include <gtest/gtest.h>
-#include <libcds/array.h>
+#include <libcds2/array.h>
 
 using cds::basic::Array;
 using cds::basic::ArrayTpl;

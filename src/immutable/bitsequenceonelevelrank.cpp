@@ -30,9 +30,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************************/
 
 
-#include <libcds/immutable/bitsequenceonelevelrank.h>
-#include <libcds/cdsexception.h>
-#include <libcds/io.h>
+#include <libcds2/immutable/bitsequenceonelevelrank.h>
+#include <libcds2/cdsexception.h>
+#include <libcds2/io.h>
 
 #include <iostream>
 #include <algorithm>

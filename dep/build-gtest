@@ -1,0 +1,28 @@
+#!/bin/sh
+# This should be an incredibly simple script. See the autoconf docs on
+# writing portable shell scripts.
+
+# FIXME:
+# Ideal strategy to build gtest:
+#   Try to build gtest with cmake. If that fails, try the configure
+#   script.  If that fails, give up.
+# Problem with ideal strategy:
+#   cmake does not build lib/libgtest.la; it builds libgtest.a.
+#   So would need to invoke libtool on it. Or something.
+
+cd gtest-1.6.0 || exit 1
+# Ideal, not working way.
+#if cmake .; then
+#  make || exit 1
+#  mkdir lib
+#  cp libgtest.a lib/libgtest.la
+#else
+#  ./configure || exit 1
+#  make || exit 1
+#fi
+
+# Pragmatic way.
+./configure || exit 1
+make || exit 1
+
+touch ../gtest-stamp

@@ -29,8 +29,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ********************************************************************************/
 
-#include <libcds/immutable/wavelettreenoptrs.h>
-#include <libcds/io.h>
+#include <libcds2/immutable/wavelettreenoptrs.h>
+#include <libcds2/io.h>
 
 #include <vector>
 

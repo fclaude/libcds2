@@ -126,10 +126,10 @@ template <typename T> T *LoadFile(const string &name, cds_word &content_length) 
 template <cds_word> void SaveValue(ostream &out, const cds_word value) {
   assert(out.good());
 #if __LP64__
-  out.write(reinterpret_cast<char *>(&value), sizeof(cds_word));
+  out.write(reinterpret_cast<const char *>(&value), sizeof(cds_word));
 #else
   unsigned long long v = value;
-  out.write(reinterpret_cast<char *>(&v), sizeof(unsigned long long));
+  out.write(reinterpret_cast<const char *>(&v), sizeof(unsigned long long));
 #endif
 }
 
@@ -156,11 +156,11 @@ template <cds_word> cds_word LoadValue(istream &in) {
 template <cds_word> void SaveValue(ostream &out, const cds_word *values, const cds_word length) {
   assert(out.good());
 #if __LP64__
-  out.write(reinterpret_cast<char *>(values), length * sizeof(cds_word));
+  out.write(reinterpret_cast<const char *>(values), length * sizeof(cds_word));
 #else
   for (cds_word i = 0; i < length; i++) {
     unsigned long long v = values[i];
-    out.write(reinterpret_cast<char *>(&v), sizeof(unsigned long long));
+    out.write(reinterpret_cast<const char *>(&v), sizeof(unsigned long long));
   }
 #endif
 }
